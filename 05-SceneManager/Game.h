@@ -1,7 +1,10 @@
 #pragma once
+#include "C:/Program Files (x86)/Microsoft DirectX SDK (June 2010)/Include/D3DX10core.h"
+
 #include <Windows.h>
 #include <d3d10.h>
 #include <d3dx10.h>
+#include <string>
 #include <unordered_map>
 
 using namespace std;
