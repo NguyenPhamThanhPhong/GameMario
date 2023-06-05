@@ -7,6 +7,8 @@
 #include "Goomba.h"
 #include "Coin.h"
 #include "Portal.h"
+#include "Brick.h"
+#include "Square.h"
 
 #include "Collision.h"
 
@@ -37,13 +39,17 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<CSquare*>(e->obj))
+	{
+		OnCollisionWidthSquare(e);
+	}
+	else
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
 		if (e->ny < 0) isOnPlatform = true;
 	}
-	else 
-	if (e->nx != 0 && e->obj->IsBlocking())
+	else if (e->nx != 0 && e->obj->IsBlocking())
 	{
 		vx = 0;
 	}
@@ -54,6 +60,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithCoin(e);
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+	else if (dynamic_cast<CMystericBrick*>(e->obj))
+	{
+		OnCOllisionWithMystericBrick(e);
+	} 
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -100,6 +110,28 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+}
+void CMario::OnCOllisionWithMystericBrick(LPCOLLISIONEVENT e)
+{
+	CMystericBrick* b = dynamic_cast<CMystericBrick*>(e->obj);
+	if (e->ny > 0)
+	{
+		if (b->GetState() != MYSTERIC_STATE_DIE)
+		{
+			b->SetState(MYSTERIC_STATE_DIE);
+		}
+	}
+
+}
+void CMario::OnCollisionWidthSquare(LPCOLLISIONEVENT e)
+{
+	vy = 0;
+	//CSquare* s = dynamic_cast<CSquare*>(e->obj);
+	//if (e->ny < 0)
+	//{
+	//	vy = 0;
+	//	if (e->ny < 0) isOnPlatform = true;
+	//}
 }
 
 //

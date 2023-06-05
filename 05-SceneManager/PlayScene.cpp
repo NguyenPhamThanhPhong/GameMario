@@ -10,6 +10,8 @@
 #include "Coin.h"
 #include "Platform.h"
 
+#include "Square.h"
+
 #include "SampleKeyEventHandler.h"
 
 using namespace std;
@@ -119,7 +121,38 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
+	case OBJECT_TYPE_MYSTERIC_BRICK: obj = new CMystericBrick(x,y); break;
+	case OBJECT_TYPE_SQUARE:
+	{
+		float cell_width = (float)atof(tokens[3].c_str());
+		float cell_height = (float)atof(tokens[4].c_str());
+		float width = (float)atof(tokens[5].c_str());
+		float height = (float)atof(tokens[6].c_str());
 
+		float idEdgeLeft = (float)atof(tokens[7].c_str());
+		float idEdgeRight = (float)atof(tokens[8].c_str());
+		float idEdgeTop= (float)atof(tokens[9].c_str());
+		float idEdgeBot = (float)atof(tokens[10].c_str());
+
+		float idContent = (float)atof(tokens[11].c_str());
+
+		float idTopLeft = (float)atof(tokens[12].c_str());
+		float idTopRight = (float)atof(tokens[13].c_str());
+		float idBotLeft = (float)atof(tokens[14].c_str());
+		float idBotRight = (float)atof(tokens[15].c_str());
+		obj = new CSquare(
+			x, y, cell_width, cell_height,
+			width, height,
+			idEdgeLeft, idEdgeRight, idEdgeTop, idEdgeBot,
+			idContent,
+			idTopLeft, idTopRight, idBotLeft, idBotRight
+		);
+		break;
+	}
+	case 8: {
+		obj = new CPipe(x,y);
+		break;
+	}
 	case OBJECT_TYPE_PLATFORM:
 	{
 
