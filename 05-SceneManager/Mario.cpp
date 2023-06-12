@@ -90,7 +90,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			if (level == MARIO_LEVEL_SMALL) {
 				y -= 15;
 				level = MARIO_LEVEL_BIG;
-				coin++;
 				e->obj->Delete();
 			}
 		}

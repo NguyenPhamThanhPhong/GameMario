@@ -20,3 +20,4 @@ height	240
 30	textures\PinkBox.png
 40	textures\mariomap.png
 50	textures\MARIO2.png
+51	textures\MUSHROOMobj.png
