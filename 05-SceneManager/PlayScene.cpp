@@ -12,6 +12,7 @@
 #include "Pipe.h"
 #include "Square.h"
 #include "Plant.h"
+#include "CoinBounce.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -123,6 +124,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_MYSTERIC_BRICK: obj = new CMystericBrick(x,y); break;
+	case OBJECT_TYPE_COIN_BOUNCE: obj = new CCoinBounce(x, y); break;
 	case OBJECT_TYPE_SQUARE:
 	{
 		float cell_width = (float)atof(tokens[3].c_str());

@@ -10,6 +10,7 @@
 #include "Brick.h"
 #include "Square.h"
 #include "Plant.h"
+#include "CoinBounce.h"
 
 #include "Collision.h"
 
@@ -71,6 +72,12 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		{
 			DebugOut(L">>> Mario DIE >>> \n");
 			SetState(MARIO_STATE_DIE);
+		}
+	}
+	else if (dynamic_cast<CCoinBounce*>(e->obj)) {
+		CCoinBounce* coin_bounce = dynamic_cast<CCoinBounce*>(e->obj);
+		if (coin_bounce->GetState() != COIN_BOUNCE_DIE) {
+			coin_bounce->SetState(COIN_BOUNCE_DIE);
 		}
 	}
 }

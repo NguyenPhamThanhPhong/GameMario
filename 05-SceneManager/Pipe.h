@@ -20,10 +20,6 @@ public:
 		CSprites* s = CSprites::GetInstance();
 
 		s->Get(this->spriteID)->Draw(x, y);
-
-		//CAnimations* animations = CAnimations::GetInstance();
-		//animations->Get(10000)->Render(x, y);
-		//RenderBoundingBox();
 	}
 	void Update(DWORD dt) {}
 	virtual int IsBlocking() { return 1; }

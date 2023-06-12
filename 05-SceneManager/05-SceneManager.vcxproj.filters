@@ -164,5 +164,11 @@
     <ClInclude Include="Pipe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinBounce.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

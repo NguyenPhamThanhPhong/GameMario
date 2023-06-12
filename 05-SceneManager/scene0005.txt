@@ -6,6 +6,7 @@ cloud.txt
 brick.txt
 Square.txt
 Plant.txt
+Pipe.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -21,6 +22,12 @@ Plant.txt
 0	120	10
 #plant
 9	300	100	18	36	40	160
+#pipe	
+8	300	100	34	51	301000
+#COIN_BOUNCE
+10	220	90
+#Brick
+1	220	90
 #COIN
 4	300	20
 4	300	190
