@@ -9,6 +9,7 @@
 #include "Portal.h"
 #include "Brick.h"
 #include "Square.h"
+#include "Plant.h"
 
 #include "Collision.h"
 
@@ -39,11 +40,7 @@ void CMario::OnNoCollision(DWORD dt)
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CSquare*>(e->obj))
-	{
-		OnCollisionWidthSquare(e);
-	}
-	else
+
 	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
@@ -63,7 +60,19 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CMystericBrick*>(e->obj))
 	{
 		OnCOllisionWithMystericBrick(e);
-	} 
+	}
+	else if (dynamic_cast<CPlant*>(e->obj)) {
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+		}
+	}
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -126,6 +135,7 @@ void CMario::OnCOllisionWithMystericBrick(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWidthSquare(LPCOLLISIONEVENT e)
 {
 	vy = 0;
+	isOnPlatform = true;
 	//CSquare* s = dynamic_cast<CSquare*>(e->obj);
 	//if (e->ny < 0)
 	//{

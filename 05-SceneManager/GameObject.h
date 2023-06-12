@@ -50,7 +50,8 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
-
+	//Is direction Collidable
+	virtual int IsDirectionCollidable(float nx,float ny) { return 1; }
 	//
 	// Collision ON or OFF ? This can change depending on object's state. For example: die
 	//

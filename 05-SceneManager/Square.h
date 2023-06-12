@@ -1,7 +1,9 @@
 #pragma once
+
 #include "GameObject.h"
 #include "Animation.h"
 #include "Animations.h"
+#include "Brick.h"
 
 #define ANI_ID_SQUARE 300000
 
@@ -15,6 +17,7 @@ protected:
 	int spriteIdEdgeLeft, spriteIdEdgeRight, spriteIdEdgeTop, spriteIdEdgeBot; // Edge
 	int spriteIdTopLeft, spriteIdTopRight, spriteIdBotLeft, spriteIdBotRight; // Corner
 	int spriteIdContent;
+
 public:
 	CSquare(float x, float y,
 		float cell_width, float cell_height, int width,int height,
@@ -39,12 +42,19 @@ public:
 		this->spriteIdTopRight = sprite_id_top_right;
 		this->spriteIdBotLeft = sprite_id_bot_left;
 		this->spriteIdBotRight = sprite_id_bot_right;
-
+		state = 0;
 
 	}
+	int IsCollidable() { return 0; };
+	int IsDirectionCollidable(float nx, float ny) {
+		if (nx == 0 && ny == -1) {
+			return true;
+		}
+		return false;
+	};
+	int IsBlocking() { return 1; }
 	void Render();
 	void testrender();
 	void Update(DWORD dt) {}
-	int IsBlocking() { return 0; }
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 };

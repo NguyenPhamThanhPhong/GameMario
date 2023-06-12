@@ -9,8 +9,9 @@
 #include "Portal.h"
 #include "Coin.h"
 #include "Platform.h"
-
+#include "Pipe.h"
 #include "Square.h"
+#include "Plant.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -149,8 +150,21 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		);
 		break;
 	}
-	case 8: {
-		obj = new CPipe(x,y);
+	case OBJECT_TYPE_PIPE:
+	{
+		float width = (float)atof(tokens[3].c_str());
+		float height = (float)atof(tokens[4].c_str());
+		float spriteId = (float)atof(tokens[5].c_str());
+		obj = new CPipe(x, y, width, height, spriteId);
+		break;
+	}
+	case OBJECT_TYPE_PLANT:
+	{
+		float width = (float)atof(tokens[3].c_str());
+		float height = (float)atof(tokens[4].c_str());
+		float topmost = (float)atof(tokens[5].c_str());
+		float botmost = (float)atof(tokens[6].c_str());
+		obj = new CPlant(x,y,width,height,topmost,botmost);
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:

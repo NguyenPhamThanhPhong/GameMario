@@ -53,10 +53,10 @@ void CSquare::Render()
 	//	xx += cellWidth;
 	//}
 	testrender();
-	RenderBoundingBox();
 }
 void CSquare::testrender()
 {
+
 	CSprites* s = CSprites::GetInstance();
 	s->Get(spriteIdTopLeft)->Draw(x, y);
 	s->Get(spriteIdEdgeTop)->Draw(x+cellWidth, y);
@@ -68,6 +68,7 @@ void CSquare::testrender()
 	s->Get(spriteIdEdgeLeft)->Draw(x , y + cellHeight);
 	s->Get(spriteIdContent)->Draw(x + cellWidth , y+cellHeight);
 }
+
 //void CSquare::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 //{
 	//left = this->x - cellWidth / 2;

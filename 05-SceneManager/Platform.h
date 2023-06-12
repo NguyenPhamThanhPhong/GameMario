@@ -12,7 +12,7 @@ protected:
 	float cellWidth;
 	float cellHeight;
 	int spriteIdBegin, spriteIdMiddle, spriteIdEnd;
-
+	//int IsCollidable
 public: 
 	CPlatform(float x, float y,
 		float cell_width, float cell_height, int length,

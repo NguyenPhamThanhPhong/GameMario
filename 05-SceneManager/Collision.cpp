@@ -16,6 +16,9 @@ CCollision* CCollision::GetInstance()
 /*
 	SweptAABB 
 */
+int CCollisionEvent::WasCollided() {
+	return t >= 0.0f && t <= 1.0f && obj->IsDirectionCollidable(nx, ny);
+}
 void CCollision::SweptAABB(
 	float ml, float mt, float mr, float mb,
 	float dx, float dy,

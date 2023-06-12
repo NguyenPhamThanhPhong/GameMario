@@ -32,21 +32,3 @@ public:
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 };
-class CPipe : public CGameObject {
-public:
-	CPipe(float x, float y) : CGameObject(x, y) {}
-	void Render()
-	{
-		CAnimations* animations = CAnimations::GetInstance();
-		animations->Get(10000)->Render(x, y);
-		RenderBoundingBox();
-	}
-	void Update(DWORD dt) {}
-	void GetBoundingBox(float& l, float& t, float& r, float& b)
-	{
-		l = x - 8;
-		t = y - 8;
-		r = l + 30;
-		b = t + 30;
-	}
-};

@@ -19,3 +19,4 @@ height	240
 20	textures\misc.png
 30	textures\PinkBox.png
 40	textures\mariomap.png
+50	textures\MARIO2.png
