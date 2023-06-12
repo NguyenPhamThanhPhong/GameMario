@@ -7,6 +7,7 @@ brick.txt
 Square.txt
 Plant.txt
 Pipe.txt
+mushroom.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -28,6 +29,8 @@ Pipe.txt
 10	220	90
 #Brick
 1	220	90
+#MUSHROOM
+11	240	90	18	18	302001
 #COIN
 4	300	20
 4	300	190

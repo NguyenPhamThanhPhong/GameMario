@@ -13,6 +13,7 @@
 #include "Square.h"
 #include "Plant.h"
 #include "CoinBounce.h"
+#include "Mushroom.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -167,6 +168,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float topmost = (float)atof(tokens[5].c_str());
 		float botmost = (float)atof(tokens[6].c_str());
 		obj = new CPlant(x,y,width,height,topmost,botmost);
+		break;
+	}
+	case 11:
+	{
+		float width = (float)atof(tokens[3].c_str());
+		float height = (float)atof(tokens[4].c_str());
+		int spriteId = atoi(tokens[5].c_str());
+		obj = new CMushroom(x, y, width, height, spriteId);
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:

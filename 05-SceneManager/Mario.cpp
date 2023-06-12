@@ -11,6 +11,7 @@
 #include "Square.h"
 #include "Plant.h"
 #include "CoinBounce.h"
+#include "Mushroom.h"
 
 #include "Collision.h"
 
@@ -78,6 +79,20 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		CCoinBounce* coin_bounce = dynamic_cast<CCoinBounce*>(e->obj);
 		if (coin_bounce->GetState() != COIN_BOUNCE_DIE) {
 			coin_bounce->SetState(COIN_BOUNCE_DIE);
+		}
+	}
+	else if (dynamic_cast<CMushroom*>(e->obj)) {
+		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+		if (mushroom->GetState() == MUSHROOM_STATE_SLEEP) {
+			mushroom->SetState(MUSHROOM_STATE_WAKEUP);
+		}
+		else if (mushroom->GetState() == MUSHROOM_STATE_WAKEUP || mushroom->GetState() == MUSHROOM_STATE_MOVE) {
+			if (level == MARIO_LEVEL_SMALL) {
+				y -= 15;
+				level = MARIO_LEVEL_BIG;
+				coin++;
+				e->obj->Delete();
+			}
 		}
 	}
 }
