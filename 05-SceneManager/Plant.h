@@ -41,17 +41,17 @@ private:
 		// y < -2.3*|x|
 		float x_new = xx - x;
 		float y_new = yy - TopMost;
-		if (/*y_new>1.4*abs(x_new)*/ abs(x_new)<30) {
+		if (y_new>1.4*abs(x_new)) {
 			return false;
 		}
 		return true;
 	}
 protected:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
-		left = x - width / 2;
-		top = y - height / 2;
-		right = x + width;
-		bottom = y + height;
+		left = x - width / 2+4;
+		top = y - height / 2+4;
+		right = x + width-4;
+		bottom = y + height-4;
 	}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
@@ -137,6 +137,16 @@ protected:
 		}
 		else if (y >= BotMost + 3) {
 			y -= 3;
+		}
+		if (state == PLANT_STATE_WAKEUP) {
+			if (vy == 0) {
+				vy = -0.04f;
+			}
+		}
+		if (state == PLANT_STATE_SLEEP) {
+			if (vy < BotMost && vy == 0) {
+				vy = 0.04f;
+			}
 		}
 		y += vy * dt;
 	}
