@@ -49,7 +49,7 @@ public:
 }
 	Ctest(float x, float y) : CGameObject(x, y) {}
 	void Render() {
-		if (Width < 3* cellWidth || Height < 3* cellHeight) return;
+		if (Width < 2* cellWidth || Height < 2* cellHeight) return;
 		int sizeHor = Width / cellWidth; // numbers of cells horizontally
 		int sizeVer = Height / cellHeight;// number of cells vertically
 		//Declare reuseable start point
