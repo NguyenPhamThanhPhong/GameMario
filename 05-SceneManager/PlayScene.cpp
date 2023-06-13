@@ -16,6 +16,7 @@
 #include "Mushroom.h"
 #include "testobj.h"
 #include "BackgroundObj.h"
+#include "FireBall.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -182,6 +183,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case 15: {
 		int spriteId = (int)atoi(tokens[3].c_str());
 		obj = new CBackgroundobj(x, y, spriteId);
+		break;
+	}
+	case 16: {
+		float width = (float)atof(tokens[3].c_str());
+		float height = (float)atof(tokens[4].c_str());
+		int spriteId = atoi(tokens[5].c_str());
+		obj = new CFireball(x, y, width, height, spriteId);
+		fireball = (CFireball*)obj;
+		DebugOut(L"[INFO] Fire ball created\n");
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:

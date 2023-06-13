@@ -25,17 +25,19 @@
 
 // SPEED VALUE
 #define FIREBALL_SPEED1	0.03f
-#define FIREBALL_SPEED2	0.05f
-#define FIREBALL_SPEED3	0.07f
+#define FIREBALL_SPEED2	0.04f
+#define FIREBALL_SPEED3	0.055f
 
 class CFireball : public CGameObject {
 private:
 	float width;
 	float height;
 	int AniId;
+	float originX;
+	float originY;
 	void resetxy() {
-		x = 0;
-		y = 0;
+		x = originX;
+		y = originY;
 	}
 protected:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
@@ -52,9 +54,10 @@ protected:
 		if (state != FIREBALL_STATE_HIDDEN) {
 			CAnimations::GetInstance()->Get(AniId)->Render(x, y);
 		}
+		//else 
+		//	CAnimations::GetInstance()->Get(151002)->Render(x, y);
 	}
 
-	virtual int IsCollidable() { return 1; };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt) {
 		x += vx * dt;
@@ -68,6 +71,10 @@ public:
 		this->height = height;
 		this->AniId = aniId;
 		state = FIREBALL_STATE_HIDDEN;
+		this->originX = x;
+		this->originY = y;
+		vx = 0;
+		vy = 0;
 	}
 	virtual void SetState(int state) {
 		CGameObject::SetState(state);
@@ -81,14 +88,14 @@ public:
 			}
 			case FIREBALL_STATE_TOPMID_LEFT:
 			{
-				vx = -FIREBALL_SPEED2;
+				vx = -FIREBALL_SPEED3;
 				vy = -FIREBALL_SPEED1;
 				resetxy();
 				break;
 			}
 			case FIREBALL_STATE_BOTMID_LEFT:
 			{
-				vx = -FIREBALL_SPEED2;
+				vx = -FIREBALL_SPEED3;
 				vy = +FIREBALL_SPEED1;
 				resetxy();
 				break;
@@ -109,14 +116,14 @@ public:
 			}
 			case FIREBALL_STATE_TOPMID_RIGHT:
 			{
-				vx = +FIREBALL_SPEED2;
+				vx = +FIREBALL_SPEED3;
 				vy = -FIREBALL_SPEED1;
 				resetxy();
 				break;
 			}
 			case FIREBALL_STATE_BOTMID_RIGHT:
 			{
-				vx = +FIREBALL_SPEED2;
+				vx = +FIREBALL_SPEED3;
 				vy = +FIREBALL_SPEED1;
 				resetxy();
 				break;

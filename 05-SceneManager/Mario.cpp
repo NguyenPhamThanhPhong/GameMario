@@ -12,6 +12,7 @@
 #include "Plant.h"
 #include "CoinBounce.h"
 #include "Mushroom.h"
+#include "FireBall.h"
 
 #include "Collision.h"
 
@@ -91,6 +92,20 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 				y -= 15;
 				level = MARIO_LEVEL_BIG;
 				e->obj->Delete();
+			}
+		}
+	}
+	else if (dynamic_cast<CFireball*>(e->obj)) {
+		if (untouchable == 0) {
+			if (level > MARIO_LEVEL_SMALL)
+			{
+				level = MARIO_LEVEL_SMALL;
+				StartUntouchable();
+			}
+			else
+			{
+				DebugOut(L">>> Mario DIE >>> \n");
+				SetState(MARIO_STATE_DIE);
 			}
 		}
 	}

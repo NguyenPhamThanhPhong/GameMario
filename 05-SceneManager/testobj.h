@@ -47,7 +47,6 @@ public:
 	this->spriteIdBotLeft = sprite_id_bot_left;
 	this->spriteIdBotRight = sprite_id_bot_right;
 }
-	Ctest(float x, float y) : CGameObject(x, y) {}
 	void Render() {
 		if (Width < 2* cellWidth || Height < 2* cellHeight) return;
 		int sizeHor = Width / cellWidth; // numbers of cells horizontally

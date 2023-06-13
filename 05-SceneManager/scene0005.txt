@@ -10,6 +10,7 @@ Pipe.txt
 mushroom.txt
 MystericBrick.txt
 backgroundobj.txt
+fireball.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -102,10 +103,11 @@ backgroundobj.txt
 #mysteric
 6	240	172
 #plant
-9	368	260	18	36	220	265
+9	368	245	18	36	220	293
 #pipe	
 8	368	260	34	51	301000
-
+#fireball
+16	368	220	10	10	151001
 #COIN_BOUNCE
 10	424	212
 #MYSTERIC
