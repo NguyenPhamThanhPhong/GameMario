@@ -15,6 +15,7 @@
 #include "CoinBounce.h"
 #include "Mushroom.h"
 #include "testobj.h"
+#include "BackgroundObj.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -176,6 +177,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 				idContent,
 				idTopLeft, idTopRight, idBotLeft, idBotRight
 			);
+		break;
+	}
+	case 15: {
+		int spriteId = (int)atoi(tokens[3].c_str());
+		obj = new CBackgroundobj(x, y, spriteId);
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:

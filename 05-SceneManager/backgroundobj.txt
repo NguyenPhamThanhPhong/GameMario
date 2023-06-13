@@ -1,0 +1,17 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+#bigbush(127*64)
+199001	16	352	143	416	40
+#small bush (17x17)
+199005	159	400	175	416	40
+#big big bush
+199006	816	336	1008	400	40
+
+#double cloud (52x26)
+199002	118	270	170	296	40
+#single cloud (34x26)
+199003	326	254	360	280	40
+#triple cloud (66x26)
+199004	727	303	792	328	40
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
