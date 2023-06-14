@@ -89,34 +89,41 @@ protected:
 			if (xxx < x) {
 				if (abs(yyy - TopMost) < 8 && yyy<TopMost) {
 					fireball->SetState(FIREBALL_STATE_TOPMID_LEFT);
+					current_sprite = PLANT_SPRITE_TOPLEFT;
 				}
 				else if (abs(yyy - TopMost) <8 && yyy > TopMost) {
 					fireball->SetState(FIREBALL_STATE_BOTMID_LEFT);
+					current_sprite = PLANT_SPRITE_BOTLEFT;
 
 				}
 				else if (abs(yyy - TopMost) >= 8 && yyy < TopMost) {
 					fireball->SetState(FIREBALL_STATE_TOPMOST_LEFT);
+					current_sprite = PLANT_SPRITE_TOPLEFT;
 
 				}
 				else if (abs(yyy - TopMost) >= 8 && yyy > TopMost) {
 					fireball->SetState(FIREBALL_STATE_BOTMOST_LEFT);
+					current_sprite = PLANT_SPRITE_BOTLEFT;
 
 				}
 			}
 			else if (xxx > x) {
 				if (abs(yyy - TopMost) < 8 && yyy < TopMost) {
 					fireball->SetState(FIREBALL_STATE_TOPMID_RIGHT);
+					current_sprite = PLANT_SPRITE_TOPRIGHT;
 				}
 				else if (abs(yyy - TopMost) < 8 && yyy > TopMost) {
 					fireball->SetState(FIREBALL_STATE_BOTMID_RIGHT);
+					current_sprite = PLANT_SPRITE_BOTRIGHT;
 
 				}
 				else if (abs(yyy - TopMost) >= 8 && yyy < TopMost) {
 					fireball->SetState(FIREBALL_STATE_TOPMOST_RIGHT);
-
+					current_sprite = PLANT_SPRITE_TOPRIGHT;
 				}
 				else if (abs(yyy - TopMost) >= 8 && yyy > TopMost) {
 					fireball->SetState(FIREBALL_STATE_BOTMOST_RIGHT);
+					current_sprite = PLANT_SPRITE_BOTRIGHT;
 
 				}
 			}
@@ -126,9 +133,11 @@ protected:
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
 	virtual void Render() {
-		int RenderId = PLANT_SPRITE_TOPLEFT;
-		CSprites* s = CSprites::GetInstance();
-		s->Get(RenderId)->Draw(x, y);
+		if (current_sprite != NULL) {
+			CSprites* s = CSprites::GetInstance();
+			s->Get(current_sprite)->Draw(x, y);
+		}
+
 	}
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt) {
@@ -165,6 +174,7 @@ public:
 		this->BotMost = botmost;
 		stop_start = -1;
 		IsShooting = false;
+		current_sprite = PLANT_SPRITE_TOPLEFT;
 	}
 	virtual void SetState(int state) {
 		CGameObject::SetState(state);
