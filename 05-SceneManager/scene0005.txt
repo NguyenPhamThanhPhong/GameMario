@@ -7,10 +7,12 @@ brick.txt
 Square.txt
 Plant.txt
 Pipe.txt
+Turtle.txt
 mushroom.txt
 MystericBrick.txt
 backgroundobj.txt
 fireball.txt
+goomba.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -112,5 +114,12 @@ fireball.txt
 10	424	212
 #MYSTERIC
 6	424	212
+# TURTLE
+17	560	231	65	100
+# TRANSPARENT BLOCK
+18	509	251
+18	624	251
+#goomba
+2	424	100
 #Portal 
 #50	200	160	216	180	1

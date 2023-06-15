@@ -13,10 +13,11 @@
 #include "CoinBounce.h"
 #include "Mushroom.h"
 #include "FireBall.h"
+#include "Turtle.h"
 
 #include "Collision.h"
 
-void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
@@ -24,7 +25,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (abs(vx) > abs(maxVx)) vx = maxVx;
 
 	// reset untouchable timer if untouchable time has passed
-	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 
+	if (GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
@@ -65,33 +66,38 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCOllisionWithMystericBrick(e);
 	}
 	else if (dynamic_cast<CPlant*>(e->obj)) {
-		if (level > MARIO_LEVEL_SMALL)
-		{
-			level = MARIO_LEVEL_SMALL;
-			StartUntouchable();
-		}
-		else
-		{
-			DebugOut(L">>> Mario DIE >>> \n");
-			SetState(MARIO_STATE_DIE);
+		if (untouchable == 0) {
+			if (level > MARIO_LEVEL_SMALL)
+			{
+				level = MARIO_LEVEL_SMALL;
+				StartUntouchable();
+			}
+			else
+			{
+				DebugOut(L">>> Mario DIE >>> \n");
+				SetState(MARIO_STATE_DIE);
+			}
 		}
 	}
 	else if (dynamic_cast<CCoinBounce*>(e->obj)) {
 		CCoinBounce* coin_bounce = dynamic_cast<CCoinBounce*>(e->obj);
-		if (coin_bounce->GetState() != COIN_BOUNCE_DIE) {
-			coin_bounce->SetState(COIN_BOUNCE_DIE);
+		if (e->ny > 0) {
+			if (coin_bounce->GetState() != COIN_BOUNCE_DIE) {
+				coin_bounce->SetState(COIN_BOUNCE_DIE);
+			}
 		}
 	}
 	else if (dynamic_cast<CMushroom*>(e->obj)) {
 		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
-		if (mushroom->GetState() == MUSHROOM_STATE_SLEEP) {
-			mushroom->SetState(MUSHROOM_STATE_WAKEUP);
-		}
-		else if (mushroom->GetState() == MUSHROOM_STATE_WAKEUP || mushroom->GetState() == MUSHROOM_STATE_MOVE) {
+		if (mushroom->GetState() == MUSHROOM_STATE_WAKEUP || mushroom->GetState() == MUSHROOM_STATE_MOVE) {
 			if (level == MARIO_LEVEL_SMALL) {
-				y -= 15;
-				level = MARIO_LEVEL_BIG;
+				SetLevel(MARIO_LEVEL_BIG);
 				e->obj->Delete();
+			}
+		}
+		if (e->ny > 0) {
+			if (mushroom->GetState() == MUSHROOM_STATE_SLEEP) {
+				mushroom->SetState(MUSHROOM_STATE_WAKEUP);
 			}
 		}
 	}
@@ -108,6 +114,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 				SetState(MARIO_STATE_DIE);
 			}
 		}
+	}
+	else if (dynamic_cast<CTurtle*>(e->obj)) {
+		OnCollisionWithTurtle(e);
+
 	}
 }
 
@@ -166,7 +176,37 @@ void CMario::OnCOllisionWithMystericBrick(LPCOLLISIONEVENT e)
 			b->SetState(MYSTERIC_STATE_DIE);
 		}
 	}
+}
+void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e) {
+	CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
+	if (turtle->GetState() == TURTLE_LIVE) {
+		if (e->nx != 0 || e->ny > 0) {
+			DamageMario();
+		}
+		else if (e->ny < 0) {
+			turtle->SetState(TURTLE_SLEEP);
+		}
+	}
+	else if (turtle->GetState() == TURTLE_SLEEP) {
 
+		{
+			if (e->nx < 0) {
+				turtle->SetState(TURTLE_SPIN_RIGHT);
+			}
+			else if (e->nx > 0) {
+				turtle->SetState(TURTLE_SPIN_LEFT);
+			}
+		}
+	}
+	else if (turtle->GetState() == TURTLE_SPIN_LEFT || turtle->GetState() == TURTLE_SPIN_RIGHT) {
+		DamageMario();
+	}
+	else if (turtle->GetState() == TURTLE_SLEEP) {
+		if (nx > 0)
+			turtle->SetState(TURTLE_SPIN_RIGHT);
+		else if (nx < 0)
+			turtle->SetState(TURTLE_SPIN_LEFT);
+	}
 }
 void CMario::OnCollisionWidthSquare(LPCOLLISIONEVENT e)
 {
@@ -318,14 +358,14 @@ void CMario::Render()
 	animations->Get(aniId)->Render(x, y);
 
 	//RenderBoundingBox();
-	
+
 	DebugOutTitle(L"Coins: %d", coin);
 }
 
 void CMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed! 
-	if (this->state == MARIO_STATE_DIE) return; 
+	if (this->state == MARIO_STATE_DIE) return;
 
 	switch (state)
 	{
@@ -374,7 +414,7 @@ void CMario::SetState(int state)
 			state = MARIO_STATE_IDLE;
 			isSitting = true;
 			vx = 0; vy = 0.0f;
-			y +=MARIO_SIT_HEIGHT_ADJUST;
+			y += MARIO_SIT_HEIGHT_ADJUST;
 		}
 		break;
 
@@ -402,9 +442,9 @@ void CMario::SetState(int state)
 	CGameObject::SetState(state);
 }
 
-void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom)
+void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (level==MARIO_LEVEL_BIG)
+	if (level == MARIO_LEVEL_BIG)
 	{
 		if (isSitting)
 		{
@@ -413,18 +453,18 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 			right = left + MARIO_BIG_SITTING_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_SITTING_BBOX_HEIGHT;
 		}
-		else 
+		else
 		{
-			left = x - MARIO_BIG_BBOX_WIDTH/2;
-			top = y - MARIO_BIG_BBOX_HEIGHT/2;
+			left = x - MARIO_BIG_BBOX_WIDTH / 2;
+			top = y - MARIO_BIG_BBOX_HEIGHT / 2;
 			right = left + MARIO_BIG_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_BBOX_HEIGHT;
 		}
 	}
 	else
 	{
-		left = x - MARIO_SMALL_BBOX_WIDTH/2;
-		top = y - MARIO_SMALL_BBOX_HEIGHT/2;
+		left = x - MARIO_SMALL_BBOX_WIDTH / 2;
+		top = y - MARIO_SMALL_BBOX_HEIGHT / 2;
 		right = left + MARIO_SMALL_BBOX_WIDTH;
 		bottom = top + MARIO_SMALL_BBOX_HEIGHT;
 	}

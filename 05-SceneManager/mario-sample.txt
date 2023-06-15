@@ -21,3 +21,5 @@ height	240
 40	textures\mariomap.png
 50	textures\MARIO2.png
 51	textures\MUSHROOMobj.png
+52	textures\turtletexture.png
+53	textures\planttexture.png

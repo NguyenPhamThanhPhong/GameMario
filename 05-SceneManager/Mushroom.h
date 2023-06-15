@@ -19,14 +19,25 @@ private:
 	ULONGLONG wakeup_start;
 protected:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
-		left = x - width / 2;
-		top = y - height / 2;
-		right = x + width;
-		bottom = y + height;
+		if (state == MUSHROOM_STATE_SLEEP) {
+			left = x - width / 2;
+			top = y - height / 2;
+			right = x + width;
+			bottom = y + height;
+		}
+		else {
+			width = 12;
+			height = 6;
+			left = x - width / 2;
+			top = y - height / 2;
+			right = x + width;
+			bottom = y + height;
+		}
+
 	}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		vy += ay * dt;
-		if (state == MUSHROOM_STATE_WAKEUP && (GetTickCount64() - wakeup_start>MUSHROOM_WAKEUP_TIMEOUT)) {
+		if (state == MUSHROOM_STATE_WAKEUP && (GetTickCount64() - wakeup_start > MUSHROOM_WAKEUP_TIMEOUT)) {
 			SetState(MUSHROOM_STATE_MOVE);
 		}
 		CGameObject::Update(dt, coObjects);
@@ -57,7 +68,7 @@ protected:
 	virtual int IsCollidable() { return 1; };
 	virtual int IsBlocking() { return 0; }
 public:
-	CMushroom(float x, float y, float width, float height,int spriteId) :CGameObject(x,y) {
+	CMushroom(float x, float y, float width, float height, int spriteId) :CGameObject(x, y) {
 		this->width = width;
 		this->height = height;
 		this->spriteId = spriteId;
@@ -68,17 +79,17 @@ public:
 	virtual void SetState(int state) {
 		CGameObject::SetState(state);
 		switch (state) {
-			case MUSHROOM_STATE_WAKEUP: {
-				wakeup_start = GetTickCount64();
-				vy = -0.05f;
-				break;
-			}
-			case MUSHROOM_STATE_MOVE: {
-				vy = 0;
-				vx = 0.05f;
-				ay = MUSHROOM_GRAVITY;
-				break;
-			}
+		case MUSHROOM_STATE_WAKEUP: {
+			wakeup_start = GetTickCount64();
+			vy = -0.05f;
+			break;
+		}
+		case MUSHROOM_STATE_MOVE: {
+			vy = 0;
+			vx = 0.05f;
+			ay = MUSHROOM_GRAVITY;
+			break;
+		}
 		}
 	}
 };

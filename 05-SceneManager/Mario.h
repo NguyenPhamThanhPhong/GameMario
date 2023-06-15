@@ -114,6 +114,7 @@ class CMario : public CGameObject
 	BOOLEAN isOnPlatform;
 	int coin; 
 
+	void OnCollisionWithTurtle(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
@@ -160,5 +161,22 @@ public:
 	}
 	int Gety() {
 		return this->y;
+	}
+	int GetnX() {
+		return this->nx;
+	}
+	void DamageMario() {
+		if (untouchable == 0) {
+			if (level > MARIO_LEVEL_SMALL)
+			{
+				level = MARIO_LEVEL_SMALL;
+				StartUntouchable();
+			}
+			else
+			{
+				DebugOut(L">>> Mario DIE >>> \n");
+				SetState(MARIO_STATE_DIE);
+			}
+		}
 	}
 };
