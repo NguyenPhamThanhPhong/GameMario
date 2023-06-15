@@ -193,11 +193,20 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e) {
 		}
 		else
 		{
-			if (e->nx < 0) {
-				turtle->SetState(TURTLE_SPIN_RIGHT);
+			if (e->ny != 0) {
+				if(nx>0)
+					turtle->SetState(TURTLE_SPIN_RIGHT);
+				else if(nx<0)
+					turtle->SetState(TURTLE_SPIN_LEFT);
 			}
-			else if (e->nx > 0) {
-				turtle->SetState(TURTLE_SPIN_LEFT);
+			else
+			{
+				if (e->nx < 0) {
+					turtle->SetState(TURTLE_SPIN_RIGHT);
+				}
+				else if (e->nx > 0) {
+					turtle->SetState(TURTLE_SPIN_LEFT);
+				}
 			}
 		}
 	}
@@ -505,7 +514,7 @@ void CMario::SetState(int state)
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (level == MARIO_LEVEL_BIG)
+	if (level == MARIO_LEVEL_BIG || level==MARIO_LEVEL_FOX)
 	{
 		if (isSitting)
 		{

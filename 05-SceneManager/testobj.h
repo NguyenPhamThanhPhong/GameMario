@@ -8,6 +8,10 @@
 #define BRICK_BBOX_WIDTH 16
 #define BRICK_BBOX_HEIGHT 16
 
+#define SHADOWBOX_TOPRIGHT 200056
+#define SHADOWBOX_BOTRIGHT 200057
+#define SHADOWBOX_BOTLEFT 200058
+#define SHADOWBOX_CONTENT 200059
 
 #define MYSTERIC_STATE_LIVE 100
 #define MYSTERIC_STATE_DIE 200
@@ -48,13 +52,25 @@ public:
 	this->spriteIdBotRight = sprite_id_bot_right;
 }
 	void Render() {
+
 		if (Width < 2* cellWidth || Height < 2* cellHeight) return;
+
+		CSprites* s = CSprites::GetInstance();
 		int sizeHor = Width / cellWidth; // numbers of cells horizontally
 		int sizeVer = Height / cellHeight;// number of cells vertically
+
+		float xshadow = this->x + Width-5;
+		float yshadow = this->y + 4;
+		int shadowboxHeightCount = (this->Height/ 10) +1;
+		for (int i = 0; i < shadowboxHeightCount; i++)
+		{
+			s->Get(SHADOWBOX_CONTENT)->Draw(xshadow, yshadow);
+			yshadow += 10;
+		}
 		//Declare reuseable start point
 		float xLocation = x;
 		float yLocation = y;
-		CSprites* s = CSprites::GetInstance();
+
 		// Draw Top Left
 		s->Get(spriteIdTopLeft)->Draw(x, y); 
 		//Draw Edge Top
@@ -97,6 +113,18 @@ public:
 			}
 			xx += cellWidth;
 		}
+	}
+	void DrawShadowBox() {
+
+		int sizeHor = Width / cellWidth; // numbers of cells horizontally
+		int sizeVer = Height / cellHeight;// number of cells vertically
+		//CSprites* s = CSprites::GetInstance();
+		//yshadow += 8;
+		//for (int i = 0; i < sizeVer; i++) {
+		//	s->Get(SHADOWBOX_CONTENT)->Draw(xshadow, yshadow);
+		//	y += 8;
+		//}
+		//s->Get(SHADOWBOX_BOTRIGHT)->Draw(xshadow, yshadow);
 	}
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {

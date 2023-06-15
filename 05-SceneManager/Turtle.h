@@ -16,7 +16,7 @@
 #define TURTLE_DIE		6
 
 
-#define TURTLE_SLEEP_TIMEOUT 2000
+#define TURTLE_SLEEP_TIMEOUT 5000
 
 class CTurtle : public CGameObject
 {
@@ -44,6 +44,7 @@ protected:
 		vx += ax * dt;
 		if ((state == TURTLE_SLEEP || state == TURTLE_SLEEP_HOLD) && (GetTickCount64() - die_start > TURTLE_SLEEP_TIMEOUT))
 		{
+			y -= 10;
 			SetState(TURTLE_LIVE);
 			die_start = 0;
 		}
@@ -129,8 +130,12 @@ public:
 		switch (state) {
 		case TURTLE_LIVE:
 		{
-			ay = 0;
-			vx = 0.02f;
+			ay = 0.002f;
+			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+			if (mario->GetnX() > 0)
+				vx = -0.02f;
+			else
+				vx = 0.02f;
 			break;
 		}
 		case TURTLE_SLEEP: {
