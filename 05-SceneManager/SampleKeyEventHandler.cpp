@@ -31,6 +31,9 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_R: // reset
 		//Reload();
 		break;
+	case DIK_3:
+		mario->SetLevel(MARIO_LEVEL_FOX);
+		break;
 	case DIK_X:
 		mario->SetHoldingkey(true);
 		break;

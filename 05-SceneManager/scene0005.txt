@@ -13,6 +13,7 @@ MystericBrick.txt
 backgroundobj.txt
 fireball.txt
 goomba.txt
+MarioFox.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type

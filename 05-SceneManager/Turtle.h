@@ -15,6 +15,9 @@
 #define TURTLE_SLEEP_HOLD	5
 #define TURTLE_DIE		6
 
+
+#define TURTLE_SLEEP_TIMEOUT 2000
+
 class CTurtle : public CGameObject
 {
 protected:
@@ -25,7 +28,12 @@ protected:
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 		float width = 16;
-		float height = 14;
+		float height = 8;
+		if (state == TURTLE_SLEEP_HOLD || state == TURTLE_SLEEP)
+		{
+			width = 16;
+			height = 14;
+		}
 		left = x - width / 2;
 		top = y - height / 2;
 		right = x + width;
@@ -34,14 +42,28 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		vy += ay * dt;
 		vx += ax * dt;
+		if ((state == TURTLE_SLEEP || state == TURTLE_SLEEP_HOLD) && (GetTickCount64() - die_start > TURTLE_SLEEP_TIMEOUT))
+		{
+			SetState(TURTLE_LIVE);
+			die_start = 0;
+		}
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
 	virtual void Render() {
 		int aniId = 504001;
-		if (vx > 0) {
-			aniId = 504002;
+		if (state == TURTLE_LIVE) {
+			if (vx > 0) {
+				aniId = 504002;
+			}
 		}
+		else if (state == TURTLE_SLEEP|| state== TURTLE_SLEEP_HOLD) {
+			aniId = 504003;
+		}
+		else if (state == TURTLE_SPIN_LEFT || state == TURTLE_SPIN_RIGHT) {
+			aniId = 504004;
+		}
+
 		CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	}
 
@@ -99,6 +121,7 @@ public:
 		this->ay = 0.002f;
 		vy = 0;
 		vx = 0.02f;
+		die_start = -1;
 		state = TURTLE_LIVE;
 	}
 	virtual void SetState(int state) {
@@ -111,6 +134,7 @@ public:
 			break;
 		}
 		case TURTLE_SLEEP: {
+			die_start = GetTickCount64();
 			ay = 0;
 			vy = 0;
 			vx = 0;
