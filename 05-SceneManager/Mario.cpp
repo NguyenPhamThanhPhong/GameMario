@@ -188,7 +188,10 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e) {
 		}
 	}
 	else if (turtle->GetState() == TURTLE_SLEEP) {
-
+		if (IskeyHolding == true) {
+			turtle->SetState(TURTLE_SLEEP_HOLD);
+		}
+		else
 		{
 			if (e->nx < 0) {
 				turtle->SetState(TURTLE_SPIN_RIGHT);

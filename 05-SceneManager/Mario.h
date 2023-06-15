@@ -114,6 +114,8 @@ class CMario : public CGameObject
 	BOOLEAN isOnPlatform;
 	int coin; 
 
+	bool IskeyHolding = false;
+
 	void OnCollisionWithTurtle(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
@@ -178,5 +180,8 @@ public:
 				SetState(MARIO_STATE_DIE);
 			}
 		}
+	}
+	void SetHoldingkey(bool signal) {
+		this->IskeyHolding = signal;
 	}
 };
