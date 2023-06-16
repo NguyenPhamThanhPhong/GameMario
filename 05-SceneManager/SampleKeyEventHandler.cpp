@@ -22,7 +22,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_1:
 		mario->SetLevel(MARIO_LEVEL_SMALL);
 		break;
-	case DIK_2:
+	case DIK_Y:
 		mario->SetLevel(MARIO_LEVEL_BIG);
 		break;
 	case DIK_0:

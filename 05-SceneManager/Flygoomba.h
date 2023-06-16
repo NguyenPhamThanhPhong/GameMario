@@ -29,6 +29,9 @@
 
 class CFlygoomba : public CGameObject
 {
+private:
+	float leftmost;
+	float rightmost;
 protected:
 	float ax;
 	float ay;
@@ -63,11 +66,11 @@ protected:
 			return;
 		}
 		if (state != FLYGOOMBA_STATE_DIE) {
-			if (x <= 50) {
-				vx = 0.01f;
+			if (x <= leftmost) {
+				vx = 0.05f;
 			}
-			else if (x >= 200) {
-				vx = -0.01f;
+			else if (x >= rightmost) {
+				vx = -0.05f;
 			}
 		}
 		if (state == FLYGOOMBA_STATE_FLY && (GetTickCount64() - fly_start > 200)) {
@@ -112,14 +115,16 @@ protected:
 	}
 
 public:
-	CFlygoomba(float x, float y) :CGameObject(x, y) {
+	CFlygoomba(float x, float y,float leftmost,float rightmost) :CGameObject(x, y) {
 		this->ax = 0;
 		this->ay = FLYGOOMBA_GRAVITY;
 		die_start = -1;
-		this->vx = -0.1f;
+		this->vx = -0.05f;
 		SetState(FLYGOOMBA_STATE_FLY);
 		fly_start = -1;
 		fly_end = -1;
+		this->leftmost = leftmost;
+		this->rightmost = rightmost;
 	}
 	virtual void SetState(int state) {
 		CGameObject::SetState(state);

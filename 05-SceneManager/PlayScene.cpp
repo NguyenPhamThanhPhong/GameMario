@@ -216,7 +216,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case 20:
 	{
-		obj = new CFlygoomba(x, y);
+		float leftmost = (float)atof(tokens[3].c_str());
+		float rightmost = (float)atof(tokens[4].c_str());
+		obj = new CFlygoomba(x, y,leftmost,rightmost);
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:
