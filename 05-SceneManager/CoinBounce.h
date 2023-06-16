@@ -32,8 +32,11 @@ public:
 		SetState(COIN_BOUNCE_LIVE);
 	}
 	void Render() {
-		CAnimations* animations = CAnimations::GetInstance();
-		animations->Get(ID_ANI_COIN_BOUNCE)->Render(x, y);
+		if (state != COIN_BOUNCE_LIVE)
+		{
+			CAnimations* animations = CAnimations::GetInstance();
+			animations->Get(ID_ANI_COIN_BOUNCE)->Render(x, y);
+		}
 	}
 	void SetState(int state) {
 		CGameObject::SetState(state);
@@ -55,9 +58,9 @@ public:
 
 	}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {
-		l = x - COIN_BBOX_WIDTH_BOUNCE / 2;
+		l = x - 14 / 2;
 		t = y - COIN_BBOX_HEIGHT_BOUNCE / 2;
-		r = l + COIN_BBOX_WIDTH_BOUNCE;
+		r = l + 14;
 		b = t + COIN_BBOX_HEIGHT_BOUNCE;
 	}
 	int IsBlocking() { return 0; }

@@ -211,6 +211,7 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e) {
 		}
 		else if (e->ny < 0) {
 			turtle->SetState(TURTLE_SLEEP);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
 	else if (turtle->GetState() == TURTLE_SLEEP) {
@@ -224,6 +225,7 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e) {
 					turtle->SetState(TURTLE_SPIN_RIGHT);
 				else if (nx < 0)
 					turtle->SetState(TURTLE_SPIN_LEFT);
+				vy = -MARIO_JUMP_DEFLECT_SPEED;
 			}
 			else
 			{

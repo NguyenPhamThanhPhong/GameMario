@@ -16,8 +16,8 @@ public:
 	CTransparentblock(float x, float y) : CGameObject(x, y) {
 	}
 	void Render() {
-		CSprites* s = CSprites::GetInstance();
-		s->Get(20001)->Draw(x, y);
+		//CSprites* s = CSprites::GetInstance();
+		//s->Get(20001)->Draw(x, y);
 	}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {
 		l = x - 10 / 2;

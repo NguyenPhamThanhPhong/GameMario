@@ -32,11 +32,14 @@ protected:
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 		float width = 16;
-		float height = 8;
-		if (state == TURTLE_SLEEP_HOLD || state == TURTLE_SLEEP)
+		float height = 12;
+		if (state != TURTLE_LIVE)
 		{
 			width = 16;
-			height = 14;
+			height = 8;
+			if (state == TURTLE_SLEEP) {
+				height = 5;
+			}
 		}
 		left = x - width / 2;
 		top = y - height / 2;
@@ -160,7 +163,7 @@ public:
 		}
 		case TURTLE_SLEEP: {
 			die_start = GetTickCount64();
-			ay = 0;
+			ay = 0.002f;
 			vy = 0;
 			vx = 0;
 			break;

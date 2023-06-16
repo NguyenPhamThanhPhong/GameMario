@@ -1,4 +1,5 @@
 #include "Goomba.h"
+#include "InvisibleBlock.h"
 
 CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 {
@@ -34,6 +35,10 @@ void CGoomba::OnNoCollision(DWORD dt)
 
 void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<CTransparentblock*>(e->obj)) {
+		vx = -vx;
+		return;
+	}
 	if (!e->obj->IsBlocking()) return; 
 	if (dynamic_cast<CGoomba*>(e->obj)) return; 
 

@@ -61,8 +61,11 @@ protected:
 		}
 	}
 	virtual void Render() {
-		CSprites* s = CSprites::GetInstance();
-		s->Get(spriteId)->Draw(x, y);
+		if (state != MUSHROOM_STATE_SLEEP) {
+			CSprites* s = CSprites::GetInstance();
+			s->Get(spriteId)->Draw(x, y);
+		}
+
 	}
 
 	virtual int IsCollidable() { return 1; };

@@ -21,6 +21,7 @@
 #include "InvisibleBlock.h"
 #include "Leaf.h"
 #include "Flygoomba.h"
+#include "Tail.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -220,6 +221,10 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float rightmost = (float)atof(tokens[4].c_str());
 		obj = new CFlygoomba(x, y,leftmost,rightmost);
 		break;
+	}
+	case 21:
+	{
+
 	}
 	case OBJECT_TYPE_PLATFORM:
 	{

@@ -1,0 +1,27 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+####BLUEEEEEEEEEEEEEEE############
+#top left
+167001	272	336	287	351	40
+#top right
+167002	304	336	319	351	40
+#bto left #ignore
+167003	304	336	319	351	40
+#bot right
+167004	304	400	319	415	40
+
+#content
+167005	290	355	305	370	40
+
+#edge top
+167006	290	336	305	351	40
+#edge right
+167007	304	355	319	370	40
+#edge bot
+167008	296	400	311	415	40
+#edge left
+167009	272	350	287	365	40
+
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
+#mysteric box animation
