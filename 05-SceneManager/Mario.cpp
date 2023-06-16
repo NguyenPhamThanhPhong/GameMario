@@ -81,8 +81,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		if (mushroom->GetState() == MUSHROOM_STATE_WAKEUP || mushroom->GetState() == MUSHROOM_STATE_MOVE) {
 			if (level == MARIO_LEVEL_SMALL) {
 				SetLevel(MARIO_LEVEL_BIG);
-				e->obj->Delete();
 			}
+			e->obj->Delete();
 		}
 		if (e->ny > 0) {
 			if (mushroom->GetState() == MUSHROOM_STATE_SLEEP) {

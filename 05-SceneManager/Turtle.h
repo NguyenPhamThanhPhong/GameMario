@@ -100,6 +100,7 @@ protected:
 			}
 		}
 		else {
+			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 			if (dynamic_cast<CGoomba*>(e->obj)) {
 				if (goomba->GetState() != GOOMBA_STATE_DIE)
@@ -112,12 +113,16 @@ protected:
 				CMystericBrick* mysteric = dynamic_cast<CMystericBrick*>(e->obj);
 					mysteric->SetState(MYSTERIC_STATE_DIE);
 			}
-			if (dynamic_cast<CLeaf*>(e->obj)) {
+			if (dynamic_cast<CLeaf*>(e->obj)&& mario->Getlevel()==MARIO_LEVEL_BIG) {
 				CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
 				if(leaf->GetState()  == LEAF_STATE_SLEEP)
 					leaf->SetState(LEAF_STATE_WAKEUP);
 			}
-			//else if(dynamic_cast<CCoin>)
+			else if (dynamic_cast<CMushroom*>(e->obj) && mario->Getlevel() == MARIO_LEVEL_SMALL) {
+				CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+				if (mushroom->GetState() == MUSHROOM_STATE_SLEEP)
+					mushroom->SetState(MUSHROOM_STATE_WAKEUP);
+			}
 		}
 
 		if (!e->obj->IsBlocking()) return;

@@ -191,6 +191,9 @@ public:
 	int GetnX() {
 		return this->nx;
 	}
+	int Getlevel() {
+		return this->level;
+	}
 	void DamageMario() {
 		if (untouchable == 0) {
 			if (level > MARIO_LEVEL_SMALL)
