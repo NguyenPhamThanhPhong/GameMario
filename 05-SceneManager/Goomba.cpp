@@ -1,5 +1,6 @@
 #include "Goomba.h"
 #include "InvisibleBlock.h"
+#include "Tail.h"
 
 CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 {
@@ -35,6 +36,15 @@ void CGoomba::OnNoCollision(DWORD dt)
 
 void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<CTail*>(e->obj))
+	{
+		CTail* tail = dynamic_cast<CTail*>(e->obj);
+		if (tail->GetState() == TAIL_TRIGGER) {
+			if (state != GOOMBA_STATE_DIE)
+				SetState(GOOMBA_STATE_DIE);
+			return;
+		}
+	}
 	if (dynamic_cast<CTransparentblock*>(e->obj)) {
 		vx = -vx;
 		return;

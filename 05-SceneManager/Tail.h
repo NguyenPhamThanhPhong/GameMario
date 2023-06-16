@@ -16,6 +16,10 @@ protected:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 		float width = 30;
 		float height = 20;
+		left = x - width / 2 ;
+		top = y - height / 2 ;
+		right = x + width ;
+		bottom = y + height ;
 	}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
@@ -33,6 +37,7 @@ protected:
 	virtual void Render() {
 		CSprites* s = CSprites::GetInstance();
 		s->Get(20001)->Draw(x, y);
+		RenderBoundingBox();
 	}
 
 	virtual int IsCollidable() { return 0; };
@@ -50,19 +55,20 @@ protected:
 			return;
 		}
 		else {
-			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+			//if()
+			//CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 
-			// jump on top >> kill Goomba and deflect a bit 
-			if (goomba->GetState() != GOOMBA_STATE_DIE)
-			{
-				goomba->SetState(GOOMBA_STATE_DIE);
-			}
+			//// jump on top >> kill Goomba and deflect a bit 
+			//if (goomba->GetState() != GOOMBA_STATE_DIE)
+			//{
+			//	goomba->SetState(GOOMBA_STATE_DIE);
+			//}
 		}
 	}
 
 public:
 	CTail(float x, float y) :CGameObject(x,y) {
-		SetState(TAIL_SLEEP);
+		SetState(TAIL_TRIGGER);
 	}
 	virtual void SetState(int state) {
 		CGameObject::SetState(state);
