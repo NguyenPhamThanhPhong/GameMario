@@ -19,6 +19,7 @@
 #include "FireBall.h"
 #include "Turtle.h"
 #include "InvisibleBlock.h"
+#include "Leaf.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -203,6 +204,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case 18:
 	{
 		obj = new CTransparentblock(x, y);
+		break;
+	}
+	case 19:
+	{
+		float width = (float)atof(tokens[3].c_str());
+		float height = (float)atof(tokens[4].c_str());
+		obj = new CLeaf(x,y,width,height);
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:

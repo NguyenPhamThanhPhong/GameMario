@@ -14,6 +14,7 @@ backgroundobj.txt
 fireball.txt
 goomba.txt
 MarioFox.txt
+leaf.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -120,6 +121,10 @@ MarioFox.txt
 # TRANSPARENT BLOCK
 18	529	251
 18	644	251
+#LEAF
+19	700	251	18	16
+#MYSTERIC
+6	700	251
 #goomba
 2	444	100
 #Portal 

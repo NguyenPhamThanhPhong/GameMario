@@ -187,6 +187,7 @@
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="InvisibleBlock.h" />
     <ClInclude Include="KeyEventHandler.h" />
+    <ClInclude Include="Leaf.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="Mushroom.h" />
     <ClInclude Include="Pipe.h" />

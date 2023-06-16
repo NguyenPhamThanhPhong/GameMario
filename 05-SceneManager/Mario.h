@@ -195,7 +195,10 @@ public:
 		if (untouchable == 0) {
 			if (level > MARIO_LEVEL_SMALL)
 			{
-				level = MARIO_LEVEL_SMALL;
+				if (level == MARIO_LEVEL_BIG)
+					level = MARIO_LEVEL_SMALL;
+				else if (level == MARIO_LEVEL_FOX)
+					level = MARIO_LEVEL_BIG;
 				StartUntouchable();
 			}
 			else

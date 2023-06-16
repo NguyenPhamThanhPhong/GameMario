@@ -7,6 +7,9 @@
 
 #include "Mario.h"
 #include "PlayScene.h"
+#include "Brick.h"
+#include "CoinBounce.h"
+#include "Leaf.h"
 
 #define TURTLE_LIVE		1
 #define TURTLE_SLEEP	2
@@ -17,6 +20,7 @@
 
 
 #define TURTLE_SLEEP_TIMEOUT 5000
+
 
 class CTurtle : public CGameObject
 {
@@ -103,6 +107,17 @@ protected:
 					goomba->SetState(GOOMBA_STATE_DIE);
 				}
 			}
+			else
+			if (dynamic_cast<CMystericBrick*>(e->obj)) {
+				CMystericBrick* mysteric = dynamic_cast<CMystericBrick*>(e->obj);
+					mysteric->SetState(MYSTERIC_STATE_DIE);
+			}
+			if (dynamic_cast<CLeaf*>(e->obj)) {
+				CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
+				if(leaf->GetState()  == LEAF_STATE_SLEEP)
+					leaf->SetState(LEAF_STATE_WAKEUP);
+			}
+			//else if(dynamic_cast<CCoin>)
 		}
 
 		if (!e->obj->IsBlocking()) return;

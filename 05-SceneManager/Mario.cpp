@@ -66,18 +66,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCOllisionWithMystericBrick(e);
 	}
 	else if (dynamic_cast<CPlant*>(e->obj)) {
-		if (untouchable == 0) {
-			if (level > MARIO_LEVEL_SMALL)
-			{
-				level = MARIO_LEVEL_SMALL;
-				StartUntouchable();
-			}
-			else
-			{
-				DebugOut(L">>> Mario DIE >>> \n");
-				SetState(MARIO_STATE_DIE);
-			}
-		}
+		DamageMario();
 	}
 	else if (dynamic_cast<CCoinBounce*>(e->obj)) {
 		CCoinBounce* coin_bounce = dynamic_cast<CCoinBounce*>(e->obj);
@@ -102,22 +91,19 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		}
 	}
 	else if (dynamic_cast<CFireball*>(e->obj)) {
-		if (untouchable == 0) {
-			if (level > MARIO_LEVEL_SMALL)
-			{
-				level = MARIO_LEVEL_SMALL;
-				StartUntouchable();
-			}
-			else
-			{
-				DebugOut(L">>> Mario DIE >>> \n");
-				SetState(MARIO_STATE_DIE);
-			}
-		}
+		DamageMario();
 	}
 	else if (dynamic_cast<CTurtle*>(e->obj)) {
 		OnCollisionWithTurtle(e);
-
+	}
+	else if (dynamic_cast<CLeaf*>(e->obj)) {
+		CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
+		if (leaf->GetState() != LEAF_STATE_SLEEP)
+		{
+			if(level==MARIO_LEVEL_BIG)
+				SetLevel(MARIO_LEVEL_FOX);
+			e->obj->Delete();
+		}
 	}
 }
 
@@ -194,9 +180,9 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e) {
 		else
 		{
 			if (e->ny != 0) {
-				if(nx>0)
+				if (nx > 0)
 					turtle->SetState(TURTLE_SPIN_RIGHT);
-				else if(nx<0)
+				else if (nx < 0)
 					turtle->SetState(TURTLE_SPIN_LEFT);
 			}
 			else
@@ -514,7 +500,7 @@ void CMario::SetState(int state)
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (level == MARIO_LEVEL_BIG || level==MARIO_LEVEL_FOX)
+	if (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_FOX)
 	{
 		if (isSitting)
 		{

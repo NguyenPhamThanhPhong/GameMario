@@ -24,3 +24,4 @@ height	240
 52	textures\turtletexture.png
 53	textures\planttexture.png
 54	textures\shadowtexture.png
+55	textures\MARIO3.png
