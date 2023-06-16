@@ -225,6 +225,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case 21:
 	{
 		obj = new CTail(x, y);
+		tail = (CTail*)obj;
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:

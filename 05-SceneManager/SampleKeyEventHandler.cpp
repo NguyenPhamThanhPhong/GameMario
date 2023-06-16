@@ -2,6 +2,7 @@
 
 #include "debug.h"
 #include "Game.h"
+#include "Tail.h"
 
 #include "Mario.h"
 #include "PlayScene.h"
@@ -34,9 +35,15 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_3:
 		mario->SetLevel(MARIO_LEVEL_FOX);
 		break;
-	case DIK_X:
+	case DIK_J:
 		mario->SetHoldingkey(true);
 		break;
+	case DIK_X: {
+		CTail* tail =  (CTail*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetTail();
+		tail->SetState(TAIL_TRIGGER);
+		mario->SetTailTriggering(true);
+		break;
+	}
 	}
 }
 
@@ -53,6 +60,12 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	case DIK_DOWN:
 		mario->SetState(MARIO_STATE_SIT_RELEASE);
 		break;
+	case DIK_X: {
+		CTail* tail = (CTail*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetTail();
+		tail->SetState(TAIL_SLEEP);
+		mario->SetTailTriggering(false);
+		break;
+		}
 	}
 }
 

@@ -10,6 +10,7 @@
 #include "Brick.h"
 #include "CoinBounce.h"
 #include "Leaf.h"
+#include "Tail.h"
 
 #define TURTLE_LIVE		1
 #define TURTLE_SLEEP	2
@@ -100,6 +101,15 @@ protected:
 		if (state == TURTLE_LIVE) {
 			if (dynamic_cast<CTransparentblock*>(e->obj)) {
 				vx = -vx;
+			}
+			else if (dynamic_cast<CTail*>(e->obj))
+			{
+				CTail* tail = dynamic_cast<CTail*>(e->obj);
+				if (tail->GetState() == TAIL_TRIGGER) {
+					if (state != GOOMBA_STATE_DIE)
+						SetState(GOOMBA_STATE_DIE);
+					return;
+				}
 			}
 		}
 		else {

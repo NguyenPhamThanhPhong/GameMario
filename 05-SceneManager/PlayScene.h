@@ -15,6 +15,7 @@ protected:
 	// A play scene has to have player, right? 
 	LPGAMEOBJECT player;
 	LPGAMEOBJECT fireball;
+	LPGAMEOBJECT tail;
 
 	vector<LPGAMEOBJECT> objects;
 
@@ -36,6 +37,7 @@ public:
 
 	LPGAMEOBJECT GetPlayer() { return player; }
 	LPGAMEOBJECT GetFireball() { return fireball; }
+	LPGAMEOBJECT GetTail() { return tail; }
 
 	void Clear();
 	void PurgeDeletedObjects();

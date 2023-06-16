@@ -136,6 +136,7 @@ class CMario : public CGameObject
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	int coin; 
+	bool isTriggeringTail = false;
 
 	bool IskeyHolding = false;
 
@@ -214,5 +215,8 @@ public:
 	}
 	void SetHoldingkey(bool signal) {
 		this->IskeyHolding = signal;
+	}
+	void SetTailTriggering(bool signal) {
+		this->isTriggeringTail = signal;
 	}
 };

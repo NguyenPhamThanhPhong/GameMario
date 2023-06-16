@@ -379,7 +379,6 @@ int CMario::GetAniIdBig()
 			}
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;
-
 	return aniId;
 }
 int CMario::GetAniIdFox()
@@ -436,7 +435,7 @@ int CMario::GetAniIdFox()
 			}
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;
-
+	if (isTriggeringTail == true) aniId = 1714;
 	return aniId;
 }
 

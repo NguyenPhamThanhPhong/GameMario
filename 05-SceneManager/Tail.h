@@ -35,9 +35,6 @@ protected:
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
 	virtual void Render() {
-		CSprites* s = CSprites::GetInstance();
-		s->Get(20001)->Draw(x, y);
-		RenderBoundingBox();
 	}
 
 	virtual int IsCollidable() { return 0; };
@@ -68,7 +65,7 @@ protected:
 
 public:
 	CTail(float x, float y) :CGameObject(x,y) {
-		SetState(TAIL_TRIGGER);
+		SetState(TAIL_SLEEP);
 	}
 	virtual void SetState(int state) {
 		CGameObject::SetState(state);

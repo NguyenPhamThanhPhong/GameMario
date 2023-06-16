@@ -6,6 +6,7 @@
 #include "InvisibleBlock.h"
 #include "Mario.h"
 #include "PlayScene.h"
+#include "Tail.h"
 
 #define FLYGOOMBA_GRAVITY 0.002f
 #define FLYGOOMBA_WALKING_SPEED 0.05f
@@ -101,6 +102,18 @@ protected:
 	}
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {
+		if (dynamic_cast<CTail*>(e->obj))
+		{
+			CTail* tail = dynamic_cast<CTail*>(e->obj);
+			if (tail->GetState() == TAIL_TRIGGER) {
+				if (GetState() == FLYGOOMBA_STATE_FLY || GetState() == FLYGOOMBA_STATE_FLYDOWN) {
+					SetState(FLYGOOMBA_STATE_WALKING);
+				}
+				else if (GetState() == FLYGOOMBA_STATE_WALKING) {
+					SetState(FLYGOOMBA_STATE_DIE);
+				}
+			}
+		}
 		if (!e->obj->IsBlocking()) return;
 		if (dynamic_cast<CFlygoomba*>(e->obj)) return;
 
