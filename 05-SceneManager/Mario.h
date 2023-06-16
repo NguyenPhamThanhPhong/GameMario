@@ -139,6 +139,7 @@ class CMario : public CGameObject
 
 	bool IskeyHolding = false;
 
+	void OnCollisionWithFlygoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithTurtle(LPCOLLISIONEVENT e);
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);

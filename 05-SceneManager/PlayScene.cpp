@@ -20,6 +20,7 @@
 #include "Turtle.h"
 #include "InvisibleBlock.h"
 #include "Leaf.h"
+#include "Flygoomba.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -211,6 +212,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float width = (float)atof(tokens[3].c_str());
 		float height = (float)atof(tokens[4].c_str());
 		obj = new CLeaf(x,y,width,height);
+		break;
+	}
+	case 20:
+	{
+		obj = new CFlygoomba(x, y);
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:

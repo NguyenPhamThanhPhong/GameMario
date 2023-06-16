@@ -15,6 +15,7 @@ fireball.txt
 goomba.txt
 MarioFox.txt
 leaf.txt
+flygoomba.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -123,10 +124,18 @@ leaf.txt
 18	644	251
 #LEAF
 19	700	251	18	16
-11	700	251	16	16	302001
 #MYSTERIC
 6	700	251
 #goomba
 2	444	100
+#Flygoomba
+20	150	270
+# TRANSPARENT BLOCK
+18	50	271
+18	50	261
+18	50	281
+18	50	251
+18	50	241
+18	50	268
 #Portal 
 #50	200	160	216	180	1

@@ -14,6 +14,7 @@
 #include "Mushroom.h"
 #include "FireBall.h"
 #include "Turtle.h"
+#include "Flygoomba.h"
 
 #include "Collision.h"
 
@@ -105,6 +106,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			e->obj->Delete();
 		}
 	}
+	else if (dynamic_cast<CFlygoomba*>(e->obj)) {
+		OnCollisionWithFlygoomba(e);
+	}
+
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -139,6 +144,41 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 			}
 		}
 	}
+}
+void CMario::OnCollisionWithFlygoomba(LPCOLLISIONEVENT e) {
+	CFlygoomba* flygoomba = dynamic_cast<CFlygoomba*>(e->obj);
+	if (e->ny < 0) {
+		if (flygoomba->GetState() == FLYGOOMBA_STATE_FLY||flygoomba->GetState()==FLYGOOMBA_STATE_FLYDOWN) {
+			flygoomba->SetState(FLYGOOMBA_STATE_WALKING);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (flygoomba->GetState() == FLYGOOMBA_STATE_WALKING) {
+			flygoomba->SetState(FLYGOOMBA_STATE_DIE);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+	}//hit by goomba
+	else {
+		if (untouchable == 0)
+		{
+			if (flygoomba->GetState() != GOOMBA_STATE_DIE)
+			{
+				if (level > MARIO_LEVEL_SMALL)
+				{
+					if (level == MARIO_LEVEL_FOX)
+						SetLevel(MARIO_LEVEL_BIG);
+					else if (level == MARIO_LEVEL_BIG)
+						SetLevel(MARIO_LEVEL_SMALL);
+					StartUntouchable();
+				}
+				else
+				{
+					DebugOut(L">>> Mario DIE >>> \n");
+					SetState(MARIO_STATE_DIE);
+				}
+			}
+		}
+	}
+
 }
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
