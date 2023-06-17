@@ -39,9 +39,11 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetHoldingkey(true);
 		break;
 	case DIK_X: {
-		CTail* tail =  (CTail*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetTail();
-		tail->SetState(TAIL_TRIGGER);
-		mario->SetTailTriggering(true);
+		if (mario->Getlevel() == MARIO_LEVEL_FOX) {
+			mario->SetTailTriggering(true);
+			CTail* tail = (CTail*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetTail();
+			tail->SetState(TAIL_TRIGGER);
+		}
 		break;
 	}
 	}

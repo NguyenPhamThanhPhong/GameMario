@@ -59,9 +59,9 @@ public:
 	}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {
 		l = x - 14 / 2;
-		t = y - COIN_BBOX_HEIGHT_BOUNCE / 2;
+		t = y - 17 / 2;
 		r = l + 14;
-		b = t + COIN_BBOX_HEIGHT_BOUNCE;
+		b = t + 17;
 	}
 	int IsBlocking() { return 0; }
 };
