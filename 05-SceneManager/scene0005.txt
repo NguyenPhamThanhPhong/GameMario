@@ -134,7 +134,7 @@ colorboxwhite.txt
 20	755	270	710	1085
 #goomba
 2	900	251
-2	900	251
+2	950	251
 # TRANSPARENT BLOCK
 18	1090	265
 #Portal 

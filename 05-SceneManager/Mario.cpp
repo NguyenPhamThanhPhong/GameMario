@@ -133,7 +133,10 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
-					level = MARIO_LEVEL_SMALL;
+					if (level == MARIO_LEVEL_FOX)
+						SetLevel(MARIO_LEVEL_BIG);
+					else if (level == MARIO_LEVEL_BIG)
+						SetLevel(MARIO_LEVEL_SMALL);
 					StartUntouchable();
 				}
 				else
