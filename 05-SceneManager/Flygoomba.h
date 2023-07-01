@@ -105,7 +105,7 @@ protected:
 		if (dynamic_cast<CTail*>(e->obj))
 		{
 			CTail* tail = dynamic_cast<CTail*>(e->obj);
-			if (tail->GetState() == TAIL_TRIGGER) {
+			if (tail->GetState() == 2) {
 				if (GetState() == FLYGOOMBA_STATE_FLY || GetState() == FLYGOOMBA_STATE_FLYDOWN) {
 					SetState(FLYGOOMBA_STATE_WALKING);
 				}

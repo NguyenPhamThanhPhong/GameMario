@@ -14,8 +14,8 @@ class CTail : public CGameObject
 protected:
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
-		float width = 30;
-		float height = 20;
+		float width = 15;
+		float height = 10;
 		left = x - width / 2 ;
 		top = y - height / 2 ;
 		right = x + width ;
@@ -23,28 +23,30 @@ protected:
 	}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
+		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+		int xxx = mario->Getx();
+		int yyy = mario->Gety();
+		y = yyy+5;
 
-
-		//if (x <= xxx-30) {
-		//	vx = -0.5f;
-		//}
-		//else if (x >= xxx + 30) {
-		//	vx = 0.5f;
-		//}
+		if (x <= xxx-5) {
+			vx = 2.0f;
+		}
+		else if (x >= xxx + 5) {
+			vx = -2.0f;
+		}
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
 	virtual void Render() {
+		RenderBoundingBox();
 	}
 
 	virtual int IsCollidable() { return 0; };
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt) {
-		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-		int xxx = mario->Getx();
-		int yyy = mario->Gety();
-		x = xxx;
-		y = yyy;
+		x += vx;
+		//x = xxx;
+		//y = yyy;
 	}
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {
@@ -53,13 +55,7 @@ protected:
 		}
 		else {
 			//if()
-			//CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 
-			//// jump on top >> kill Goomba and deflect a bit 
-			//if (goomba->GetState() != GOOMBA_STATE_DIE)
-			//{
-			//	goomba->SetState(GOOMBA_STATE_DIE);
-			//}
 		}
 	}
 

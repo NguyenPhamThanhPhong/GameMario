@@ -44,7 +44,7 @@ void CGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 				SetState(GOOMBA_STATE_DIE);
 			return;
 		}
-	}
+	}else
 	if (dynamic_cast<CTransparentblock*>(e->obj)) {
 		vx = -vx;
 		return;
