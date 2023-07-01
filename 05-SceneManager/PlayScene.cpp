@@ -138,7 +138,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	{
 		float width = (float)atof(tokens[3].c_str());
 		float height = (float)atof(tokens[4].c_str());
-		float spriteId = (float)atof(tokens[5].c_str());
+		int spriteId = (int)atof(tokens[5].c_str());
 		obj = new CPipe(x, y, width, height, spriteId);
 		break;
 	}
@@ -165,17 +165,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float width = (float)atof(tokens[5].c_str());
 		float height = (float)atof(tokens[6].c_str());
 
-		float idEdgeLeft = (float)atof(tokens[7].c_str());
-		float idEdgeRight = (float)atof(tokens[8].c_str());
-		float idEdgeTop = (float)atof(tokens[9].c_str());
-		float idEdgeBot = (float)atof(tokens[10].c_str());
+		int idEdgeLeft = (int)atof(tokens[7].c_str());
+		int idEdgeRight = (int)atof(tokens[8].c_str());
+		int idEdgeTop = (int)atof(tokens[9].c_str());
+		int idEdgeBot = (int)atof(tokens[10].c_str());
 
-		float idContent = (float)atof(tokens[11].c_str());
+		int idContent = (int)atof(tokens[11].c_str());
 
-		float idTopLeft = (float)atof(tokens[12].c_str());
-		float idTopRight = (float)atof(tokens[13].c_str());
-		float idBotLeft = (float)atof(tokens[14].c_str());
-		float idBotRight = (float)atof(tokens[15].c_str());
+		int idTopLeft = (int)atof(tokens[12].c_str());
+		int idTopRight = (int)atof(tokens[13].c_str());
+		int idBotLeft = (int)atof(tokens[14].c_str());
+		int idBotRight = (int)atof(tokens[15].c_str());
 		obj = new Ctest(
 			x, y, cell_width, cell_height,
 			width, height,

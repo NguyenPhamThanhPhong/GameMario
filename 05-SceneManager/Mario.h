@@ -184,10 +184,10 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	int Getx() {
+	float Getx() {
 		return this->x;
 	}
-	int Gety() {
+	float Gety() {
 		return this->y;
 	}
 	int GetnX() {

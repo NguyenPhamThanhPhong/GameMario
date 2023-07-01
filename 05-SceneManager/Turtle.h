@@ -30,6 +30,7 @@ protected:
 	float ay;
 
 	ULONGLONG die_start;
+	ULONGLONG bounce_start;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 		float width = 16;
@@ -55,6 +56,9 @@ protected:
 			y -= 10;
 			SetState(TURTLE_LIVE);
 			die_start = 0;
+		}
+		if (state == TURTLE_SLEEP && vx!=0 && (GetTickCount64()-bounce_start > 600)) {
+				vx = 0;
 		}
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -106,8 +110,7 @@ protected:
 			{
 				CTail* tail = dynamic_cast<CTail*>(e->obj);
 				if (tail->GetState() == TAIL_TRIGGER) {
-					if (state != GOOMBA_STATE_DIE)
-						SetState(GOOMBA_STATE_DIE);
+					SetState(TURTLE_SLEEP);
 					return;
 				}
 			}
@@ -126,7 +129,7 @@ protected:
 				CMystericBrick* mysteric = dynamic_cast<CMystericBrick*>(e->obj);
 					mysteric->SetState(MYSTERIC_STATE_DIE);
 			}
-			if (dynamic_cast<CLeaf*>(e->obj)&& mario->Getlevel()==MARIO_LEVEL_BIG) {
+			if (dynamic_cast<CLeaf*>(e->obj)&& mario->Getlevel()>=MARIO_LEVEL_BIG) {
 				CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
 				if(leaf->GetState()  == LEAF_STATE_SLEEP)
 					leaf->SetState(LEAF_STATE_WAKEUP);
@@ -135,6 +138,23 @@ protected:
 				CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 				if (mushroom->GetState() == MUSHROOM_STATE_SLEEP)
 					mushroom->SetState(MUSHROOM_STATE_WAKEUP);
+			}
+			else if (dynamic_cast<CTail*>(e->obj)) {
+				CTail* tail = dynamic_cast<CTail*>(e->obj);
+				if (tail->GetState() == TAIL_TRIGGER) {
+					if (state == TURTLE_SLEEP)
+					{
+						vy = -0.5f;
+						if (e->nx > 0) {
+							vx = 0.02f;
+							bounce_start = GetTickCount64();
+						}
+						else if (e->nx < 0) {
+							vx = -0.02f;
+							bounce_start = GetTickCount64();
+						}
+					}
+				}
 			}
 		}
 
@@ -156,6 +176,7 @@ public:
 		vy = 0;
 		vx = 0.02f;
 		die_start = -1;
+		bounce_start = -1;
 		state = TURTLE_LIVE;
 	}
 	virtual void SetState(int state) {

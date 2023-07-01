@@ -28,7 +28,7 @@ private:
 	int spriteIdContent;
 public:
 	Ctest(float x, float y,
-	float cell_width, float cell_height, int width, int height,
+	float cell_width, float cell_height, float width, float height,
 	int sprite_id_edge_left, int sprite_id_edge_right, int sprite_id_edge_top, int sprite_id_edge_bot,
 	int sprite_id_content,
 	int sprite_id_top_left, int sprite_id_top_right,
@@ -56,8 +56,8 @@ public:
 		if (Width < 2* cellWidth || Height < 2* cellHeight) return;
 
 		CSprites* s = CSprites::GetInstance();
-		int sizeHor = Width / cellWidth; // numbers of cells horizontally
-		int sizeVer = Height / cellHeight;// number of cells vertically
+		int sizeHor = (int)(Width / cellWidth); // numbers of cells horizontally
+		int sizeVer = (int)(Height / cellHeight);// number of cells vertically
 
 		float xshadow = this->x + Width-5;
 		float yshadow = this->y + 4;
@@ -104,9 +104,9 @@ public:
 			yLocation -= this->cellHeight;
 		}
 		//Draw Content
-		int xx = x + cellWidth;
+		float xx = x + cellWidth;
 		for (int i = 0; i < sizeHor-2; i++) {
-			int yy = y + cellHeight;
+			float yy = y + cellHeight;
 			for (int j = 0; j < sizeVer-2; j++) {
 				s->Get(spriteIdContent)->Draw(xx, yy);
 				yy += cellHeight;
@@ -116,8 +116,6 @@ public:
 	}
 	void DrawShadowBox() {
 
-		int sizeHor = Width / cellWidth; // numbers of cells horizontally
-		int sizeVer = Height / cellHeight;// number of cells vertically
 		//CSprites* s = CSprites::GetInstance();
 		//yshadow += 8;
 		//for (int i = 0; i < sizeVer; i++) {

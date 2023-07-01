@@ -15,7 +15,7 @@ protected:
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 		float width = 15;
-		float height = 10;
+		float height = 5;
 		left = x - width / 2 ;
 		top = y - height / 2 ;
 		right = x + width ;
@@ -24,8 +24,8 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
 		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-		int xxx = mario->Getx();
-		int yyy = mario->Gety();
+		float xxx = mario->Getx();
+		float yyy = mario->Gety();
 		y = yyy+5;
 
 		if (x <= xxx-5) {

@@ -74,8 +74,8 @@ protected:
 		}
 		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
-		int xxx = mario->Getx();
-		int yyy = mario->Gety();
+		float xxx = mario->Getx();
+		float yyy = mario->Gety();
 		if (IsinShootRange(xxx, yyy)==true) {
 			if(state== PLANT_STATE_SLEEP)
 				SetState(PLANT_STATE_WAKEUP);
