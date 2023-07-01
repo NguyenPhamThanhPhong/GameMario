@@ -16,6 +16,7 @@ protected:
 	LPGAMEOBJECT player;
 	LPGAMEOBJECT fireball;
 	LPGAMEOBJECT tail;
+	LPGAMEOBJECT turtle = NULL;
 
 	vector<LPGAMEOBJECT> objects;
 
@@ -38,9 +39,11 @@ public:
 	LPGAMEOBJECT GetPlayer() { return player; }
 	LPGAMEOBJECT GetFireball() { return fireball; }
 	LPGAMEOBJECT GetTail() { return tail; }
+	LPGAMEOBJECT GetTurtle() { return turtle; }
 
 	void Clear();
 	void PurgeDeletedObjects();
+	void SetTurtle(LPGAMEOBJECT currentTurtle) { this->turtle = currentTurtle; }
 
 	static bool IsGameObjectDeleted(const LPGAMEOBJECT& o);
 };

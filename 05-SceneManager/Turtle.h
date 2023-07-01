@@ -11,6 +11,7 @@
 #include "CoinBounce.h"
 #include "Leaf.h"
 #include "Tail.h"
+#include "Mushroom.h"
 
 #define TURTLE_LIVE		1
 #define TURTLE_SLEEP	2

@@ -38,7 +38,7 @@ protected:
 	}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		vy += ay * dt;
-		if (state == LEAF_STATE_WAKEUP && (GetTickCount64() - wakeup_start > MUSHROOM_WAKEUP_TIMEOUT)) {
+		if (state == LEAF_STATE_WAKEUP && (GetTickCount64() - wakeup_start > 1500)) {
 			SetState(LEAF_STATE_MOVE);
 		}
 		CGameObject::Update(dt, coObjects);

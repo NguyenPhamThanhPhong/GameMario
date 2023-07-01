@@ -5,6 +5,7 @@
 #include "Tail.h"
 
 #include "Mario.h"
+#include "Turtle.h"
 #include "PlayScene.h"
 
 void CSampleKeyHandler::OnKeyDown(int KeyCode)
@@ -68,6 +69,17 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 		mario->SetTailTriggering(false);
 		break;
 		}
+	case DIK_J:
+		CTurtle * turtle = (CTurtle*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetTurtle();
+		if (turtle != NULL) {
+			if (turtle->GetState() == TURTLE_SLEEP_HOLD) {
+				if (mario->GetnX() > 0)
+					turtle->SetState(TURTLE_SPIN_RIGHT);
+				else if (mario->GetnX() < 0)
+					turtle->SetState(TURTLE_SPIN_LEFT);
+			}
+		}
+		break;
 	}
 }
 

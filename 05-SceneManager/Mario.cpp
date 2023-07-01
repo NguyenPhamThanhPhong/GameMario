@@ -220,6 +220,7 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e) {
 	else if (turtle->GetState() == TURTLE_SLEEP) {
 		if (IskeyHolding == true) {
 			turtle->SetState(TURTLE_SLEEP_HOLD);
+			((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->SetTurtle(turtle);
 		}
 		else
 		{
