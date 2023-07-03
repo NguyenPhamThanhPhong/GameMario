@@ -36,7 +36,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_3:
 		mario->SetLevel(MARIO_LEVEL_FOX);
 		break;
-	case DIK_J:
+	case DIK_A:
 		mario->SetHoldingkey(true);
 		break;
 	case DIK_X: {
@@ -69,7 +69,7 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 		mario->SetTailTriggering(false);
 		break;
 		}
-	case DIK_J:
+	case DIK_A:
 		CTurtle * turtle = (CTurtle*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetTurtle();
 		if (turtle != NULL) {
 			if (turtle->GetState() == TURTLE_SLEEP_HOLD) {
@@ -77,6 +77,7 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 					turtle->SetState(TURTLE_SPIN_RIGHT);
 				else if (mario->GetnX() < 0)
 					turtle->SetState(TURTLE_SPIN_LEFT);
+				mario->SetHoldingkey(false);
 			}
 		}
 		break;

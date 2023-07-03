@@ -19,7 +19,10 @@
 #define TURTLE_SPIN_RIGHT	4
 #define TURTLE_SLEEP_HOLD	5
 #define TURTLE_DIE		6
+#define TURTLE_FLY		7
 
+#define TURTLE_FLY_UP 1
+#define TURTLE_FLY_DOWN 2
 
 #define TURTLE_SLEEP_TIMEOUT 5000
 
@@ -29,9 +32,16 @@ class CTurtle : public CGameObject
 protected:
 	float ax;
 	float ay;
+	float originalx;
+	float originaly;
+
+	int isFlyUp = 0; // 0: no fly, 1:fly up, 2:fly down
 
 	ULONGLONG die_start;
 	ULONGLONG bounce_start;
+	ULONGLONG fly_start=-1;
+	ULONGLONG fly_end = -1;
+
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 		float width = 16;
@@ -52,15 +62,25 @@ protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		vy += ay * dt;
 		vx += ax * dt;
+		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+		float xxx = mario->Getx();
 		if ((state == TURTLE_SLEEP || state == TURTLE_SLEEP_HOLD) && (GetTickCount64() - die_start > TURTLE_SLEEP_TIMEOUT))
 		{
 			y -= 10;
 			SetState(TURTLE_LIVE);
 			die_start = 0;
 		}
-		if (state == TURTLE_SLEEP && vx!=0 && (GetTickCount64()-bounce_start > 600)) {
+		else if (state == TURTLE_SLEEP && vx!=0 && (GetTickCount64()-bounce_start > 600)) {
 				vx = 0;
 		}
+		if (xxx >= originalx + 200 || xxx < originalx - 200) {
+			if (state != TURTLE_FLY) {
+				this->x = originalx;
+				this->y = originaly;
+				SetState(TURTLE_FLY);
+			}
+		}
+		HandleFly();
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
@@ -77,6 +97,9 @@ protected:
 		else if (state == TURTLE_SPIN_LEFT || state == TURTLE_SPIN_RIGHT) {
 			aniId = 504004;
 		}
+		//else if (state == TURTLE_FLY) {
+		//	aniId = 504005;
+		//}
 
 		CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	}
@@ -91,11 +114,11 @@ protected:
 		else {
 			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 			if (mario->GetnX() < 0) {
-				x = mario->Getx() - 10;
+				x = mario->Getx() - 15;
 				y = mario->Gety();
 			}
 			else if (mario->GetnX() > 0) {
-				x = mario->Getx() + 10;
+				x = mario->Getx() + 15;
 				y = mario->Gety();
 			}
 		}
@@ -113,6 +136,14 @@ protected:
 				if (tail->GetState() == TAIL_TRIGGER) {
 					SetState(TURTLE_SLEEP);
 					return;
+				}
+			}
+		}
+		else if (state==TURTLE_FLY) {
+			if (dynamic_cast<CTail*>(e->obj)) {
+				CTail* tail = dynamic_cast<CTail*>(e->obj);
+				if (tail->GetState() == TAIL_TRIGGER) {
+					SetState(TURTLE_LIVE);
 				}
 			}
 		}
@@ -172,13 +203,37 @@ protected:
 
 public:
 	CTurtle(float x, float y) :CGameObject(x, y) {
+		// Veloc metrics
 		this->ax = 0;
 		this->ay = 0.002f;
 		vy = 0;
 		vx = 0.02f;
+		//timer
 		die_start = -1;
 		bounce_start = -1;
-		state = TURTLE_LIVE;
+		//initial state
+		SetState(TURTLE_FLY);
+		//initial point
+		originalx = x;
+		originaly = y;
+	}
+	void HandleFly() {
+		//fly down
+		if (state == TURTLE_FLY) {
+			if (isFlyUp == TURTLE_FLY_UP && (GetTickCount64() - fly_start > 100)) {
+				ay = 0.003f;
+				fly_end = GetTickCount64();
+				isFlyUp = TURTLE_FLY_DOWN;
+			}
+			//fly up
+			else if (isFlyUp == TURTLE_FLY_DOWN && (GetTickCount64() - fly_end > 200)) {
+				ay = -0.003f;
+				fly_start = GetTickCount64();
+				isFlyUp = TURTLE_FLY_UP;
+
+			}
+		}
+
 	}
 	virtual void SetState(int state) {
 		CGameObject::SetState(state);
@@ -224,6 +279,19 @@ public:
 			vx = 0;
 			vy = 0;
 			ay = 0;
+			break;
+		}
+		case TURTLE_FLY: {
+			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+			if (mario->Getx() < originalx)
+				vx = -0.035f;
+			else
+				vx = 0.035f;
+			vy = 0;
+			ay = -0.001f;
+			isFlyUp = TURTLE_FLY_UP;
+			fly_start = GetTickCount64();
+			fly_end = GetTickCount64();
 			break;
 		}
 		}

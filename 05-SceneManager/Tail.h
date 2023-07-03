@@ -14,7 +14,7 @@ class CTail : public CGameObject
 protected:
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
-		float width = 15;
+		float width = 1;
 		float height = 5;
 		left = x - width / 2 ;
 		top = y - height / 2 ;
@@ -28,10 +28,10 @@ protected:
 		float yyy = mario->Gety();
 		y = yyy+5;
 
-		if (x <= xxx-5) {
+		if (x <= xxx-1) {
 			vx = 2.0f;
 		}
-		else if (x >= xxx + 5) {
+		else if (x >= xxx + 1) {
 			vx = -2.0f;
 		}
 		CGameObject::Update(dt, coObjects);

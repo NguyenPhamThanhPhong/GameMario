@@ -208,7 +208,15 @@ void CMario::OnCOllisionWithMystericBrick(LPCOLLISIONEVENT e)
 }
 void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e) {
 	CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
-	if (turtle->GetState() == TURTLE_LIVE) {
+	if (turtle->GetState() == TURTLE_FLY) {
+		if (e->nx != 0 || e->ny > 0) {
+			DamageMario();
+		}
+		else if (e->ny < 0) {
+			turtle->SetState(TURTLE_LIVE);
+		}
+	}
+	else if (turtle->GetState() == TURTLE_LIVE) {
 		if (e->nx != 0 || e->ny > 0) {
 			DamageMario();
 		}
