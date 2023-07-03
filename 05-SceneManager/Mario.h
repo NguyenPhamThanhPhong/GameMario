@@ -33,6 +33,8 @@
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
 
+#define MARIO_STATE_FLY				700
+
 
 #pragma region ANIMATION_ID
 
@@ -134,8 +136,12 @@ class CMario : public CGameObject
 	int level; 
 	int untouchable; 
 	ULONGLONG untouchable_start;
+	ULONGLONG resetGravity_start=-1;
 	BOOLEAN isOnPlatform;
 	int coin; 
+
+	bool isFlying = false;
+
 	bool isTriggeringTail = false;
 
 	bool IskeyHolding = false;
@@ -189,6 +195,9 @@ public:
 	}
 	float Gety() {
 		return this->y;
+	}
+	float GetVx() {
+		return this->vx;
 	}
 	int GetnX() {
 		return this->nx;

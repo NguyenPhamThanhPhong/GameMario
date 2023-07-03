@@ -58,7 +58,14 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_S:
-		mario->SetState(MARIO_STATE_RELEASE_JUMP);
+		if (abs(mario->GetVx()) >= 0.2f) {
+			mario->SetState(MARIO_STATE_FLY);
+			break;
+		}
+		else {
+			mario->SetState(MARIO_STATE_RELEASE_JUMP);
+
+		}
 		break;
 	case DIK_DOWN:
 		mario->SetState(MARIO_STATE_SIT_RELEASE);
@@ -77,8 +84,8 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 					turtle->SetState(TURTLE_SPIN_RIGHT);
 				else if (mario->GetnX() < 0)
 					turtle->SetState(TURTLE_SPIN_LEFT);
-				mario->SetHoldingkey(false);
 			}
+			mario->SetHoldingkey(false);
 		}
 		break;
 	}

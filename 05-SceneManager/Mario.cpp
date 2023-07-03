@@ -31,6 +31,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
+	if (isFlying) {
+		if (GetTickCount64() - resetGravity_start > 500) {
+			vy = 0.1;
+			ay = MARIO_GRAVITY;
+			vx = 0;
+			isFlying = false;
+			//SetState(MARIO_STATE_RELEASE_JUMP);
+		}
+
+	}
 
 	isOnPlatform = false;
 
@@ -514,7 +524,22 @@ void CMario::SetState(int state)
 		break;
 
 	case MARIO_STATE_RELEASE_JUMP:
-		if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
+		if (level == MARIO_LEVEL_FOX) {
+			if (vy > 0) {
+				vy = -0.04f;
+				break;
+			}
+		}
+		else {
+			if (vy < 0) vy += MARIO_JUMP_SPEED_Y / 2;
+		}
+		break;
+	case MARIO_STATE_FLY:
+		ay = 0;
+		vy = -0.2f;
+		vx = 0.2f;
+		isFlying = true;
+		resetGravity_start = GetTickCount64();
 		break;
 
 	case MARIO_STATE_SIT:
