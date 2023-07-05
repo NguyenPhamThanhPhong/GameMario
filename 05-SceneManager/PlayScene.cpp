@@ -200,7 +200,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	}
 	case 17: {
-		obj = new CTurtle(x, y);
+		int colorstate1 = (int)atoi(tokens[3].c_str());
+		int initialstate = (int)atoi(tokens[4].c_str());
+		if (colorstate1 != 1 && colorstate1 != 2)
+			colorstate1 = 2;
+		obj = new CTurtle(x, y,colorstate1,initialstate);
 		break;
 	}
 	case 18:

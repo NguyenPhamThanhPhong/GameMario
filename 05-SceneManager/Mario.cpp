@@ -33,9 +33,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	if (isFlying) {
 		if (GetTickCount64() - resetGravity_start > 500) {
-			vy = 0.1;
+			vy = 0.1f;
 			ay = MARIO_GRAVITY;
-			vx = 0;
+			vx = 0.0f;
 			isFlying = false;
 			//SetState(MARIO_STATE_RELEASE_JUMP);
 		}

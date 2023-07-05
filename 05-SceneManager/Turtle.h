@@ -46,6 +46,7 @@ protected:
 	float originalx;
 	float originaly;
 
+	int Originalstate = TURTLE_FLY;
 	int Color=TURTLE_GREEN;
 
 	int isFlyUp = 0; // 0: no fly, 1:fly up, 2:fly down
@@ -87,10 +88,10 @@ protected:
 				vx = 0;
 		}
 		if (xxx >= originalx + 200 || xxx < originalx - 200) {
-			if (state != TURTLE_FLY) {
+			if (state != Originalstate) {
 				this->x = originalx;
 				this->y = originaly;
-				SetState(TURTLE_FLY);
+				SetState(Originalstate);
 			}
 		}
 		HandleFly();
@@ -234,7 +235,7 @@ protected:
 	}
 
 public:
-	CTurtle(float x, float y) :CGameObject(x, y) {
+	CTurtle(float x, float y,int colorstate,int initialstate) :CGameObject(x, y) {
 		// Veloc metrics
 		this->ax = 0;
 		this->ay = 0.002f;
@@ -244,10 +245,14 @@ public:
 		die_start = -1;
 		bounce_start = -1;
 		//initial state
-		SetState(TURTLE_FLY);
+		if (initialstate != TURTLE_FLY && initialstate != TURTLE_LIVE)
+			initialstate = TURTLE_FLY;
+		Originalstate = initialstate;
+		SetState(initialstate);
 		//initial point
 		originalx = x;
 		originaly = y;
+		Color = colorstate;
 	}
 	void HandleFly() {
 		//fly down
