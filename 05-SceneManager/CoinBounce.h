@@ -59,9 +59,9 @@ public:
 	}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {
 		l = x - 14 / 2;
-		t = y - 17 / 2;
+		t = y - 16 / 2;
 		r = l + 14;
-		b = t + 17;
+		b = t + 16;
 	}
 	int IsBlocking() { return 0; }
 };

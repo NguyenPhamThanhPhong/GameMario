@@ -15,6 +15,7 @@
 #include "FireBall.h"
 #include "Turtle.h"
 #include "Flygoomba.h"
+#include "BreakableBrick.h"
 
 #include "Collision.h"
 
@@ -103,7 +104,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			}
 			e->obj->Delete();
 		}
-		if (e->ny > 0) {
+		else if (e->ny > 0) 
+		{
 			if (mushroom->GetState() == MUSHROOM_STATE_SLEEP) {
 				mushroom->SetState(MUSHROOM_STATE_WAKEUP);
 			}
@@ -126,6 +128,12 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (dynamic_cast<CFlygoomba*>(e->obj)) {
 		OnCollisionWithFlygoomba(e);
+	}
+	else if (dynamic_cast<CBreakableBrick*>(e->obj)) {
+		CBreakableBrick* bbrick = dynamic_cast<CBreakableBrick*>(e->obj);
+		if (bbrick->GetState() != BREAKABLE_BRICK_DIE) {
+			bbrick->SetState(BREAKABLE_BRICK_DIE);
+		}
 	}
 
 }

@@ -22,6 +22,7 @@
 #include "Leaf.h"
 #include "Flygoomba.h"
 #include "Tail.h"
+#include "BreakableBrick.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -230,6 +231,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	{
 		obj = new CTail(x, y);
 		tail = (CTail*)obj;
+		break;
+	}
+	case 22:
+	{
+		obj = new CBreakableBrick(x, y);
+
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:

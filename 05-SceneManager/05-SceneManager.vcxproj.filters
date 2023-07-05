@@ -194,5 +194,8 @@
     <ClInclude Include="Tail.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BreakableBrick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
