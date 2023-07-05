@@ -25,3 +25,5 @@ height	240
 53	textures\planttexture.png
 54	textures\shadowtexture.png
 55	textures\MARIO3.png
+56	textures\MARIO4.png
+57	textures\MARIO4FLIP.png

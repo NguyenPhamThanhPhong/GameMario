@@ -41,6 +41,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 
 	}
+	else if (isGlide) {
+		if (GetTickCount64() - glide_start > 300) {
+			vy = 0.1;
+			ay = MARIO_GRAVITY;
+			vx = 0;
+			isGlide = false;
+		}
+	}
 
 	isOnPlatform = false;
 
@@ -526,7 +534,10 @@ void CMario::SetState(int state)
 	case MARIO_STATE_RELEASE_JUMP:
 		if (level == MARIO_LEVEL_FOX) {
 			if (vy > 0) {
-				vy = -0.04f;
+				ay = 0;
+				vy = 0.03f;
+				isGlide = true;
+				glide_start = GetTickCount64();
 				break;
 			}
 		}

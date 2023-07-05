@@ -24,6 +24,17 @@
 #define TURTLE_FLY_UP 1
 #define TURTLE_FLY_DOWN 2
 
+#define TURTLE_GREEN_ANI_WALK_LEFT 504005
+#define TURTLE_GREEN_ANI_WALK_RIGHT 504006
+#define TURTLE_GREEN_ANI_SLEEP 504007
+#define TURTLE_GREEN_ANI_SPIN 504008
+#define TURTLE_GREEN_ANI_FLY_LEFT 504009
+#define TURTLE_GREEN_ANI_FLY_RIGHT 504010
+
+
+#define TURTLE_RED 1
+#define TURTLE_GREEN 2
+
 #define TURTLE_SLEEP_TIMEOUT 5000
 
 
@@ -34,6 +45,8 @@ protected:
 	float ay;
 	float originalx;
 	float originaly;
+
+	int Color=TURTLE_GREEN;
 
 	int isFlyUp = 0; // 0: no fly, 1:fly up, 2:fly down
 
@@ -86,21 +99,40 @@ protected:
 	}
 	virtual void Render() {
 		int aniId = 504001;
-		if (state == TURTLE_LIVE) {
-			if (vx > 0) {
-				aniId = 504002;
+		if (Color == TURTLE_RED) {
+			if (state == TURTLE_LIVE) {
+				if (vx > 0) {
+					aniId = 504002;
+				}
+			}
+			else if (state == TURTLE_SLEEP || state == TURTLE_SLEEP_HOLD) {
+				aniId = 504003;
+			}
+			else if (state == TURTLE_SPIN_LEFT || state == TURTLE_SPIN_RIGHT) {
+				aniId = 504004;
 			}
 		}
-		else if (state == TURTLE_SLEEP|| state== TURTLE_SLEEP_HOLD) {
-			aniId = 504003;
+		else if (Color == TURTLE_GREEN) {
+			if (state == TURTLE_LIVE) {
+				if (vx > 0) {
+					aniId = TURTLE_GREEN_ANI_WALK_LEFT;
+				}
+				else
+					aniId = TURTLE_GREEN_ANI_WALK_RIGHT;
+			}
+			else if (state == TURTLE_SLEEP || state == TURTLE_SLEEP_HOLD) {
+				aniId = TURTLE_GREEN_ANI_SLEEP;
+			}
+			else if (state == TURTLE_SPIN_LEFT || state == TURTLE_SPIN_RIGHT) {
+				aniId = TURTLE_GREEN_ANI_SPIN;
+			}
+			else if (state == TURTLE_FLY) {
+				if (vx > 0)
+					aniId = TURTLE_GREEN_ANI_FLY_LEFT;
+				else
+					aniId = TURTLE_GREEN_ANI_FLY_RIGHT;
+			}
 		}
-		else if (state == TURTLE_SPIN_LEFT || state == TURTLE_SPIN_RIGHT) {
-			aniId = 504004;
-		}
-		//else if (state == TURTLE_FLY) {
-		//	aniId = 504005;
-		//}
-
 		CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	}
 

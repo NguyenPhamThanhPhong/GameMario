@@ -137,10 +137,12 @@ class CMario : public CGameObject
 	int untouchable; 
 	ULONGLONG untouchable_start;
 	ULONGLONG resetGravity_start=-1;
+	ULONGLONG glide_start = -1;
 	BOOLEAN isOnPlatform;
 	int coin; 
 
 	bool isFlying = false;
+	bool isGlide = false;
 
 	bool isTriggeringTail = false;
 
