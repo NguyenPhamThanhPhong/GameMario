@@ -19,6 +19,8 @@ protected:
 	LPGAMEOBJECT turtle = NULL;
 
 	vector<LPGAMEOBJECT> objects;
+	vector<LPGAMEOBJECT> bbricks;
+
 
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);

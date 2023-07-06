@@ -236,7 +236,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case 22:
 	{
 		obj = new CBreakableBrick(x, y);
-
+		bbricks.push_back(obj);
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:
