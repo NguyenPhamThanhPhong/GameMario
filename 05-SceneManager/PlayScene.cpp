@@ -235,8 +235,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case 22:
 	{
-		obj = new CBreakableBrick(x, y);
+		float coinid = (float)atof(tokens[3].c_str());
+		obj = new CBreakableBrick(x, y,coinid);
 		bbricks.push_back(obj);
+		break;
+	}
+	case 23:
+	{
+		float coinid = (float)atof(tokens[3].c_str());
+		obj = new CCoinHidden(x, y, coinid);
+		hidddenCoins.push_back(obj);
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:

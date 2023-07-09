@@ -6,7 +6,7 @@
 
 #define COIN_HIDDEN_DIE 1
 #define COIN_HIDDEN_LIVE 2
-#define COIN_HIDDEN_SLEEP 2
+#define COIN_HIDDEN_SLEEP 3
 
 
 class CCoinHidden : public CGameObject {
@@ -28,9 +28,12 @@ public:
 		}
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+		DebugOut(L"[ERROR] Texture ID %d \n", state);
+
 		CGameObject::Update(dt, coObjects);
 	}
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
+
 		float width = 15;
 		float height = 15;
 		left = x - width / 2;

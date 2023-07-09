@@ -145,4 +145,5 @@ colorboxwhite.txt
 #Portal 
 #50	1300	230	1320	250	1
 #breakable brick
-22	1300	245
+22	1300	245	0
+23	1300	245	0

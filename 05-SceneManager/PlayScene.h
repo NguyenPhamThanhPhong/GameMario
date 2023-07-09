@@ -20,6 +20,7 @@ protected:
 
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> bbricks;
+	vector<LPGAMEOBJECT> hidddenCoins;
 
 
 	void _ParseSection_SPRITES(string line);
@@ -42,7 +43,22 @@ public:
 	LPGAMEOBJECT GetFireball() { return fireball; }
 	LPGAMEOBJECT GetTail() { return tail; }
 	LPGAMEOBJECT GetTurtle() { return turtle; }
+	LPGAMEOBJECT GetsingleCoinHidden(int index) { 
+		if(index<hidddenCoins.size())
+			return hidddenCoins[index]; 
+		return NULL;
+	}
 
+	void UnlockBreakableBricks() {
+		vector<LPGAMEOBJECT>::iterator it;
+		//for (it = bbricks.begin(); it != bbricks.end(); it++)
+		//{
+		//	if (*it != NULL) {
+		//		DebugOut(L"[INFO] COIN HIDDEN %d unloaded! \n", (*it)->GetState());
+
+		//	}
+		//}
+	};
 	void Clear();
 	void PurgeDeletedObjects();
 	void SetTurtle(LPGAMEOBJECT currentTurtle) { this->turtle = currentTurtle; }

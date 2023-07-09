@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Animation.h"
 #include "Animations.h"
+#include "CoinHidden.h"
 
 #define ID_ANI_BREAKABLE_BRICK 100092
 #define ID_ANI_BREAKABLE_BRICK_DIE 100093
@@ -13,23 +14,23 @@
 
 class CBreakableBrick : public CGameObject {
 	int blocking_state=true;
+	int coinid;
 	ULONGLONG die_start = -1;
 public:
-	CBreakableBrick(float x, float y) : CGameObject(x, y) {
+	CBreakableBrick(float x, float y,int coinid) : CGameObject(x, y) {
 		blocking_state = true;
 		state = BREAKABLE_BRICK_LIVE;
+		this->coinid = coinid;
 	}
 	virtual int IsBlocking() { return blocking_state; }
 	void Render() {
-		if (this == NULL)
-			return;
 		CAnimations* animations = CAnimations::GetInstance();
 		if (state == BREAKABLE_BRICK_LIVE) {
 			animations->Get(ID_ANI_BREAKABLE_BRICK)->Render(x, y);
 		}
-		else if (state == BREAKABLE_BRICK_DIE) {
-			animations->Get(ID_ANI_BREAKABLE_BRICK_DIE)->Render(x, y);
-		}
+		//else if (state == BREAKABLE_BRICK_DIE) {
+		//	animations->Get(ID_ANI_BREAKABLE_BRICK_DIE)->Render(x, y);
+		//}
 		RenderBoundingBox();
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
@@ -50,6 +51,14 @@ public:
 		if (state == BREAKABLE_BRICK_DIE) {
 			blocking_state = false;
 			die_start = GetTickCount64();
+			CCoinHidden* coinh = (CCoinHidden*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetsingleCoinHidden(coinid);
+			coinh->Delete();
+		}
+		else if (state == BREAKABLE_BRICK_SLEEP) {
+			CCoinHidden* coinh = (CCoinHidden*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetsingleCoinHidden(coinid);
+			if(coinh!=NULL)
+				coinh->SetState(COIN_HIDDEN_LIVE);
+			blocking_state = false;
 		}
 	}
 };
