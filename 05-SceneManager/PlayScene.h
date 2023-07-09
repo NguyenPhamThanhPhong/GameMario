@@ -21,6 +21,8 @@ protected:
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> hidddenCoins;
 
+	bool isCoinDeleted = false;
+
 
 	void _ParseSection_SPRITES(string line);
 	void _ParseSection_ANIMATIONS(string line);
@@ -56,7 +58,10 @@ public:
 				(*it)->SetState(2);
 			}
 		}
+		isCoinDeleted = true;
 	};
+	bool GetisCoinDeleted() { return isCoinDeleted; }
+
 	void Clear();
 	void PurgeDeletedObjects();
 	void SetTurtle(LPGAMEOBJECT currentTurtle) { this->turtle = currentTurtle; }

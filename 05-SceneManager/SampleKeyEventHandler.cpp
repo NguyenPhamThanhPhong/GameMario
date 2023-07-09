@@ -91,6 +91,11 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 		}
 		break;
 	}
+	case DIK_B:
+	{
+		currentScene->Unload();
+		break;
+	}
 
 	case DIK_4:
 		currentScene->UnlockBreakableBricks();
@@ -104,6 +109,7 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	LPGAME game = CGame::GetInstance();
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
+	if(mario!=nullptr)
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
 		if (game->IsKeyDown(DIK_A))

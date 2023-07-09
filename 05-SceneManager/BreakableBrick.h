@@ -17,6 +17,7 @@ class CBreakableBrick : public CGameObject {
 	int coinid;
 	ULONGLONG die_start = -1;
 	ULONGLONG sleep_start = -1;
+	bool isCoinDeleted = false;
 public:
 	CBreakableBrick(float x, float y,int coinid) : CGameObject(x, y) {
 		blocking_state = true;
@@ -59,15 +60,20 @@ public:
 		{
 			blocking_state = false;
 			die_start = GetTickCount64();
-			CCoinHidden* coinh = (CCoinHidden*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetsingleCoinHidden(coinid);
-			coinh->Delete();
+			if (((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetisCoinDeleted() == false) {
+				CCoinHidden* coinh = (CCoinHidden*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetsingleCoinHidden(coinid);
+				coinh->Delete();
+			}
+
 			break;
 		}
 		case BREAKABLE_BRICK_SLEEP:
 		{
-			CCoinHidden* coinh = (CCoinHidden*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetsingleCoinHidden(coinid);
-			if (coinh != NULL)
-				coinh->SetState(COIN_HIDDEN_LIVE);
+			if (((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetisCoinDeleted()== false) {
+				CCoinHidden* coinh = (CCoinHidden*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetsingleCoinHidden(coinid);
+					coinh->SetState(COIN_HIDDEN_LIVE);
+			}
+
 			blocking_state = false;
 			sleep_start = GetTickCount64();
 			break;
@@ -75,8 +81,7 @@ public:
 		case BREAKABLE_BRICK_LIVE:
 		{
 			CCoinHidden* coinh = (CCoinHidden*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetsingleCoinHidden(coinid);
-			if (coinh != NULL)
-				coinh->Delete();
+			coinh->Delete();
 			break;
 		}
 		}
