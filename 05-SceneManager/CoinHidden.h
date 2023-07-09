@@ -28,7 +28,6 @@ public:
 		}
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-		DebugOut(L"[ERROR] Texture ID %d \n", state);
 
 		CGameObject::Update(dt, coObjects);
 	}

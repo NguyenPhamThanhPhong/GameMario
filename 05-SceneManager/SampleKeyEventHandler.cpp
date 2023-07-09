@@ -55,6 +55,7 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	LPPLAYSCENE currentScene = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene());
 	switch (KeyCode)
 	{
 	case DIK_S:
@@ -77,7 +78,9 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 		break;
 		}
 	case DIK_A:
-		CTurtle * turtle = (CTurtle*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetTurtle();
+	{
+		mario->SetHoldingkey(false);
+		CTurtle* turtle = (CTurtle*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetTurtle();
 		if (turtle != NULL) {
 			if (turtle->GetState() == TURTLE_SLEEP_HOLD) {
 				if (mario->GetnX() > 0)
@@ -85,10 +88,15 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 				else if (mario->GetnX() < 0)
 					turtle->SetState(TURTLE_SPIN_LEFT);
 			}
-			mario->SetHoldingkey(false);
 		}
 		break;
 	}
+
+	case DIK_4:
+		currentScene->UnlockBreakableBricks();
+		break;
+	}
+
 }
 
 void CSampleKeyHandler::KeyState(BYTE *states)

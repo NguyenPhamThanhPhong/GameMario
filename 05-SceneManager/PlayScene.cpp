@@ -237,7 +237,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	{
 		float coinid = (float)atof(tokens[3].c_str());
 		obj = new CBreakableBrick(x, y,coinid);
-		bbricks.push_back(obj);
 		break;
 	}
 	case 23:

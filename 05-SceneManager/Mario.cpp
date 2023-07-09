@@ -131,7 +131,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (dynamic_cast<CBreakableBrick*>(e->obj)) {
 		CBreakableBrick* bbrick = dynamic_cast<CBreakableBrick*>(e->obj);
-		if (bbrick->GetState() != BREAKABLE_BRICK_DIE) {
+		if (bbrick->GetState() == BREAKABLE_BRICK_LIVE) {
 			bbrick->SetState(BREAKABLE_BRICK_DIE);
 		}
 	}

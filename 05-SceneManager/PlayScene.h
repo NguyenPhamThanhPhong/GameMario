@@ -19,7 +19,6 @@ protected:
 	LPGAMEOBJECT turtle = NULL;
 
 	vector<LPGAMEOBJECT> objects;
-	vector<LPGAMEOBJECT> bbricks;
 	vector<LPGAMEOBJECT> hidddenCoins;
 
 
@@ -51,13 +50,12 @@ public:
 
 	void UnlockBreakableBricks() {
 		vector<LPGAMEOBJECT>::iterator it;
-		//for (it = bbricks.begin(); it != bbricks.end(); it++)
-		//{
-		//	if (*it != NULL) {
-		//		DebugOut(L"[INFO] COIN HIDDEN %d unloaded! \n", (*it)->GetState());
-
-		//	}
-		//}
+		for (it = objects.begin(); it != objects.end(); it++)
+		{
+			if ((*it)->IsControlledGroup() == true) {
+				(*it)->SetState(2);
+			}
+		}
 	};
 	void Clear();
 	void PurgeDeletedObjects();

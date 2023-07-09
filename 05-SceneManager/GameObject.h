@@ -50,6 +50,8 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects = NULL) {};
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
+
+	virtual int IsControlledGroup() { return false; }
 	//Is direction Collidable
 	virtual int IsDirectionCollidable(float nx,float ny) { return 1; }
 	//

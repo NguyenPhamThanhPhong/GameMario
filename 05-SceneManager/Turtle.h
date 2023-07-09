@@ -87,7 +87,7 @@ protected:
 		else if (state == TURTLE_SLEEP && vx!=0 && (GetTickCount64()-bounce_start > 600)) {
 				vx = 0;
 		}
-		if (xxx >= originalx + 200 || xxx < originalx - 200) {
+		if (xxx >= x + 200 || xxx < x - 200) {
 			if (state != Originalstate) {
 				this->x = originalx;
 				this->y = originaly;
