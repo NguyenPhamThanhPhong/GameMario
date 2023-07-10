@@ -14,7 +14,8 @@ class CPlayScene: public CScene
 protected: 
 	// A play scene has to have player, right? 
 	LPGAMEOBJECT player;
-	LPGAMEOBJECT fireball;
+	LPGAMEOBJECT fireball = NULL;
+	LPGAMEOBJECT fireball2 = NULL;
 	LPGAMEOBJECT tail;
 	LPGAMEOBJECT turtle = NULL;
 
@@ -41,9 +42,14 @@ public:
 	virtual void Unload();
 
 	LPGAMEOBJECT GetPlayer() { return player; }
-	LPGAMEOBJECT GetFireball() { return fireball; }
+	LPGAMEOBJECT GetFireball(int index) { 
+		if(index == 1)
+			return fireball;
+		return fireball2;
+	}
 	LPGAMEOBJECT GetTail() { return tail; }
 	LPGAMEOBJECT GetTurtle() { return turtle; }
+
 	LPGAMEOBJECT GetsingleCoinHidden(int index) { 
 		if(index<hidddenCoins.size())
 			return hidddenCoins[index]; 

@@ -25,8 +25,8 @@
 
 // SPEED VALUE
 #define FIREBALL_SPEED1	0.03f
-#define FIREBALL_SPEED2	0.04f
-#define FIREBALL_SPEED3	0.055f
+#define FIREBALL_SPEED2	0.06f
+#define FIREBALL_SPEED3	0.1f
 
 class CFireball : public CGameObject {
 private:
@@ -47,6 +47,8 @@ protected:
 		bottom = y + height;
 	}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
+
+
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
@@ -81,8 +83,8 @@ public:
 		switch (state) {
 			case FIREBALL_STATE_TOPMOST_LEFT:
 			{
-				vx = -FIREBALL_SPEED1;
-				vy = -FIREBALL_SPEED2;
+				vx = -FIREBALL_SPEED2;
+				vy = -FIREBALL_SPEED3;
 				resetxy();
 				break;
 			}
@@ -102,15 +104,15 @@ public:
 			}
 			case FIREBALL_STATE_BOTMOST_LEFT:
 			{
-				vx = -FIREBALL_SPEED1;
-				vy = +FIREBALL_SPEED2;
+				vx = -FIREBALL_SPEED2;
+				vy = +FIREBALL_SPEED3;
 				resetxy();
 				break;
 			}
 			case FIREBALL_STATE_TOPMOST_RIGHT:
 			{
-				vx = +FIREBALL_SPEED1;
-				vy = -FIREBALL_SPEED2;
+				vx = +FIREBALL_SPEED2;
+				vy = -FIREBALL_SPEED3;
 				resetxy();
 				break;
 			}
@@ -130,8 +132,8 @@ public:
 			}
 			case FIREBALL_STATE_BOTMOST_RIGHT:
 			{
-				vx = +FIREBALL_SPEED1;
-				vy = +FIREBALL_SPEED2;
+				vx = +FIREBALL_SPEED2;
+				vy = +FIREBALL_SPEED3;
 				resetxy();
 				break;
 			}

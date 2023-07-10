@@ -149,7 +149,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float height = (float)atof(tokens[4].c_str());
 		float topmost = (float)atof(tokens[5].c_str());
 		float botmost = (float)atof(tokens[6].c_str());
-		obj = new CPlant(x, y, width, height, topmost, botmost);
+		int index = (int)atoi(tokens[7].c_str());
+		obj = new CPlant(x, y, width, height, topmost, botmost,index);
 		break;
 	}
 	case 11:
@@ -244,6 +245,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float coinid = (float)atof(tokens[3].c_str());
 		obj = new CCoinHidden(x, y, coinid);
 		hidddenCoins.push_back(obj);
+		break;
+	}
+	case 24:
+	{
+		float width = (float)atof(tokens[3].c_str());
+		float height = (float)atof(tokens[4].c_str());
+		int spriteId = atoi(tokens[5].c_str());
+		obj = new CFireball(x, y, width, height, spriteId);
+		fireball2 = (CFireball*)obj;
+		DebugOut(L"[INFO] Fire ball 2 (seccond) created\n");
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:
