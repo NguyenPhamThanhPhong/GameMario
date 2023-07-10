@@ -88,11 +88,9 @@ protected:
 				vx = 0;
 		}
 		if (xxx >= x + 200 || xxx < x - 200) {
-			if (state != Originalstate) {
-				this->x = originalx;
-				this->y = originaly;
-				SetState(Originalstate);
-			}
+			this->x = originalx;
+			this->y = originaly;
+			SetState(Originalstate);
 		}
 		HandleFly();
 		CGameObject::Update(dt, coObjects);
@@ -240,7 +238,7 @@ public:
 		this->ax = 0;
 		this->ay = 0.002f;
 		vy = 0;
-		vx = 0.02f;
+		vx = -0.02f;
 		//timer
 		die_start = -1;
 		bounce_start = -1;
