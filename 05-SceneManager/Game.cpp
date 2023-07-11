@@ -559,3 +559,6 @@ CGame* CGame::GetInstance()
 	return __instance;
 }
 
+void CGame::SetPlayerlevel(int level) {
+	((CPlayScene*)scenes[1])->SetMarioStateGlobally(level);
+}

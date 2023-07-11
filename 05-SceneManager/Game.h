@@ -27,6 +27,7 @@ using namespace std;
 */
 class CGame
 {
+	int current_mario_level = 1;
 	static CGame* __instance;
 	HWND hWnd;									// Window handle
 
@@ -116,7 +117,8 @@ public:
 
 	void _ParseSection_TEXTURES(string line);
 
-
+	void SetPlayerlevel(int level);
+	int getPlayerlevel() { return this->current_mario_level; }
 	~CGame();
 };
 typedef CGame* LPGAME;

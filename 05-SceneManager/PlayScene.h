@@ -14,6 +14,8 @@ class CPlayScene: public CScene
 protected: 
 	// A play scene has to have player, right? 
 	LPGAMEOBJECT player;
+	int player_level = 1;
+
 	LPGAMEOBJECT fireball = NULL;
 	LPGAMEOBJECT fireball2 = NULL;
 	LPGAMEOBJECT tail;
@@ -65,6 +67,14 @@ public:
 			}
 		}
 		isCoinDeleted = true;
+	};
+	void SetMarioStateGlobally(int lv) {
+
+		player_level = lv;
+		/*if (player != NULL) {
+			((CMario*)(player))->SetLevel(lv);
+			DebugOut(L"[ERROR] mario at scene %d \n", id);
+		}*/
 	};
 	bool GetisCoinDeleted() { return isCoinDeleted; }
 

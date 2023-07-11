@@ -127,6 +127,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		}
 		obj = new CMario(x, y);
 		player = (CMario*)obj;
+		//int level = CGame::GetInstance()->getPlayerlevel();
+		//((CMario*)player)->SetLevel(level);
 
 		DebugOut(L"[INFO] Player object has been created!\n");
 		break;
@@ -365,6 +367,9 @@ void CPlayScene::Load()
 
 	f.close();
 
+	if (player != nullptr) {
+		((CMario*)(player))->SetLevel(player_level);
+	}
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }
 

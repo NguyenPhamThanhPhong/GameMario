@@ -626,6 +626,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 void CMario::SetLevel(int l)
 {
 	// Adjust position to avoid falling off platform
+	CGame::GetInstance()->SetPlayerlevel(l);
 	if (this->level == MARIO_LEVEL_SMALL)
 	{
 		y -= (MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT) / 2;
