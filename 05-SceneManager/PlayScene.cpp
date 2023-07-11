@@ -23,6 +23,7 @@
 #include "Flygoomba.h"
 #include "Tail.h"
 #include "BreakableBrick.h"
+#include "Button.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -135,8 +136,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
-	case OBJECT_TYPE_MYSTERIC_BRICK: obj = new CMystericBrick(x, y); break;
-	case OBJECT_TYPE_COIN_BOUNCE: obj = new CCoinBounce(x, y); break;
+	case OBJECT_TYPE_MYSTERIC_BRICK: {
+		int rewardid = (int)atof(tokens[3].c_str());
+		obj = new CMystericBrick(x, y,rewardid);
+		break;
+
+	}
+	case OBJECT_TYPE_COIN_BOUNCE: {
+		 int rewardindex = (int)atof(tokens[3].c_str());
+		obj = new CCoinBounce(x, y,rewardindex); 
+		break;
+	}
 	case OBJECT_TYPE_PIPE:
 	{
 		float width = (float)atof(tokens[3].c_str());
@@ -160,7 +170,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float width = (float)atof(tokens[3].c_str());
 		float height = (float)atof(tokens[4].c_str());
 		int spriteId = atoi(tokens[5].c_str());
-		obj = new CMushroom(x, y, width, height, spriteId);
+		int rewardindex = (int)atof(tokens[6].c_str());
+		obj = new CMushroom(x, y, width, height, spriteId,rewardindex);
 		break;
 	}
 	case 12: {
@@ -220,7 +231,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	{
 		float width = (float)atof(tokens[3].c_str());
 		float height = (float)atof(tokens[4].c_str());
-		obj = new CLeaf(x,y,width,height);
+		int rewardindex = (int)atof(tokens[5].c_str());
+		obj = new CLeaf(x,y,width,height,rewardindex);
 		break;
 	}
 	case 20:
@@ -259,6 +271,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[INFO] Fire ball 2 (seccond) created\n");
 		break;
 	}
+	case 25: {
+		int rewardindex = (int)atof(tokens[3].c_str());
+		obj = new CButton(x, y, rewardindex);
+		break;
+	}
+
 	case OBJECT_TYPE_PLATFORM:
 	{
 

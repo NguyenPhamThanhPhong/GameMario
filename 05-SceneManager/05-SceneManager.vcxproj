@@ -150,6 +150,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="debug.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="BackgroundObj.h" />
     <ClInclude Include="BreakableBrick.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinBounce.h" />
     <ClInclude Include="CoinHidden.h" />

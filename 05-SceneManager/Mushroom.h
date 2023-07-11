@@ -16,6 +16,7 @@ private:
 	float height;
 	float ay;
 	int spriteId;
+	int Rewardid;
 	ULONGLONG wakeup_start;
 protected:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
@@ -71,14 +72,16 @@ protected:
 	virtual int IsCollidable() { return 1; };
 	virtual int IsBlocking() { return 0; }
 public:
-	CMushroom(float x, float y, float width, float height, int spriteId) :CGameObject(x, y) {
+	CMushroom(float x, float y, float width, float height, int spriteId,int Rewardid) :CGameObject(x, y) {
 		this->width = width;
 		this->height = height;
 		this->spriteId = spriteId;
 		this->ay = 0;
 		wakeup_start = -1;
+		this->Rewardid = Rewardid;
 		SetState(MUSHROOM_STATE_SLEEP);
 	}
+	virtual int GetRewardIndex() { return this->Rewardid; }
 	virtual void SetState(int state) {
 		CGameObject::SetState(state);
 		switch (state) {

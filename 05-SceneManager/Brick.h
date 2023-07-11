@@ -23,11 +23,17 @@ public:
 };
 class CMystericBrick : public CBrick
 {
+private:
+	int rewardid;
+	int Trigger_Reward_Bylevel();
 protected:
 	virtual int IsCollidable() { return 1; };
 
 public:
-	CMystericBrick(float x, float y) : CBrick(x, y) {}
+	CMystericBrick(float x, float y,int rewardid) : CBrick(x, y) {
+		this->rewardid = rewardid;
+	}
+
 	virtual void SetState(int state);
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);

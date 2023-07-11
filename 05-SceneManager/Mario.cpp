@@ -88,14 +88,14 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CPlant*>(e->obj)) {
 		DamageMario();
 	}
-	else if (dynamic_cast<CCoinBounce*>(e->obj)) {
-		CCoinBounce* coin_bounce = dynamic_cast<CCoinBounce*>(e->obj);
-		if (e->ny > 0) {
-			if (coin_bounce->GetState() != COIN_BOUNCE_DIE) {
-				coin_bounce->SetState(COIN_BOUNCE_DIE);
-			}
-		}
-	}
+	//else if (dynamic_cast<CCoinBounce*>(e->obj)) {
+	//	CCoinBounce* coin_bounce = dynamic_cast<CCoinBounce*>(e->obj);
+	//	if (e->ny > 0) {
+	//		if (coin_bounce->GetState() != COIN_BOUNCE_DIE) {
+	//			coin_bounce->SetState(COIN_BOUNCE_DIE);
+	//		}
+	//	}
+	//}
 	else if (dynamic_cast<CMushroom*>(e->obj)) {
 		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 		if (mushroom->GetState() == MUSHROOM_STATE_WAKEUP || mushroom->GetState() == MUSHROOM_STATE_MOVE) {
@@ -103,12 +103,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 				SetLevel(MARIO_LEVEL_BIG);
 			}
 			e->obj->Delete();
-		}
-		else if (e->ny > 0) 
-		{
-			if (mushroom->GetState() == MUSHROOM_STATE_SLEEP) {
-				mushroom->SetState(MUSHROOM_STATE_WAKEUP);
-			}
 		}
 	}
 	else if (dynamic_cast<CFireball*>(e->obj)) {
@@ -124,6 +118,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			if(level==MARIO_LEVEL_BIG)
 				SetLevel(MARIO_LEVEL_FOX);
 			e->obj->Delete();
+			DebugOut(L">>> leaf die >>> \n");
 		}
 	}
 	else if (dynamic_cast<CFlygoomba*>(e->obj)) {

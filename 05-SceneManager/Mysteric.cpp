@@ -1,5 +1,6 @@
 #pragma once
 #include "Brick.h"
+#include "PlayScene.h"
 
 #define ID_ANI_MYSTERIC_BRICK 100000
 #define ID_ANI_MYSTERIC_BRICK_DIE 100001
@@ -27,4 +28,38 @@ void CMystericBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 void CMystericBrick::SetState(int state)
 {
 	CGameObject::SetState(state);
+	if (state == MYSTERIC_STATE_DIE) {
+		LPPLAYSCENE currentScene = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene());
+		int claimID = Trigger_Reward_Bylevel();
+		DebugOut(L">>> reward id: %d >>> \n",claimID);
+		currentScene->TriggerRewards(claimID);
+	}
+}
+int CMystericBrick::Trigger_Reward_Bylevel() {
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	int level = mario->Getlevel();
+	if (rewardid > 50)
+		return rewardid;
+	else if (rewardid == -1)
+		return -2;
+	switch (level)
+	{
+	case 1:
+		if ((rewardid < 10 && rewardid>0))
+			return rewardid;
+		else
+			return rewardid % 10;
+	case 2:
+		if ((rewardid < 20 && rewardid>10))
+			return rewardid;
+		else
+			return rewardid % 10 + 10;
+	case 3:
+		if ((rewardid < 20 && rewardid>10))
+			return rewardid;
+		else
+			return rewardid % 10;
+	default:
+		return -2;
+	}
 }

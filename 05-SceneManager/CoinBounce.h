@@ -17,6 +17,7 @@
 class CCoinBounce : public CGameObject {
 private:
 	ULONGLONG die_start;
+	int Rewardindex;
 protected:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		if ((state == COIN_BOUNCE_DIE) && (GetTickCount64() - die_start > COIN_DIE_TIMEOUT))
@@ -28,9 +29,11 @@ protected:
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
 public:
-	CCoinBounce(float x,float y):CGameObject() {
+	CCoinBounce(float x,float y,int Rewardid):CGameObject() {
 		SetState(COIN_BOUNCE_LIVE);
+		this->Rewardindex = Rewardid;
 	}
+	virtual int GetRewardIndex() { return this->Rewardindex; }
 	void Render() {
 		if (state != COIN_BOUNCE_LIVE)
 		{

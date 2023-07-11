@@ -17,6 +17,7 @@ private:
 	float width;
 	float height;
 	float ay;
+	int Rewardid;
 	ULONGLONG wakeup_start;
 protected:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
@@ -58,30 +59,38 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {
 	}
 	virtual void Render() {
-		int renderId = LEAF_FLYRIGHT;
-		if (vx < 0) {
-			renderId = LEAF_FLYLEFT;
+		if (state != LEAF_STATE_SLEEP) {
+			int renderId = LEAF_FLYRIGHT;
+			if (vx < 0) {
+				renderId = LEAF_FLYLEFT;
+			}
+			CSprites* s = CSprites::GetInstance();
+			s->Get(renderId)->Draw(x, y);
 		}
-		CSprites* s = CSprites::GetInstance();
-		s->Get(renderId)->Draw(x, y);
+
 	}
 
 	virtual int IsCollidable() { return 0; };
 	virtual int IsBlocking() { return 0; }
 public:
-	CLeaf(float x, float y, float width, float height) :CGameObject(x, y) {
+	CLeaf(float x, float y, float width, float height,int Rewardid) :CGameObject(x, y) {
 		this->width = width;
 		this->height = height;
 		this->ay = 0;
 		wakeup_start = -1;
+		this->Rewardid = Rewardid;
 		SetState(LEAF_STATE_SLEEP);
 	}
+	virtual int GetRewardIndex() { 
+		DebugOut(L">>> leaf reward id: %d >>> \n",this->Rewardid);
+		return this->Rewardid; }
 	virtual void SetState(int state) {
 		CGameObject::SetState(state);
 		switch (state) {
 		case LEAF_STATE_WAKEUP: {
 			wakeup_start = GetTickCount64();
 			vy = -0.05f;
+			DebugOut(L">>> leaf wake up >>> \n");
 			break;
 		}
 		case LEAF_STATE_MOVE: {

@@ -57,6 +57,19 @@ public:
 			return hidddenCoins[index]; 
 		return NULL;
 	}
+	void TriggerRewards(int rewardid) {
+		if (rewardid < 0)
+			return;
+		vector<LPGAMEOBJECT>::iterator it;
+		for (it = objects.begin(); it != objects.end(); it++)
+		{
+			if ((*it)->GetRewardIndex()== rewardid) {
+				(*it)->SetState(2);
+				DebugOut(L"[ERROR] reward num:  %d\n", rewardid);
+				return;
+			}
+		}
+	}
 
 	void UnlockBreakableBricks() {
 		vector<LPGAMEOBJECT>::iterator it;
@@ -64,6 +77,7 @@ public:
 		{
 			if ((*it)->IsControlledGroup() == true) {
 				(*it)->SetState(2);
+
 			}
 		}
 		isCoinDeleted = true;
