@@ -523,6 +523,10 @@ void CGame::SwitchScene()
 	LPSCENE s = scenes[next_scene];
 	this->SetKeyHandler(s->GetKeyEventHandler());
 	s->Load();
+	
+	//if (current_scene == 5) {
+	//	((LPPLAYSCENE)s)->GetPlayer()->SetPosition(2336.0f, 330.0f);
+	//}
 }
 
 void CGame::InitiateSwitchScene(int scene_id)

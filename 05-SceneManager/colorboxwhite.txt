@@ -22,6 +22,9 @@
 #edge left
 168009	512	315	527	330	40
 
+#FACIAL CLOUD ON SKY colorbox
+168010	1488	176	1503	191	40
+168011	0	0	17	17	59
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 #mysteric box animation

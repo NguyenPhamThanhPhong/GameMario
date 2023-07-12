@@ -28,3 +28,4 @@ height	240
 56	textures\MARIO4.png
 57	textures\MARIO4FLIP.png
 58	textures\Black.png
+59	textures\transparentpic.png
