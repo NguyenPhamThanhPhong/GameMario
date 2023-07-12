@@ -524,14 +524,16 @@ void CGame::SwitchScene()
 	this->SetKeyHandler(s->GetKeyEventHandler());
 	s->Load();
 	
-	//if (current_scene == 5) {
-	//	((LPPLAYSCENE)s)->GetPlayer()->SetPosition(2336.0f, 330.0f);
-	//}
+	if (startx>0 && starty>0) {
+		((LPPLAYSCENE)s)->GetPlayer()->SetPosition(startx,starty);
+	}
 }
 
-void CGame::InitiateSwitchScene(int scene_id)
+void CGame::InitiateSwitchScene(int scene_id,float positionx,float positiony)
 {
 	next_scene = scene_id;
+	this->startx = positionx;
+	this->starty = positiony;
 }
 
 

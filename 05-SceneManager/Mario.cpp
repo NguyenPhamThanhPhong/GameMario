@@ -225,7 +225,13 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
-	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+	int startx = -10;
+	int starty = -10;
+	if (p->GetSceneId() == 5) {
+		startx = 2336.0f;
+		starty = 330.0f;
+	}
+	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId(),startx,starty);
 }
 void CMario::OnCOllisionWithMystericBrick(LPCOLLISIONEVENT e)
 {
