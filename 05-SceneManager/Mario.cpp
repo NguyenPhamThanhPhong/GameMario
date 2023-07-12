@@ -32,8 +32,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
+
 	if (isFlying) {
-		if (GetTickCount64() - resetGravity_start > 500) {
+		if (GetTickCount64() - resetGravity_start > 300) {
 			vy = 0.1f;
 			ay = MARIO_GRAVITY;
 			vx = 0.0f;
@@ -49,6 +50,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			vx = 0;
 			isGlide = false;
 		}
+	}
+	else if (wasAtMaxSpeed == false && level == MARIO_LEVEL_FOX && abs(vx)>=0.3f) {
+		wasAtMaxSpeed = true;
+		maxSpeed_start = GetTickCount64();
+	}
+
+	if ((wasAtMaxSpeed && abs(vx) < 0.3f) || level!= MARIO_LEVEL_FOX) {
+		wasAtMaxSpeed = false;
 	}
 
 	isOnPlatform = false;
@@ -501,30 +510,51 @@ void CMario::SetState(int state)
 	{
 	case MARIO_STATE_RUNNING_RIGHT:
 		if (isSitting) break;
+		if (isFlying) {
+			vx = 0.2f;
+			nx = 1;
+			break;
+		}
 		maxVx = MARIO_RUNNING_SPEED;
 		ax = MARIO_ACCEL_RUN_X;
 		nx = 1;
 		break;
 	case MARIO_STATE_RUNNING_LEFT:
 		if (isSitting) break;
+		if (isFlying) {
+			vx = -0.2f;
+			nx = -1;
+			break;
+		}
 		maxVx = -MARIO_RUNNING_SPEED;
 		ax = -MARIO_ACCEL_RUN_X;
 		nx = -1;
 		break;
 	case MARIO_STATE_WALKING_RIGHT:
 		if (isSitting) break;
+		if (isFlying) {
+			vx = 0.2f;
+			nx = 1;
+			break;
+		}
 		maxVx = MARIO_WALKING_SPEED;
 		ax = MARIO_ACCEL_WALK_X;
 		nx = 1;
 		break;
 	case MARIO_STATE_WALKING_LEFT:
 		if (isSitting) break;
+		if (isFlying) {
+			vx = -0.2f;
+			nx = -1;
+			break;
+		}
 		maxVx = -MARIO_WALKING_SPEED;
 		ax = -MARIO_ACCEL_WALK_X;
 		nx = -1;
 		break;
 	case MARIO_STATE_JUMP:
 		if (isSitting) break;
+		if (isFlying) break;
 		if (isOnPlatform)
 		{
 			if (abs(this->vx) == MARIO_RUNNING_SPEED)
@@ -538,7 +568,7 @@ void CMario::SetState(int state)
 		if (level == MARIO_LEVEL_FOX) {
 			if (vy > 0) {
 				ay = 0;
-				vy = 0.03f;
+				vy = 0.06f;
 				isGlide = true;
 				glide_start = GetTickCount64();
 				break;
@@ -553,6 +583,7 @@ void CMario::SetState(int state)
 		vy = -0.2f;
 		vx = 0.2f;
 		isFlying = true;
+		isOnPlatform = false;
 		resetGravity_start = GetTickCount64();
 		break;
 

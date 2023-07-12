@@ -7,7 +7,7 @@
 #include "debug.h"
 
 #define MARIO_WALKING_SPEED		0.1f
-#define MARIO_RUNNING_SPEED		0.2f
+#define MARIO_RUNNING_SPEED		0.3f
 
 #define MARIO_ACCEL_WALK_X	0.0005f
 #define MARIO_ACCEL_RUN_X	0.0007f
@@ -138,6 +138,10 @@ class CMario : public CGameObject
 	ULONGLONG untouchable_start;
 	ULONGLONG resetGravity_start=-1;
 	ULONGLONG glide_start = -1;
+
+	ULONGLONG maxSpeed_start = -1;
+	bool wasAtMaxSpeed = false;
+
 	BOOLEAN isOnPlatform;
 	int coin; 
 
@@ -207,6 +211,9 @@ public:
 	int Getlevel() {
 		return this->level;
 	}
+	bool GetisFlying() {
+		return this->isFlying;
+	}
 	void DamageMario() {
 		if (untouchable == 0) {
 			if (level > MARIO_LEVEL_SMALL)
@@ -229,5 +236,11 @@ public:
 	}
 	void SetTailTriggering(bool signal) {
 		this->isTriggeringTail = signal;
+	}
+	bool IsReadyToFly() {
+		if (wasAtMaxSpeed && GetTickCount64()- maxSpeed_start>1000) {
+			return true;
+		}
+		return false;
 	}
 };

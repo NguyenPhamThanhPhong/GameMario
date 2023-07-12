@@ -59,13 +59,17 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_S:
-		if (abs(mario->GetVx()) >= 0.2f) {
+		if (mario->GetisFlying()) {
+			mario->SetState(MARIO_STATE_FLY);
+			break;
+		}
+		else if (mario->Getlevel() == MARIO_LEVEL_FOX && mario->IsReadyToFly()) {
 			mario->SetState(MARIO_STATE_FLY);
 			break;
 		}
 		else {
 			mario->SetState(MARIO_STATE_RELEASE_JUMP);
-
+			break;
 		}
 		break;
 	case DIK_DOWN:
