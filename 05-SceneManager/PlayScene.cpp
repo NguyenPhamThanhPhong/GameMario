@@ -421,7 +421,7 @@ void CPlayScene::Update(DWORD dt)
 	if (cx < 0) cx = 0;
 
 	if (cy > 200) cy = 200;
-	else if (cy < 10) cy = 10;
+	else if (cy < 10) cy = 0;
 
 	CGame::GetInstance()->SetCamPos(cx, cy /*cy*/);
 

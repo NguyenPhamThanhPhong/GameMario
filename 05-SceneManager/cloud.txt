@@ -11,5 +11,7 @@
 54004	624	415	639	430	40
 54005	640	415	655	430	40
 54006	1073	415	1088	430	40
+#under ground
+54007	1983	449	1998	464	40
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
