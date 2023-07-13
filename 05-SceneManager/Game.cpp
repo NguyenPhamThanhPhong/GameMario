@@ -568,3 +568,6 @@ CGame* CGame::GetInstance()
 void CGame::SetPlayerlevel(int level) {
 	((CPlayScene*)scenes[1])->SetMarioStateGlobally(level);
 }
+void CGame::SetGameWasOver() {
+	((CPlayScene*)scenes[3])->SetGameWasOver();
+}

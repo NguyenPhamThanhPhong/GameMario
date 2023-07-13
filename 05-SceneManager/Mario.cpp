@@ -17,6 +17,7 @@
 #include "Flygoomba.h"
 #include "BreakableBrick.h"
 #include "Button.h"
+#include "BackgroundAni.h"
 
 #include "Collision.h"
 
@@ -72,6 +73,8 @@ void CMario::OnNoCollision(DWORD dt)
 	if (x < 0)
 		x = 0;
 	y += vy * dt;
+	if (y > 430)
+		((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->SetGameOver();
 }
 
 void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
@@ -142,7 +145,13 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			button->SetState(3);
 		}
 	}
-
+	else if (dynamic_cast<CCard*>(e->obj)) {
+		DebugOut(L">>> get card %d >>> \n",e->obj->GetState());
+		CCard* card = dynamic_cast<CCard*>(e->obj);
+		if (card->GetState() == 1) {
+			card->SetState(2);
+		}
+	}
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)

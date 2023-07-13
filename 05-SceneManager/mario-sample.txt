@@ -35,3 +35,4 @@ height	240
 61	textures\worldmapbg.png
 62	textures\maps.png
 63	textures\HUD.png
+64	textures\goal.png

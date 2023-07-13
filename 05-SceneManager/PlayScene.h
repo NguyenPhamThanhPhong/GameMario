@@ -19,6 +19,11 @@ protected:
 	int score=986354;
 	int time = 900;
 	int coin;
+	int card = -1;
+
+
+	ULONGLONG win_start = -1;
+	ULONGLONG game_start = -1;
 
 	LPGAMEOBJECT fireball = NULL;
 	LPGAMEOBJECT fireball2 = NULL;
@@ -31,6 +36,8 @@ protected:
 	vector<LPGAMEOBJECT> hidddenCoins;
 
 	bool isCoinDeleted = false;
+	bool isWin = false;
+	bool WasgameOver = false;
 
 
 	void _ParseSection_SPRITES(string line);
@@ -112,7 +119,9 @@ public:
 
 	void Rendernums(int size,int num,float numx,float numy);
 
-	void hi(){}
+	void SetGameOver();
+	void SetGameWasOver() { this->WasgameOver = true; }
+	void SetGameWin(int received_card);
 
 	 
 	bool GetisCoinDeleted() { return isCoinDeleted; }

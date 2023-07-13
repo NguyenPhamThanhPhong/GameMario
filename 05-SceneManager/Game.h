@@ -120,6 +120,7 @@ public:
 	void _ParseSection_TEXTURES(string line);
 
 	void SetPlayerlevel(int level);
+	void SetGameWasOver();
 	int getPlayerlevel() { return this->current_mario_level; }
 	~CGame();
 };

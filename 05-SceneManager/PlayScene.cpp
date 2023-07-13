@@ -209,7 +209,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case 15: {
 		int spriteId = (int)atoi(tokens[3].c_str());
-		DebugOut(L"[INFO] background sprite: %d\n",spriteId);
 		obj = new CBackgroundobj(x, y, spriteId);
 		break;
 	}
@@ -301,6 +300,10 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case 28: {
 		int aniId = (int)atof(tokens[3].c_str());
 		obj = new CBackgroundAni(x, y, aniId);
+		break;
+	}
+	case 29: {
+		obj = new CCard(x, y);
 		break;
 	}
 	case OBJECT_TYPE_PLATFORM:
@@ -414,6 +417,9 @@ void CPlayScene::Load()
 	if (player != nullptr) {
 		((CMario*)(player))->SetLevel(player_level);
 	}
+	if (id == 5) {
+		game_start = GetTickCount64();
+	}
 	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }
 
@@ -433,8 +439,19 @@ void CPlayScene::Update(DWORD dt)
 		objects[i]->Update(dt, &coObjects);
 	}
 
+	if (id == 5) {
+		time = GetTickCount64() - game_start;
+	}
+
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
+
+	if (isWin == true && GetTickCount64() - win_start > 2000) {
+		CGame::GetInstance()->InitiateSwitchScene(3, 400, 300);
+		DebugOut(L"[INFO] game win \n");
+		isWin = false;
+		return;
+	}
 
 	// Update camera to follow mario
 	float cx, cy;
@@ -445,11 +462,12 @@ void CPlayScene::Update(DWORD dt)
 	cy -= game->GetBackBufferHeight() / 2;
 
 	if (cx < 0) cx = 0;
+	if (cx > 2700) cx = 2700;
 
 	if (cy > 228) cy = 225;
 	else if (cy < 10) cy = 0;
 
-	if (id == 3) {
+	if (id == 3 || id == 4) {
 		cx = 0;
 		cy = 0;
 	}
@@ -484,6 +502,16 @@ void CPlayScene::Render()
 		float coinx = timex+10;
 		float coiny = timey - 10;
 		Rendernums(2, coin, coinx, coiny);
+
+		if (isWin)
+		{
+			s->Get(199012)->Draw(2690,265);
+			if (card <= 3 && card>=1) {
+				s->Get(199018+card)->Draw(2720, 265);
+				DebugOut(L"[INFO] card is: %d \n",card);
+
+			}
+		}
 
 	}
 }
@@ -555,4 +583,14 @@ void CPlayScene::PurgeDeletedObjects()
 	objects.erase(
 		std::remove_if(objects.begin(), objects.end(), CPlayScene::IsGameObjectDeleted),
 		objects.end());
+}
+
+void CPlayScene::SetGameOver() {
+	CGame::GetInstance()->InitiateSwitchScene(3, 400, 300);
+}
+void CPlayScene::SetGameWin(int received_card) {
+	isWin = true;
+	win_start = GetTickCount64();
+	card = received_card;
+
 }
