@@ -19,6 +19,7 @@ flygoomba.txt
 colorboxgreen.txt
 colorboxblue.txt
 colorboxwhite.txt
+button.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
@@ -155,7 +156,7 @@ colorboxwhite.txt
 19	1480	350	18	10	12
 6	1480	350	2
 #button - mysteric #rewardid = 101
-25	1940	350	101
+25	1940	330	101
 6	1940	350	101
 #mysteric
 6	1447	63	-2

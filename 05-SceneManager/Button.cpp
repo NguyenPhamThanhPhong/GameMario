@@ -19,10 +19,15 @@ void CButton::SetState(int state) {
 	}
 }
 void CButton::Render() {
-	if (state != 1) {
-		int renderid = 20001;
+	if (state == 2) {
+		int renderid = 810001;
 		CSprites* s = CSprites::GetInstance();
 		s->Get(renderid)->Draw(x, y);
 	}
+	//else if (state == 3) {
+	//	int renderid = 900001;
+	//	CSprites* s = CSprites::GetInstance();
+	//	s->Get(renderid)->Draw(x+10, y+10);
+	//}
 
 }

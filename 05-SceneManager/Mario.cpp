@@ -16,6 +16,7 @@
 #include "Turtle.h"
 #include "Flygoomba.h"
 #include "BreakableBrick.h"
+#include "Button.h"
 
 #include "Collision.h"
 
@@ -139,6 +140,12 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		CBreakableBrick* bbrick = dynamic_cast<CBreakableBrick*>(e->obj);
 		if (bbrick->GetState() == BREAKABLE_BRICK_LIVE) {
 			bbrick->SetState(BREAKABLE_BRICK_DIE);
+		}
+	}
+	else if (dynamic_cast<CButton*>(e->obj)) {
+		CButton* button = dynamic_cast<CButton*>(e->obj);
+		if (button->GetState() == 2) {
+			button->SetState(3);
 		}
 	}
 
