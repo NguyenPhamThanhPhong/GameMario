@@ -33,3 +33,5 @@ height	240
 59	textures\transparentpic.png
 60	textures\worldmap.png
 61	textures\worldmapbg.png
+62	textures\maps.png
+63	textures\HUD.png

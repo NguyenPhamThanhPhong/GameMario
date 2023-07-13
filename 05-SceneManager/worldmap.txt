@@ -40,12 +40,24 @@
 #bridge
 800023	89	310	104	325	60
 #path tiles:
+#horizon no node:
 800024	4	227	19	242	60
+#vertical no node:
 800025	21	227	36	242	60
+#single node:
 800026	38	227	53	242	60
+#right and node:
 800027	55	227	70	242	60
+#top and node:
 800028	72	227	87	242	60
+#left top and node
 800029	89	227	104	242	60
+#background: sand
+800030	0	0	223	150	61
+#frame:
+800031	4	40	237	201	62
+#HUD:
+800032	12	246	241	271	63
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 #moving tree:
