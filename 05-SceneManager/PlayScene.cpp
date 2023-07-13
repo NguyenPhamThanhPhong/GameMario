@@ -440,7 +440,8 @@ void CPlayScene::Update(DWORD dt)
 	}
 
 	if (id == 5) {
-		time = GetTickCount64() - game_start;
+		time = 999-	(int)((GetTickCount64() - game_start)/1000);
+		DebugOut(L"[INFO] game time: %d \n",time);
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
@@ -493,7 +494,7 @@ void CPlayScene::Render()
 
 		float scorex = xx - 14;
 		float scorey = yy + 4;
-		Rendernums(7, score, scorex, scorey);
+		//Rendernums(7, score, scorex, scorey);
 
 		float timex = xx + 28;
 		float timey = scorey;
@@ -501,7 +502,7 @@ void CPlayScene::Render()
 
 		float coinx = timex+10;
 		float coiny = timey - 10;
-		Rendernums(2, coin, coinx, coiny);
+		//Rendernums(2, coin, coinx, coiny);
 
 		if (isWin)
 		{
@@ -514,9 +515,16 @@ void CPlayScene::Render()
 		}
 
 	}
+
+	if (id == 3 && WasgameOver == true) {
+		DebugOut(L"[INFO]game was over: \n");
+		CSprites* s = CSprites::GetInstance();
+		s->Get(199023)->Draw(150, 50);
+	}
 }
 void CPlayScene::Rendernums(int size, int num, float numx, float numy) {
 	//render score
+	if (num < 0)return;
 	int digits[7] = { 0 };  // Initialized with all zeros
 
 	// Extract digits in reverse order
@@ -527,10 +535,11 @@ void CPlayScene::Rendernums(int size, int num, float numx, float numy) {
 		numDigits++;
 	}
 	CSprites* s = CSprites::GetInstance();
-	for (int i = size-1; i >= 0; i--) {
+	for (int i = 0; i < size; i++) {
 		s->Get(101 + digits[i])->Draw(numx, numy);
 		numx -= 8;
 	}
+
 }
 
 /*
@@ -587,6 +596,7 @@ void CPlayScene::PurgeDeletedObjects()
 
 void CPlayScene::SetGameOver() {
 	CGame::GetInstance()->InitiateSwitchScene(3, 400, 300);
+	CGame::GetInstance()->SetGameWasOver();
 }
 void CPlayScene::SetGameWin(int received_card) {
 	isWin = true;

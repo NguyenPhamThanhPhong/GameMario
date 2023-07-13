@@ -36,3 +36,4 @@ height	240
 62	textures\maps.png
 63	textures\HUD.png
 64	textures\goal.png
+65	textures\gameover.png

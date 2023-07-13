@@ -120,11 +120,12 @@ public:
 	void Rendernums(int size,int num,float numx,float numy);
 
 	void SetGameOver();
-	void SetGameWasOver() { this->WasgameOver = true; }
+	void SetGameWasOver(bool signal) { this->WasgameOver = signal; }
 	void SetGameWin(int received_card);
 
 	 
 	bool GetisCoinDeleted() { return isCoinDeleted; }
+	bool GetGameWasOver() { return this->WasgameOver; }
 
 	void Clear();
 	void PurgeDeletedObjects();
