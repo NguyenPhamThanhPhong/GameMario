@@ -46,7 +46,7 @@
 800025	21	227	36	242	60
 #single node:
 800026	38	227	53	242	60
-#right and node:
+#left and node:
 800027	55	227	70	242	60
 #top and node:
 800028	72	227	87	242	60
