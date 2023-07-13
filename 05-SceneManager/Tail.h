@@ -22,51 +22,16 @@ protected:
 		right = x + width ;
 		bottom = y + height ;
 	}
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
-
-		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-		float xxx = mario->Getx();
-		float yyy = mario->Gety();
-		y = yyy+5;
-
-		if (x <= xxx-10) {
-			x = xxx-9;
-			vx = 0.4f;
-		}
-		else if (x >= xxx + 10) {
-			x = xxx+9;
-			vx = -0.4f;
-		}
-		CGameObject::Update(dt, coObjects);
-		CCollision::GetInstance()->Process(this, dt, coObjects);
-	}
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render() {
 		RenderBoundingBox();
 	}
 
-	virtual int IsCollidable() { return 0; };
+	virtual int IsCollidable() { return 1; };
 	virtual int IsBlocking() { return 0; }
-	virtual void OnNoCollision(DWORD dt) {
-		x += vx;
-		//x = xxx;
-		//y = yyy;
-	}
+	virtual void OnNoCollision(DWORD dt);
 
-	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {
-		if (state == TAIL_SLEEP) {
-			return;
-		}
-		else { 
-			//if (dynamic_cast<CBreakableBrick*>(e->obj)) {
-			//	if (e->ny > 0) {
-			//		CBreakableBrick* bbrick = dynamic_cast<CBreakableBrick*>(e->obj);
-			//		if (bbrick->GetState() == 1) {
-			//			bbrick->SetState(3);
-			//		}
-			//	}
-			//}
-		}
-	}
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public:
 	CTail(float x, float y) :CGameObject(x,y) {

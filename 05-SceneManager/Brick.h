@@ -33,6 +33,7 @@ public:
 	CMystericBrick(float x, float y,int rewardid) : CBrick(x, y) {
 		this->rewardid = rewardid;
 	}
+	int GetClaimid() { return this->rewardid; }
 
 	virtual void SetState(int state);
 	void Render();

@@ -110,7 +110,9 @@ public:
 		player_level = lv;
 	};
 
-	void Rendernums(int size, int num, float numx, float numy);
+	void Rendernums(int size,int num,float numx,float numy);
+
+	void hi(){}
 
 	 
 	bool GetisCoinDeleted() { return isCoinDeleted; }

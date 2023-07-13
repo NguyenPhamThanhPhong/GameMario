@@ -76,6 +76,7 @@ public:
 		{
 			((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->DeleteCoinHIdden(coinid);
 			coinid = -1;
+			blocking_state = true;
 			break;
 		}
 		}
