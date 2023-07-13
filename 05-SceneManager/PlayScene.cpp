@@ -24,6 +24,9 @@
 #include "Tail.h"
 #include "BreakableBrick.h"
 #include "Button.h"
+#include "MarioIcon.h"
+#include "Node.h"
+#include "BackgroundAni.h"
 
 #include "SampleKeyEventHandler.h"
 
@@ -33,7 +36,11 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) :
 	CScene(id, filePath)
 {
 	player = NULL;
-	key_handler = new CSampleKeyHandler(this);
+	if (id == 3) {
+		key_handler = new CSampleKeyHandlerWorld(this);
+	}
+	else
+		key_handler = new CSampleKeyHandler(this);
 }
 
 
@@ -202,6 +209,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 	case 15: {
 		int spriteId = (int)atoi(tokens[3].c_str());
+		DebugOut(L"[INFO] background sprite: %d\n",spriteId);
 		obj = new CBackgroundobj(x, y, spriteId);
 		break;
 	}
@@ -276,7 +284,27 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CButton(x, y, rewardindex);
 		break;
 	}
+	case 26: {
+		obj = new CMarioIcon(x, y);
+		marioicon = (CMarioIcon*)obj;
+		break;
+	}
+	case 27: {
+		int Left = (int)atof(tokens[3].c_str());
+		int Right = (int)atof(tokens[4].c_str());
+		int Top = (int)atof(tokens[5].c_str());
+		int Bot = (int)atof(tokens[6].c_str());
 
+		int id = (int)atof(tokens[3].c_str());
+		int isStage = (int)atof(tokens[4].c_str());
+		obj = new CNode(x, y, Left, Right, Top, Bot, id, isStage);
+		break;
+	}
+	case 28: {
+		int aniId = (int)atof(tokens[3].c_str());
+		obj = new CBackgroundAni(x, y, aniId);
+		break;
+	}
 	case OBJECT_TYPE_PLATFORM:
 	{
 
@@ -423,6 +451,10 @@ void CPlayScene::Update(DWORD dt)
 	if (cy > 200) cy = 200;
 	else if (cy < 10) cy = 0;
 
+	if (id == 3) {
+		cx = 0;
+		cy = 0;
+	}
 	CGame::GetInstance()->SetCamPos(cx, cy /*cy*/);
 
 	PurgeDeletedObjects();

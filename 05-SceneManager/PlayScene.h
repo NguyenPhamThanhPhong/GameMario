@@ -21,6 +21,8 @@ protected:
 	LPGAMEOBJECT tail;
 	LPGAMEOBJECT turtle = NULL;
 
+	LPGAMEOBJECT marioicon = NULL;
+
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> hidddenCoins;
 
@@ -57,6 +59,8 @@ public:
 			return hidddenCoins[index]; 
 		return NULL;
 	}
+	LPGAMEOBJECT GetMarioIcon() { return marioicon; }
+
 	void TriggerRewards(int rewardid) {
 		if (rewardid < 0)
 			return;
@@ -83,13 +87,10 @@ public:
 		isCoinDeleted = true;
 	};
 	void SetMarioStateGlobally(int lv) {
-
 		player_level = lv;
-		/*if (player != NULL) {
-			((CMario*)(player))->SetLevel(lv);
-			DebugOut(L"[ERROR] mario at scene %d \n", id);
-		}*/
 	};
+
+	 
 	bool GetisCoinDeleted() { return isCoinDeleted; }
 
 	void Clear();

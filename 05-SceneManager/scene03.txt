@@ -1,0 +1,40 @@
+# list of object assets to load in this scene
+[ASSETS]
+mario.txt
+brick.txt
+coin.txt
+goomba.txt
+cloud.txt
+MarioFox.txt
+backgroundobj.txt
+pipe.txt
+worldmap.txt
+#
+[OBJECTS]
+# type	x	y	extra_settings per object type
+# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
+# See OBJECT_TYPE constants in AssetIDs.h
+
+15	250	250	199010
+
+# MARIO
+0	400	400
+#plat form:
+5	350	440	16	15	20	54001	54002	54003
+
+#backgroundobj:
+28	8	8	950001
+28	24	8	950001
+28	40	8	950001
+28	8	24	950001
+28	24	24	950001
+28	40	24	950001
+#15	8	8	800001
+
+#nodes:(x, y, Left, Right, Top, Bot, id, isStage, renderid)
+27	100	50	0	1	0	1	1	1
+27	150	50	1	0	0	1	1	1
+27	150	100	1	0	1	0	1	1
+27	100	100	0	1	1	0	1	1
+# icon:
+26	50	50
