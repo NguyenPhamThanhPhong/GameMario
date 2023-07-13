@@ -51,19 +51,15 @@ void CMarioIcon::SetState(int state) {
 		if (Left)
 			vx = -ICON_VLOC;
 
-		DebugOut(L"[INFO] left is : %d \n", Left);
-
 		break;
 	case MARIO_ICON_MOVE_RIGHT:
 		if (Right)
 			vx = ICON_VLOC;
 
-		DebugOut(L"[INFO] right is : %d \n", Right);
 		break;
 	case MARIO_ICON_MOVE_TOP:
 		if (Top)
 			vy = -ICON_VLOC;
-		DebugOut(L"[INFO] top is : %d \n", Top);
 		break;
 	case MARIO_ICON_MOVE_BOT:
 		if (Bot)

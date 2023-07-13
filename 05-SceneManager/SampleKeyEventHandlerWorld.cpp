@@ -27,6 +27,11 @@ void CSampleKeyHandlerWorld::OnKeyDown(int KeyCode)
 	case DIK_UP:
 		icon->SetState(MARIO_ICON_MOVE_TOP);
 		break;
+	case DIK_S:
+		if (icon->GetisAtStage()) {
+			CGame::GetInstance()->InitiateSwitchScene(5, 10.0f, 330.0f);
+		}
+		break;
 	}
 }
 

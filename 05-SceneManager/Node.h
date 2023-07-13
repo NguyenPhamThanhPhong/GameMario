@@ -12,7 +12,7 @@ private:
 	bool Top = false;
 	bool Bot = false;
 public:
-	CNode(float x, float y,int left,int right,int top,int bot,int id,int isStage) : CGameObject(x, y) {
+	CNode(float x, float y,int left,int right,int top,int bot,int isStage) : CGameObject(x, y) {
 		this->Left =	(bool)left;
 		this->Right =	(bool)right;
 		this->Top =		(bool)top;

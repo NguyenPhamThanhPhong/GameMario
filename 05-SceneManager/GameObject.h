@@ -52,6 +52,7 @@ public:
 	virtual void SetState(int state) { this->state = state; }
 
 	virtual int GetRewardIndex() { return -1; }
+	virtual int GetidHiddenCoin() { return -2; }
 	virtual int IsControlledGroup() { return false; }
 	//Is direction Collidable
 	virtual int IsDirectionCollidable(float nx,float ny) { return 1; }

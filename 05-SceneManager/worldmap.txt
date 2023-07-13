@@ -58,6 +58,9 @@
 800031	4	40	237	201	62
 #HUD:
 800032	12	246	241	271	63
+#river:
+800033	137	125	215	189	62
+800034	170	110	215	124	62
 # ani_id	sprite1_id	time1	sprite2_id	time2	...
 [ANIMATIONS]
 #moving tree:

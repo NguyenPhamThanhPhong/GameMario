@@ -20,7 +20,7 @@ public:
 		state = COIN_HIDDEN_SLEEP;
 		this->id = id;
 	}
-	int Getid() { return this->id; }
+	int GetidHiddenCoin() { return this->id; }
 	void Render() {
 		if (state == COIN_HIDDEN_LIVE) {
 			CSprites* s = CSprites::GetInstance();

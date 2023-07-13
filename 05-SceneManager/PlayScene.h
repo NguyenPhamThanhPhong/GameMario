@@ -54,10 +54,27 @@ public:
 	LPGAMEOBJECT GetTail() { return tail; }
 	LPGAMEOBJECT GetTurtle() { return turtle; }
 
-	LPGAMEOBJECT GetsingleCoinHidden(int index) { 
-		if(index<hidddenCoins.size())
-			return hidddenCoins[index]; 
-		return NULL;
+	void TriggerCoinHIdden(int index) {
+		if (index < 0)	return;
+		vector<LPGAMEOBJECT>::iterator it;
+		for (it = objects.begin(); it != objects.end(); it++)
+		{
+			if ((*it)->GetidHiddenCoin() == index) {
+				(*it)->SetState(2);
+				return;
+			}
+		}
+	}
+	void DeleteCoinHIdden(int index) {
+		if (index < 0)	return;
+		vector<LPGAMEOBJECT>::iterator it;
+		for (it = objects.begin(); it != objects.end(); it++)
+		{
+			if ((*it)->GetidHiddenCoin() == index) {
+				(*it)->SetState(1);
+				return;
+			}
+		}
 	}
 	LPGAMEOBJECT GetMarioIcon() { return marioicon; }
 
@@ -69,7 +86,6 @@ public:
 		{
 			if ((*it)->GetRewardIndex()== rewardid) {
 				(*it)->SetState(2);
-				DebugOut(L"[ERROR] reward num:  %d\n", rewardid);
 				return;
 			}
 		}

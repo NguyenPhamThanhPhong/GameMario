@@ -36,5 +36,8 @@ public:
 		vx = 0;
 		vy = 0;
 	}
+	bool GetisAtStage() {
+		return isAtStage;
+	}
 	virtual void SetState(int state);
 };

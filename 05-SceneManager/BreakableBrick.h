@@ -60,28 +60,22 @@ public:
 		{
 			blocking_state = false;
 			die_start = GetTickCount64();
-			if (((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetisCoinDeleted() == false) {
-				CCoinHidden* coinh = (CCoinHidden*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetsingleCoinHidden(coinid);
-				coinh->Delete();
-			}
+			((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->DeleteCoinHIdden(coinid);
+			this->coinid = -1;
 
 			break;
 		}
 		case BREAKABLE_BRICK_SLEEP:
 		{
-			if (((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetisCoinDeleted()== false) {
-				CCoinHidden* coinh = (CCoinHidden*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetsingleCoinHidden(coinid);
-					coinh->SetState(COIN_HIDDEN_LIVE);
-			}
-
+			((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->TriggerCoinHIdden(coinid);
 			blocking_state = false;
 			sleep_start = GetTickCount64();
 			break;
 		}
 		case BREAKABLE_BRICK_LIVE:
 		{
-			CCoinHidden* coinh = (CCoinHidden*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetsingleCoinHidden(coinid);
-			coinh->Delete();
+			((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->DeleteCoinHIdden(coinid);
+			coinid = -1;
 			break;
 		}
 		}

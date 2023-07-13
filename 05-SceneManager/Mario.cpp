@@ -486,6 +486,21 @@ int CMario::GetAniIdFox()
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;
 	if (isTriggeringTail == true) aniId = 1714;
+	if (isFlying)
+	{
+		if(nx>0)
+		aniId = ID_ANI_MARIO_FOX_FLY_RIGHT;
+		else
+			aniId = ID_ANI_MARIO_FOX_FLY_LEFT;
+
+	}
+	if (isGlide) {
+		if (nx > 0)
+			aniId = 1717;
+		else
+			aniId = 1718;
+
+	}
 	return aniId;
 }
 

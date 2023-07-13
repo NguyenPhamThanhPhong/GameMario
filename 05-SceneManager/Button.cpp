@@ -14,7 +14,7 @@ void CButton::SetState(int state) {
 	CGameObject::SetState(state);
 	LPPLAYSCENE currentScene = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene());
 
-	if (state == 2) {
+	if (state == 3) {
 		currentScene->UnlockBreakableBricks();
 	}
 }
