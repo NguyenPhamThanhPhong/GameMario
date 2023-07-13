@@ -5,6 +5,7 @@
 
 #include "Mario.h"
 #include "PlayScene.h"
+#include "Tail.h"
 
 #define TAIL_SLEEP 1
 #define TAIL_TRIGGER 2
@@ -55,9 +56,15 @@ protected:
 		if (state == TAIL_SLEEP) {
 			return;
 		}
-		else {
-			//if()
-
+		else { 
+			//if (dynamic_cast<CBreakableBrick*>(e->obj)) {
+			//	if (e->ny > 0) {
+			//		CBreakableBrick* bbrick = dynamic_cast<CBreakableBrick*>(e->obj);
+			//		if (bbrick->GetState() == 1) {
+			//			bbrick->SetState(3);
+			//		}
+			//	}
+			//}
 		}
 	}
 

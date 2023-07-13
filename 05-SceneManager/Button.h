@@ -21,7 +21,7 @@ public:
 		state = 1;
 	}
 	virtual int GetRewardIndex() { return this->Rewardindex; }
-
+	int IsBlocking() { return 0; }
 	virtual void SetState(int state);
 	void Render();
 	void GetBoundingBox(float& l, float& t, float& r, float& b);

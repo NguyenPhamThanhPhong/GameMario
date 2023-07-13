@@ -16,6 +16,10 @@ protected:
 	LPGAMEOBJECT player;
 	int player_level = 1;
 
+	int score=986354;
+	int time = 900;
+	int coin;
+
 	LPGAMEOBJECT fireball = NULL;
 	LPGAMEOBJECT fireball2 = NULL;
 	LPGAMEOBJECT tail;
@@ -77,7 +81,6 @@ public:
 		}
 	}
 	LPGAMEOBJECT GetMarioIcon() { return marioicon; }
-
 	void TriggerRewards(int rewardid) {
 		if (rewardid < 0)
 			return;
@@ -90,6 +93,7 @@ public:
 			}
 		}
 	}
+
 
 	void UnlockBreakableBricks() {
 		vector<LPGAMEOBJECT>::iterator it;
@@ -105,6 +109,8 @@ public:
 	void SetMarioStateGlobally(int lv) {
 		player_level = lv;
 	};
+
+	void Rendernums(int size, int num, float numx, float numy);
 
 	 
 	bool GetisCoinDeleted() { return isCoinDeleted; }

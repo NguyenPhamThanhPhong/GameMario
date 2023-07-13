@@ -100,14 +100,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CPlant*>(e->obj)) {
 		DamageMario();
 	}
-	//else if (dynamic_cast<CCoinBounce*>(e->obj)) {
-	//	CCoinBounce* coin_bounce = dynamic_cast<CCoinBounce*>(e->obj);
-	//	if (e->ny > 0) {
-	//		if (coin_bounce->GetState() != COIN_BOUNCE_DIE) {
-	//			coin_bounce->SetState(COIN_BOUNCE_DIE);
-	//		}
-	//	}
-	//}
 	else if (dynamic_cast<CMushroom*>(e->obj)) {
 		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 		if (mushroom->GetState() == MUSHROOM_STATE_WAKEUP || mushroom->GetState() == MUSHROOM_STATE_MOVE) {
@@ -137,9 +129,11 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithFlygoomba(e);
 	}
 	else if (dynamic_cast<CBreakableBrick*>(e->obj)) {
-		CBreakableBrick* bbrick = dynamic_cast<CBreakableBrick*>(e->obj);
-		if (bbrick->GetState() == BREAKABLE_BRICK_LIVE) {
-			bbrick->SetState(BREAKABLE_BRICK_DIE);
+		if (e->ny > 0) {
+			CBreakableBrick* bbrick = dynamic_cast<CBreakableBrick*>(e->obj);
+			if (bbrick->GetState() == BREAKABLE_BRICK_LIVE) {
+				bbrick->SetState(BREAKABLE_BRICK_DIE);
+			}
 		}
 	}
 	else if (dynamic_cast<CButton*>(e->obj)) {

@@ -93,6 +93,9 @@
     <ClCompile Include="MarioIcon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Huditem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -222,6 +225,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BackgroundAni.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Huditem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

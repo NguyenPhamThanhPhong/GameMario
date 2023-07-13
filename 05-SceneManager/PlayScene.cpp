@@ -446,7 +446,7 @@ void CPlayScene::Update(DWORD dt)
 
 	if (cx < 0) cx = 0;
 
-	if (cy > 200) cy = 200;
+	if (cy > 228) cy = 225;
 	else if (cy < 10) cy = 0;
 
 	if (id == 3) {
@@ -462,6 +462,47 @@ void CPlayScene::Render()
 {
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
+
+	if (id == 5) {
+		float xx = 0, yy = 0;
+		CGame::GetInstance()->GetCamPos(xx,yy);
+		CSprites* s = CSprites::GetInstance();
+		xx += 160;
+		yy += 190;
+		s->Get(111)->Draw(xx, yy);
+		s->Get(800032)->Draw(xx, yy);
+
+
+		float scorex = xx - 14;
+		float scorey = yy + 4;
+		Rendernums(7, score, scorex, scorey);
+
+		float timex = xx + 28;
+		float timey = scorey;
+		Rendernums(3, time, timex, timey);
+
+		float coinx = timex+10;
+		float coiny = timey - 10;
+		Rendernums(2, coin, coinx, coiny);
+
+	}
+}
+void CPlayScene::Rendernums(int size, int num, float numx, float numy) {
+	//render score
+	int digits[7] = { 0 };  // Initialized with all zeros
+
+	// Extract digits in reverse order
+	int numDigits = 0;
+	while (score > 0 && numDigits < 7) {
+		digits[numDigits] = num % 10;
+		num /= 10;
+		numDigits++;
+	}
+	CSprites* s = CSprites::GetInstance();
+	for (int i = size-1; i >= 0; i--) {
+		s->Get(101 + digits[i])->Draw(numx, numy);
+		numx -= 8;
+	}
 }
 
 /*

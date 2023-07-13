@@ -30,9 +30,9 @@ public:
 		if (state == BREAKABLE_BRICK_LIVE) {
 			animations->Get(ID_ANI_BREAKABLE_BRICK)->Render(x, y);
 		}
-		//else if (state == BREAKABLE_BRICK_DIE) {
-		//	animations->Get(ID_ANI_BREAKABLE_BRICK_DIE)->Render(x, y);
-		//}
+		else if (state == BREAKABLE_BRICK_DIE) {
+			animations->Get(ID_ANI_BREAKABLE_BRICK_DIE)->Render(x, y);
+		}
 		RenderBoundingBox();
 	}
 	int IsControlledGroup() { return true; }
