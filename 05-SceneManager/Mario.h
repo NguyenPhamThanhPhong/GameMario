@@ -247,4 +247,8 @@ public:
 		}
 		return false;
 	}
+	void SetScorecoin(int scored, int coined) {
+		this->score = scored;
+		this->coin = coined;
+	}
 };

@@ -30,6 +30,9 @@ class CGame
 	int current_mario_level = 1;
 	float startx = -10.0f;
 	float starty = -10.0f;
+	int scene_coin = 0;
+	int scene_score = 0;
+
 	static CGame* __instance;
 	HWND hWnd;									// Window handle
 
@@ -115,7 +118,7 @@ public:
 	LPSCENE GetCurrentScene() { return scenes[current_scene]; }
 	void Load(LPCWSTR gameFile);
 	void SwitchScene();
-	void InitiateSwitchScene(int scene_id,float positionx,float positiony);
+	void InitiateSwitchScene(int scene_id,float positionx,float positiony,int score=0,int coin=0);
 
 	void _ParseSection_TEXTURES(string line);
 

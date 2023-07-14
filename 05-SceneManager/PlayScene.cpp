@@ -422,6 +422,8 @@ void CPlayScene::Load()
 			((CMario*)(player))->SetLevel(player_level);
 		}
 	}
+	((CMario*)(player))->SetScorecoin(score, coin);
+	DebugOut(L"[INFO] load() scene %d score: %d coin: %d \n",id, score, coin);
 	//DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }
 
@@ -449,7 +451,7 @@ void CPlayScene::Update(DWORD dt)
 	if (player == NULL) return;
 
 	if (isWin == true && GetTickCount64() - win_start > 2000) {
-		CGame::GetInstance()->InitiateSwitchScene(3, 400, 300);
+		CGame::GetInstance()->InitiateSwitchScene(3, 400, 300,score,coin);
 		DebugOut(L"[INFO] game win \n");
 		isWin = false;
 		return;
@@ -496,7 +498,7 @@ void CPlayScene::Render()
 		s->Get(111)->Draw(xx, yy);
 		s->Get(800032)->Draw(xx, yy);
 
-
+		
 		float scorex = xx - 14;
 		float scorey = yy + 4;
 		Rendernums(7, score, scorex, scorey);
@@ -597,7 +599,7 @@ void CPlayScene::PurgeDeletedObjects()
 }
 
 void CPlayScene::SetGameOver() {
-	CGame::GetInstance()->InitiateSwitchScene(3, 400, 300);
+	CGame::GetInstance()->InitiateSwitchScene(3, 400, 300,0,0);
 	CGame::GetInstance()->SetGameWasOver();
 	score = 0;
 	coin = 0;

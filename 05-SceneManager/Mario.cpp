@@ -165,6 +165,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 		{
 			goomba->SetState(GOOMBA_STATE_DIE);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			score += 100;
 		}
 	}
 	else // hit by Goomba
@@ -200,6 +201,7 @@ void CMario::OnCollisionWithFlygoomba(LPCOLLISIONEVENT e) {
 		else if (flygoomba->GetState() == FLYGOOMBA_STATE_WALKING) {
 			flygoomba->SetState(FLYGOOMBA_STATE_DIE);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
+			score += 100;
 		}
 	}//hit by goomba
 	else {
@@ -230,6 +232,7 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	coin++;
+	score += 50;
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
@@ -243,7 +246,7 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 	}
 	ULONGLONG time = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->Gettime();
 	CGame::GetInstance()->SetScoreTimeCoinGlobal(score, time, coin);
-	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId(),startx,starty);
+	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId(),startx,starty,score,coin);
 
 }
 void CMario::OnCOllisionWithMystericBrick(LPCOLLISIONEVENT e)
@@ -254,6 +257,14 @@ void CMario::OnCOllisionWithMystericBrick(LPCOLLISIONEVENT e)
 		if (b->GetState() != MYSTERIC_STATE_DIE)
 		{
 			b->SetState(MYSTERIC_STATE_DIE);
+			int claimid = b->GetClaimid();
+			if (claimid != 101 && claimid > 50) {
+				score += 50;
+				coin++;
+			}
+			else if (claimid < 30 && claimid>0) {
+				score += 100;
+			}
 		}
 	}
 }
@@ -535,6 +546,8 @@ void CMario::Render()
 	//RenderBoundingBox();
 
 	DebugOutTitle(L"Coins: %d", coin);
+	((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->SetScoreCoin(score, coin);
+
 }
 
 void CMario::SetState(int state)

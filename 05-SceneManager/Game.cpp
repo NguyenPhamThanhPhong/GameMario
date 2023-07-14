@@ -528,13 +528,18 @@ void CGame::SwitchScene()
 	if (startx>0 && starty>0) {
 		((LPPLAYSCENE)s)->GetPlayer()->SetPosition(startx,starty);
 	}
+	DebugOut(L"[INFO] IN GAME score coin: %d %d \n", scene_score, scene_coin);
+	((LPPLAYSCENE)s)->SetScoreCoin(this->scene_score, this->scene_coin);
 }
 
-void CGame::InitiateSwitchScene(int scene_id,float positionx,float positiony)
+void CGame::InitiateSwitchScene(int scene_id,float positionx,float positiony,int score,int coin)
 {
 	next_scene = scene_id;
 	this->startx = positionx;
 	this->starty = positiony;
+	this->scene_score = score;
+	this->scene_coin = coin;
+	
 }
 
 

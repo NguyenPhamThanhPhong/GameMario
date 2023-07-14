@@ -34,7 +34,7 @@ void CSampleKeyHandlerWorld::OnKeyDown(int KeyCode)
 		break;
 	case DIK_S:
 		if (icon->GetisAtStage()) {
-			CGame::GetInstance()->InitiateSwitchScene(5, 10.0f, 330.0f);
+			CGame::GetInstance()->InitiateSwitchScene(5, 10.0f, 330.0f,0,0);
 		}
 		break;
 	}
