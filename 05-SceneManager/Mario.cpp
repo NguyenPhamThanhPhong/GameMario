@@ -18,7 +18,6 @@
 #include "BreakableBrick.h"
 #include "Button.h"
 #include "BackgroundAni.h"
-#include "CoinHidden.h"
 
 #include "Collision.h"
 
@@ -123,9 +122,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 		if ( mushroom->GetState() == MUSHROOM_STATE_MOVE) {
 			if (level == MARIO_LEVEL_SMALL) {
+				e->obj->Delete();
 				SetLevel(MARIO_LEVEL_BIG);
 			}
-			e->obj->Delete();
 		}
 	}
 	else if (dynamic_cast<CFireball*>(e->obj)) {
@@ -153,6 +152,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			if (bbrick->GetState() == BREAKABLE_BRICK_LIVE) {
 				bbrick->SetState(BREAKABLE_BRICK_DIE);
 			}
+			else if (bbrick->GetState() == BREAKABLE_BRICK_SLEEP) {
+				bbrick->Killcoin();
+			}
 		}
 	}
 	else if (dynamic_cast<CButton*>(e->obj)) {
@@ -166,14 +168,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		CCard* card = dynamic_cast<CCard*>(e->obj);
 		if (card->GetState() == 1) {
 			card->SetState(2);
-		}
-	}
-	else if (dynamic_cast<CCoinHidden*>(e->obj)) {
-		CCoinHidden* coinhidden = dynamic_cast<CCoinHidden*>(e->obj);
-		if (coinhidden->GetState() == COIN_HIDDEN_LIVE) {
-			coinhidden->SetState(COIN_HIDDEN_DIE);
-			coin++;
-			score += 50;
 		}
 	}
 }

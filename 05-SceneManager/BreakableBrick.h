@@ -52,6 +52,10 @@ public:
 		r = l + 14;
 		b = t + 16;
 	}
+	void Killcoin() {
+		((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->DeleteCoinHIdden(coinid);
+		this->coinid = -1;
+	}
 	virtual void SetState(int state) {
 		CGameObject::SetState(state);
 		switch (state) {

@@ -61,7 +61,6 @@ public:
 			s->Get(199013)->Draw(x, y);
 			break;
 		}
-		RenderBoundingBox();
 		
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
