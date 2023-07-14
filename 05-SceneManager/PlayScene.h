@@ -9,6 +9,8 @@
 //#include "Koopas.h"
 
 #define GAME_TIME 500
+#define CUR_X 155
+#define CUR_Y 100
 
 class CPlayScene: public CScene
 {
@@ -22,9 +24,14 @@ protected:
 	int coin = 0;
 	int card = -1;
 
+	float curtainx = 80;
+	float curtainy = 80;
 
 	ULONGLONG win_start = -1;
 	ULONGLONG game_start = -1;
+
+	ULONGLONG title_start = -1;
+	ULONGLONG title_sleep = -1;
 
 	LPGAMEOBJECT fireball = NULL;
 	LPGAMEOBJECT fireball2 = NULL;
@@ -32,6 +39,7 @@ protected:
 	LPGAMEOBJECT turtle = NULL;
 
 	LPGAMEOBJECT marioicon = NULL;
+	LPGAMEOBJECT arrow = NULL;
 
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> hidddenCoins;
@@ -39,6 +47,7 @@ protected:
 	bool isCoinDeleted = false;
 	bool isWin = false;
 	bool WasgameOver = false;
+	bool isAniPlaying = false;
 
 
 	void _ParseSection_SPRITES(string line);
@@ -57,6 +66,9 @@ public:
 	virtual void Render();
 	virtual void Unload();
 
+	void UpdateTitle();
+	void RenderTitle();
+
 	LPGAMEOBJECT GetPlayer() { return player; }
 	LPGAMEOBJECT GetFireball(int index) { 
 		if(index == 1)
@@ -65,6 +77,7 @@ public:
 	}
 	LPGAMEOBJECT GetTail() { return tail; }
 	LPGAMEOBJECT GetTurtle() { return turtle; }
+	LPGAMEOBJECT GetArrow() { return arrow; }
 
 	void TriggerCoinHIdden(int index) {
 		if (index < 0)	return;
@@ -128,10 +141,26 @@ public:
 		this->score = score_set;
 		this->coin = coin_set;
 	}
-
+	void SetAniPlaying(bool signal) { 
+		if (signal) {
+			this->isAniPlaying = signal;
+			title_start = GetTickCount64();
+			curtainx = CUR_X;
+			curtainy = CUR_Y;
+			arrow->SetPosition(500, 500);
+		}
+		else
+		{
+			isAniPlaying = false;
+			title_sleep = GetTickCount64();
+			arrow->SetPosition(100, 137);
+		}
+	
+	}
 	 
 	bool GetisCoinDeleted() { return isCoinDeleted; }
 	bool GetGameWasOver() { return this->WasgameOver; }
+	bool GetisAniPlaying() { return this->isAniPlaying; }
 	ULONGLONG  Gettime() { return this->game_start; }
 
 	void Clear();

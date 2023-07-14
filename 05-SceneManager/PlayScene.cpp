@@ -39,6 +39,9 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) :
 	if (id == 3) {
 		key_handler = new CSampleKeyHandlerWorld(this);
 	}
+	else if (id == 4) {
+		key_handler = new CSampleKeyHandlerTitle(this);
+	}
 	else
 		key_handler = new CSampleKeyHandler(this);
 }
@@ -306,6 +309,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CCard(x, y);
 		break;
 	}
+	case 30: {
+		int spriteId = (int)atoi(tokens[3].c_str());
+		obj = new CBackgroundobj(x, y,spriteId);
+		this->arrow = (CBackgroundobj*)obj;
+		break;
+	}
 	case OBJECT_TYPE_PLATFORM:
 	{
 
@@ -461,6 +470,10 @@ void CPlayScene::Update(DWORD dt)
 			SetGameOver();
 	}
 
+	if (id == 4) {
+		UpdateTitle();
+	}
+
 	// Update camera to follow mario
 	float cx, cy;
 	player->GetPosition(cx, cy);
@@ -486,6 +499,11 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
+
+	if (id == 4) {
+		RenderTitle();
+	}
+
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 
@@ -618,4 +636,43 @@ void CPlayScene::SetScoreTimeCoin(int scored, ULONGLONG game_startz, int coined)
 	int timetemp = GAME_TIME - (int)((GetTickCount64() - game_start) / 1000);
 	DebugOut(L" scene id(%d) time in scene: %d \n ",id, timetemp);
 
+}
+void CPlayScene::UpdateTitle() {
+	curtainy -= 1.2f;
+	if (id == 4) {
+		if (isAniPlaying == false && GetTickCount64() - title_sleep > 10000) {
+			isAniPlaying = true;
+			title_start = GetTickCount64();
+			curtainx = CUR_X;
+			curtainy = CUR_Y;
+			arrow->SetPosition(500, 500);
+		}
+		else if (isAniPlaying && GetTickCount64() - title_start > 5000) {
+			isAniPlaying = false;
+			title_sleep = GetTickCount64();
+			
+			arrow->SetPosition(100, 137);
+		}
+	}
+}
+void CPlayScene::RenderTitle() {
+	CSprites* s = CSprites::GetInstance();
+	s->Get(199010)->Draw(250,250);
+	if (id == 4) {
+		if (isAniPlaying == true) {
+			int time_span = GetTickCount64() - title_start;
+			if (time_span < 2000) {
+				s->Get(55002)->Draw(CUR_X, CUR_Y);
+				s->Get(55001)->Draw(curtainx, curtainy);
+			}
+			else if (time_span <= 2500) {
+				s->Get(55003)->Draw(CUR_X, CUR_Y);
+			}
+			else if (time_span <= 5000) {
+				s->Get(55004)->Draw(CUR_X, CUR_Y);
+			}
+		}
+		else
+			s->Get(55004)->Draw(CUR_X, CUR_Y);
+	}
 }

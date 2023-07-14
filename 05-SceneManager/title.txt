@@ -1,0 +1,15 @@
+# id	left	top	right	bottom	texture_id
+[SPRITES]
+#screen:
+#curtain
+55001	0	0	255	184	66
+#no curtain:
+55002	258	0	513	224	66
+#mario bros black:
+55003	516	0	771	224	66
+#mario bros color:
+55004	516	226	771	449	66
+#arrow:
+55005	30	307	36	314	66
+# ani_id	sprite1_id	time1	sprite2_id	time2	...
+[ANIMATIONS]
