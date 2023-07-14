@@ -527,6 +527,11 @@ void CGame::SwitchScene()
 	
 	if (startx>0 && starty>0) {
 		((LPPLAYSCENE)s)->GetPlayer()->SetPosition(startx,starty);
+		if(startx>2000){
+			((LPPLAYSCENE)s)->GetPlayer()->SetState(MARIO_STATE_DETELEPORTUP);
+		}
+		else
+			((LPPLAYSCENE)s)->GetPlayer()->SetState(MARIO_STATE_DETELEPORTDOWN);
 	}
 	DebugOut(L"[INFO] IN GAME score coin: %d %d \n", scene_score, scene_coin);
 	((LPPLAYSCENE)s)->SetScoreCoin(this->scene_score, this->scene_coin);

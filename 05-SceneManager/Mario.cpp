@@ -63,6 +63,21 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		wasAtMaxSpeed = false;
 	}
 
+	if (this->state == MARIO_STATE_DETELEPORTDOWN || this->state == MARIO_STATE_DETELEPORTUP) {
+		if (GetTickCount64() - deteleport_start > 1500) {
+			ay = MARIO_GRAVITY;
+			state = MARIO_STATE_IDLE;
+			SetState(MARIO_STATE_IDLE);
+			untouchable = 1;
+			canCollide = true;
+			if (isTeleporting) {
+				ULONGLONG time = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->Gettime();
+				CGame::GetInstance()->SetScoreTimeCoinGlobal(score, time, coin);
+				CGame::GetInstance()->InitiateSwitchScene(teleportto, startx, starty, score, coin);
+			}
+		}
+	}
+
 	isOnPlatform = false;
 
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -248,28 +263,28 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	LPGAME game = CGame::GetInstance();
 	CPortal* p = (CPortal*)e->obj;
-	int startx = -10;
-	int starty = -10;
+	this->startx = -10.0f;
+	this->starty = -10.0f;
 	if (e->ny < 0) {
 		if (game->IsKeyDown(DIK_DOWN)) {
+			teleportto = p->GetSceneId();
 			if (p->GetSceneId() == 1) {
 				startx = 150.0f;
-				starty = 10.0f;
+				starty = 20.0f;
 			}
-			ULONGLONG time = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->Gettime();
-			CGame::GetInstance()->SetScoreTimeCoinGlobal(score, time, coin);
-			CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId(), startx, starty, score, coin);
+			SetState(MARIO_STATE_DETELEPORTDOWN);
+			isTeleporting = true;
 		}
 	}
 	else if (e->ny > 0) {
 		if (game->IsKeyDown(DIK_UP)) {
+			teleportto = p->GetSceneId();
 			if (p->GetSceneId() == 5) {
 				startx = 2336.0f;
-				starty = 330.0f;
+				starty = 345.0f;
 			}
-			ULONGLONG time = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->Gettime();
-			CGame::GetInstance()->SetScoreTimeCoinGlobal(score, time, coin);
-			CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId(), startx, starty, score, coin);
+			SetState(MARIO_STATE_DETELEPORTUP);
+			isTeleporting = true;
 		}
 	}
 
@@ -423,6 +438,9 @@ int CMario::GetAniIdSmall()
 			}
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_SMALL_IDLE_RIGHT;
+	if (state == MARIO_STATE_DETELEPORTUP || state == MARIO_STATE_DETELEPORTDOWN) {
+		aniId = ID_ANI_TELEPORT_SMALL;
+	}
 
 	return aniId;
 }
@@ -485,6 +503,9 @@ int CMario::GetAniIdBig()
 			}
 
 	if (aniId == -1) aniId = ID_ANI_MARIO_IDLE_RIGHT;
+	if (state == MARIO_STATE_DETELEPORTUP || state == MARIO_STATE_DETELEPORTDOWN) {
+		aniId = ID_ANI_TELEPORT_BIG;
+	}
 	return aniId;
 }
 int CMario::GetAniIdFox()
@@ -557,6 +578,9 @@ int CMario::GetAniIdFox()
 			aniId = 1718;
 
 	}
+	if (state == MARIO_STATE_DETELEPORTUP || state == MARIO_STATE_DETELEPORTDOWN) {
+		aniId = ID_ANI_TELEPORT_FOX;
+	}
 	return aniId;
 }
 
@@ -586,6 +610,8 @@ void CMario::SetState(int state)
 {
 	// DIE is the end state, cannot be changed! 
 	if (this->state == MARIO_STATE_DIE) return;
+	if (this->state == MARIO_STATE_DETELEPORTDOWN || this->state == MARIO_STATE_DETELEPORTUP)
+		return;
 
 	switch (state)
 	{
@@ -696,6 +722,24 @@ void CMario::SetState(int state)
 		vy = -MARIO_JUMP_DEFLECT_SPEED;
 		vx = 0;
 		ax = 0;
+		break;
+	case MARIO_STATE_DETELEPORTUP:
+		vy = -0.01f;
+		vx = 0.0f;
+		ax = 0.0f;
+		ay = 0.0f;
+		untouchable = 0;
+		canCollide = false;
+		deteleport_start = GetTickCount64();
+		break;
+	case MARIO_STATE_DETELEPORTDOWN:
+		vy = 0.01f;
+		vx = 0.0f;
+		ax = 0.0f;
+		ay = 0.0f;
+		untouchable = 0;
+		canCollide = false;
+		deteleport_start = GetTickCount64();
 		break;
 	}
 

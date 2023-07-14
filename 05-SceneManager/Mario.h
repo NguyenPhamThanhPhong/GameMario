@@ -107,6 +107,10 @@
 #define ID_ANI_MARIO_FOX_FLY_RIGHT 1715
 #define ID_ANI_MARIO_FOX_FLY_LEFT 1716
 
+#define ID_ANI_TELEPORT_SMALL 150702
+#define ID_ANI_TELEPORT_BIG 150703
+#define ID_ANI_TELEPORT_FOX 150704
+
 #pragma endregion
 
 #define GROUND_Y 160.0f
@@ -138,11 +142,17 @@ class CMario : public CGameObject
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
 
+	float startx = -10;
+	float starty = -10;
+	int teleportto = 5;
+	bool canCollide = true;
+
 	int level; 
 	int untouchable; 
 	ULONGLONG untouchable_start;
 	ULONGLONG resetGravity_start=-1;
 	ULONGLONG glide_start = -1;
+	ULONGLONG deteleport_start = -1;
 
 	ULONGLONG maxSpeed_start = -1;
 	bool wasAtMaxSpeed = false;
@@ -155,6 +165,7 @@ class CMario : public CGameObject
 	bool isGlide = false;
 
 	bool isTriggeringTail = false;
+	bool isTeleporting = false;
 
 	bool IskeyHolding = false;
 
@@ -190,7 +201,7 @@ public:
 
 	int IsCollidable()
 	{ 
-		return (state != MARIO_STATE_DIE); 
+		return (state != MARIO_STATE_DIE) && canCollide; 
 	}
 
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }
