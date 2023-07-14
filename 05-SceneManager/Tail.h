@@ -24,7 +24,6 @@ protected:
 	}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render() {
-		RenderBoundingBox();
 	}
 
 	virtual int IsCollidable() { return 1; };

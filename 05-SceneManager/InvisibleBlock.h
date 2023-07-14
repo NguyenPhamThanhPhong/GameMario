@@ -18,7 +18,6 @@ public:
 	void Render() {
 		//CSprites* s = CSprites::GetInstance();
 		//s->Get(20001)->Draw(x, y);
-		RenderBoundingBox();
 	}
 	void GetBoundingBox(float& l, float& t, float& r, float& b) {
 		l = x - 10 / 2;
