@@ -514,6 +514,7 @@ void CGame::SwitchScene()
 
 	DebugOut(L"[INFO] Switching to scene %d\n", next_scene);
 
+
 	scenes[current_scene]->Unload();
 
 	CSprites::GetInstance()->Clear();
@@ -570,4 +571,17 @@ void CGame::SetPlayerlevel(int level) {
 }
 void CGame::SetGameWasOver() {
 	((CPlayScene*)scenes[3])->SetGameWasOver(true);
+	for (auto it = scenes.begin(); it != scenes.end(); ++it) {
+		CPlayScene* tempscene = (CPlayScene*)(it->second);
+		tempscene->SetScoreTimeCoin(0, 0, 0);
+	}
+}
+void CGame::SetScoreTimeCoinGlobal(int scored, ULONGLONG timed, int coined) {
+	for (auto it = scenes.begin(); it != scenes.end(); ++it) {
+		CPlayScene* tempscene = (CPlayScene*)(it->second);
+		tempscene->SetScoreTimeCoin(scored, timed, coined);
+	}
+	int time = 999 - (int)((GetTickCount64() - timed) / 1000);
+	DebugOut(L" num: %d \n ", time);
+
 }

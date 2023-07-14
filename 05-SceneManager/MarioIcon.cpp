@@ -35,7 +35,6 @@ void CMarioIcon::OnCollisionWith(LPCOLLISIONEVENT e) {
 		isAtStage = node->GetisStage();
 		x = node->Getx();
 		y = node->Gety();
-		DebugOut(L"[INFO] now at : %d \n",(int)x);
 		vx = 0;
 		vy = 0;
 	}

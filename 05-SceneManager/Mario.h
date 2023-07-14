@@ -147,6 +147,7 @@ class CMario : public CGameObject
 
 	BOOLEAN isOnPlatform;
 	int coin; 
+	int score=0;
 
 	bool isFlying = false;
 	bool isGlide = false;

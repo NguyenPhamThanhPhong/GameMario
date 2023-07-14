@@ -9,6 +9,7 @@ MarioFox.txt
 backgroundobj.txt
 pipe.txt
 worldmap.txt
+hud.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type

@@ -70,7 +70,7 @@ void CPlayScene::_ParseSection_SPRITES(string line)
 	LPTEXTURE tex = CTextures::GetInstance()->Get(texID);
 	if (tex == NULL)
 	{
-		DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
+		//DebugOut(L"[ERROR] Texture ID %d not found!\n", texID);
 		return;
 	}
 
@@ -138,7 +138,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		//int level = CGame::GetInstance()->getPlayerlevel();
 		//((CMario*)player)->SetLevel(level);
 
-		DebugOut(L"[INFO] Player object has been created!\n");
+		//DebugOut(L"[INFO] Player object has been created!\n");
 		break;
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x, y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x, y); break;
@@ -349,7 +349,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 void CPlayScene::LoadAssets(LPCWSTR assetFile)
 {
-	DebugOut(L"[INFO] Start loading assets from : %s \n", assetFile);
+	//DebugOut(L"[INFO] Start loading assets from : %s \n", assetFile);
 
 	ifstream f;
 	f.open(assetFile);
@@ -379,7 +379,7 @@ void CPlayScene::LoadAssets(LPCWSTR assetFile)
 
 	f.close();
 
-	DebugOut(L"[INFO] Done loading assets from %s\n", assetFile);
+	//DebugOut(L"[INFO] Done loading assets from %s\n", assetFile);
 }
 
 void CPlayScene::Load()
@@ -414,13 +414,15 @@ void CPlayScene::Load()
 
 	f.close();
 
-	if (player != nullptr) {
-		((CMario*)(player))->SetLevel(player_level);
-	}
+
 	if (id == 5) {
-		game_start = GetTickCount64();
+		DebugOut(L"[INFO] scene %d time: %d \n",id, time);
+		if (time <= 0 || game_start <=0) {
+			game_start = GetTickCount64();
+			((CMario*)(player))->SetLevel(player_level);
+		}
 	}
-	DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
+	//DebugOut(L"[INFO] Done loading scene  %s\n", sceneFilePath);
 }
 
 void CPlayScene::Update(DWORD dt)
@@ -439,9 +441,8 @@ void CPlayScene::Update(DWORD dt)
 		objects[i]->Update(dt, &coObjects);
 	}
 
-	if (id == 5) {
-		time = 999-	(int)((GetTickCount64() - game_start)/1000);
-		DebugOut(L"[INFO] game time: %d \n",time);
+	if (id == 5 || id == 1) {
+		time = GAME_TIME-	(int)((GetTickCount64() - game_start)/1000);
 	}
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
@@ -452,6 +453,10 @@ void CPlayScene::Update(DWORD dt)
 		DebugOut(L"[INFO] game win \n");
 		isWin = false;
 		return;
+	}
+	if (!isWin && id==5||id ==1) {
+		if (time <= 0)
+			SetGameOver();
 	}
 
 	// Update camera to follow mario
@@ -482,7 +487,7 @@ void CPlayScene::Render()
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 
-	if (id == 5) {
+	if (id == 5 || id == 1 || id == 3) {
 		float xx = 0, yy = 0;
 		CGame::GetInstance()->GetCamPos(xx,yy);
 		CSprites* s = CSprites::GetInstance();
@@ -494,22 +499,22 @@ void CPlayScene::Render()
 
 		float scorex = xx - 14;
 		float scorey = yy + 4;
-		//Rendernums(7, score, scorex, scorey);
+		Rendernums(7, score, scorex, scorey);
 
 		float timex = xx + 28;
 		float timey = scorey;
 		Rendernums(3, time, timex, timey);
+		
 
 		float coinx = timex+10;
 		float coiny = timey - 10;
-		//Rendernums(2, coin, coinx, coiny);
+		Rendernums(2, coin, coinx, coiny);
 
 		if (isWin)
 		{
 			s->Get(199012)->Draw(2690,265);
 			if (card <= 3 && card>=1) {
 				s->Get(199018+card)->Draw(2720, 265);
-				DebugOut(L"[INFO] card is: %d \n",card);
 
 			}
 		}
@@ -517,19 +522,17 @@ void CPlayScene::Render()
 	}
 
 	if (id == 3 && WasgameOver == true) {
-		DebugOut(L"[INFO]game was over: \n");
 		CSprites* s = CSprites::GetInstance();
 		s->Get(199023)->Draw(150, 50);
 	}
 }
 void CPlayScene::Rendernums(int size, int num, float numx, float numy) {
 	//render score
-	if (num < 0)return;
 	int digits[7] = { 0 };  // Initialized with all zeros
 
 	// Extract digits in reverse order
 	int numDigits = 0;
-	while (score > 0 && numDigits < 7) {
+	while (num > 0 && numDigits < 7) {
 		digits[numDigits] = num % 10;
 		num /= 10;
 		numDigits++;
@@ -539,7 +542,6 @@ void CPlayScene::Rendernums(int size, int num, float numx, float numy) {
 		s->Get(101 + digits[i])->Draw(numx, numy);
 		numx -= 8;
 	}
-
 }
 
 /*
@@ -597,10 +599,21 @@ void CPlayScene::PurgeDeletedObjects()
 void CPlayScene::SetGameOver() {
 	CGame::GetInstance()->InitiateSwitchScene(3, 400, 300);
 	CGame::GetInstance()->SetGameWasOver();
+	score = 0;
+	coin = 0;
 }
 void CPlayScene::SetGameWin(int received_card) {
 	isWin = true;
 	win_start = GetTickCount64();
 	card = received_card;
+	CGame::GetInstance()->SetScoreTimeCoinGlobal(score, 0, coin);
+}
+void CPlayScene::SetScoreTimeCoin(int scored, ULONGLONG game_startz, int coined) {
+	this->coin = coined;
+	this->score = scored;
+	this->game_start = game_startz;
+
+	int timetemp = GAME_TIME - (int)((GetTickCount64() - game_start) / 1000);
+	DebugOut(L" scene id(%d) time in scene: %d \n ",id, timetemp);
 
 }

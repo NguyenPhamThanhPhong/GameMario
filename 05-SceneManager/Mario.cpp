@@ -241,7 +241,10 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 		startx = 2336.0f;
 		starty = 330.0f;
 	}
+	ULONGLONG time = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->Gettime();
+	CGame::GetInstance()->SetScoreTimeCoinGlobal(score, time, coin);
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId(),startx,starty);
+
 }
 void CMario::OnCOllisionWithMystericBrick(LPCOLLISIONEVENT e)
 {

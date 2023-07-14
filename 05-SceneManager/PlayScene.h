@@ -8,6 +8,7 @@
 #include "Goomba.h"
 //#include "Koopas.h"
 
+#define GAME_TIME 10
 
 class CPlayScene: public CScene
 {
@@ -17,8 +18,8 @@ protected:
 	int player_level = 1;
 
 	int score=986354;
-	int time = 900;
-	int coin;
+	int time = 0;
+	int coin = 0;
 	int card = -1;
 
 
@@ -27,7 +28,7 @@ protected:
 
 	LPGAMEOBJECT fireball = NULL;
 	LPGAMEOBJECT fireball2 = NULL;
-	LPGAMEOBJECT tail;
+	LPGAMEOBJECT tail = nullptr;
 	LPGAMEOBJECT turtle = NULL;
 
 	LPGAMEOBJECT marioicon = NULL;
@@ -122,10 +123,12 @@ public:
 	void SetGameOver();
 	void SetGameWasOver(bool signal) { this->WasgameOver = signal; }
 	void SetGameWin(int received_card);
+	void SetScoreTimeCoin(int scored, ULONGLONG game_startz, int coined);
 
 	 
 	bool GetisCoinDeleted() { return isCoinDeleted; }
 	bool GetGameWasOver() { return this->WasgameOver; }
+	int  Gettime() { return this->game_start; }
 
 	void Clear();
 	void PurgeDeletedObjects();
