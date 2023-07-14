@@ -19,6 +19,7 @@ private:
 	float ay;
 	int Rewardid;
 	ULONGLONG wakeup_start;
+	ULONGLONG direct_start;
 protected:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 		if (state == LEAF_STATE_SLEEP) {
@@ -39,11 +40,22 @@ protected:
 	}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 		vy += ay * dt;
-		if (state == LEAF_STATE_WAKEUP && (GetTickCount64() - wakeup_start > 1500)) {
+		if (state == LEAF_STATE_WAKEUP && (GetTickCount64() - wakeup_start > 1000)) {
 			SetState(LEAF_STATE_MOVE);
+		}
+		if (state == LEAF_STATE_MOVE) {
+			if (vx < 0 && (GetTickCount64() - direct_start > 240)) {
+				vx = 0.2f;
+				direct_start = GetTickCount64();
+			}
+			else if (vx > 0 && (GetTickCount64() - direct_start > 240)) {
+				vx = -0.2f;
+				direct_start = GetTickCount64();
+			}
 		}
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
+
 	}
 	virtual void OnNoCollision(DWORD dt) {
 		if (state == LEAF_STATE_WAKEUP)
@@ -60,9 +72,9 @@ protected:
 	}
 	virtual void Render() {
 		if (state != LEAF_STATE_SLEEP) {
-			int renderId = LEAF_FLYRIGHT;
+			int renderId = LEAF_FLYLEFT;
 			if (vx < 0) {
-				renderId = LEAF_FLYLEFT;
+				renderId = LEAF_FLYRIGHT;
 			}
 			CSprites* s = CSprites::GetInstance();
 			s->Get(renderId)->Draw(x, y);
@@ -95,7 +107,8 @@ public:
 		}
 		case LEAF_STATE_MOVE: {
 			vy = 0.05f;
-			vx = 0;
+			vx = 0.02f;
+			direct_start = GetTickCount64();
 			break;
 		}
 		}

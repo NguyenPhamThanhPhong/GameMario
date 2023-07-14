@@ -428,8 +428,10 @@ void CPlayScene::Load()
 		DebugOut(L"[INFO] scene %d time: %d \n",id, time);
 		if (time <= 0 || game_start <=0) {
 			game_start = GetTickCount64();
-			((CMario*)(player))->SetLevel(player_level);
 		}
+	}
+	if (id == 5 || id == 1) {
+		((CMario*)(player))->SetLevel(player_level);
 	}
 	((CMario*)(player))->SetScorecoin(score, coin);
 	DebugOut(L"[INFO] load() scene %d score: %d coin: %d \n",id, score, coin);

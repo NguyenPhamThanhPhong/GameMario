@@ -2,6 +2,8 @@
 #include "BreakableBrick.h"
 #include "Brick.h"
 #include "debug.h"
+#include "Turtle.h"
+#include "Flygoomba.h"
 
 void CTail::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
@@ -10,12 +12,12 @@ void CTail::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	float yyy = mario->Gety();
 	y = yyy + 5;
 
-	if (x <= xxx - 10) {
-		x = xxx - 9;
+	if (x <= xxx - 11) {
+		x = xxx - 10;
 		vx = 0.4f;
 	}
-	else if (x >= xxx + 10) {
-		x = xxx + 9;
+	else if (x >= xxx + 11) {
+		x = xxx + 10;
 		vx = -0.4f;
 	}
 	CGameObject::Update(dt, coObjects);
@@ -44,6 +46,28 @@ void CTail::OnCollisionWith(LPCOLLISIONEVENT e) {
 
 			if (b->GetClaimid() == 101) {
 				b->SetState(MYSTERIC_STATE_DIE);
+			}
+		}
+		else if (dynamic_cast<CTurtle*>(e->obj)) {
+			CTurtle* turtle = dynamic_cast<CTurtle*>(e->obj);
+			if (state == TAIL_TRIGGER) {
+				turtle->SetBounce(e->nx);
+			}
+		}
+		else if (dynamic_cast<CGoomba*>(e->obj)) {
+			CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+			if (goomba->GetState() != GOOMBA_STATE_DIE)
+			{
+				goomba->SetState(GOOMBA_STATE_DIE);
+			}
+		}
+		else if (dynamic_cast<CFlygoomba*>(e->obj)) {
+			CFlygoomba* flygoomba = dynamic_cast<CFlygoomba*>(e->obj);
+			if (flygoomba->GetState() == FLYGOOMBA_STATE_FLY || flygoomba->GetState() == FLYGOOMBA_STATE_FLYDOWN) {
+				flygoomba->SetState(FLYGOOMBA_STATE_WALKING);
+			}
+			else if (flygoomba->GetState() == FLYGOOMBA_STATE_WALKING) {
+				flygoomba->SetState(FLYGOOMBA_STATE_DIE);
 			}
 		}
 	}

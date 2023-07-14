@@ -161,6 +161,7 @@ public:
 	bool GetisCoinDeleted() { return isCoinDeleted; }
 	bool GetGameWasOver() { return this->WasgameOver; }
 	bool GetisAniPlaying() { return this->isAniPlaying; }
+	bool GetisWin() { return this->isWin; }
 	ULONGLONG  Gettime() { return this->game_start; }
 
 	void Clear();

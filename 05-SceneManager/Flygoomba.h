@@ -102,20 +102,9 @@ protected:
 	}
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e) {
-		if (dynamic_cast<CTail*>(e->obj))
-		{
-			CTail* tail = dynamic_cast<CTail*>(e->obj);
-			if (tail->GetState() == 2) {
-				if (GetState() == FLYGOOMBA_STATE_FLY || GetState() == FLYGOOMBA_STATE_FLYDOWN) {
-					SetState(FLYGOOMBA_STATE_WALKING);
-				}
-				else if (GetState() == FLYGOOMBA_STATE_WALKING) {
-					SetState(FLYGOOMBA_STATE_DIE);
-				}
-			}
-		}
 		if (!e->obj->IsBlocking()) return;
 		if (dynamic_cast<CFlygoomba*>(e->obj)) return;
+		if (dynamic_cast<CGoomba*>(e->obj))	return;
 
 		if (e->ny != 0)
 		{

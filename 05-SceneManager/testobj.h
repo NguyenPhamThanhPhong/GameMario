@@ -59,14 +59,17 @@ public:
 		int sizeHor = (int)(Width / cellWidth); // numbers of cells horizontally
 		int sizeVer = (int)(Height / cellHeight);// number of cells vertically
 
-		float xshadow = this->x + Width-5;
-		float yshadow = this->y + 4;
-		int shadowboxHeightCount = (this->Height/ 10) +1;
-		for (int i = 0; i < shadowboxHeightCount; i++)
-		{
-			s->Get(SHADOWBOX_CONTENT)->Draw(xshadow, yshadow);
-			yshadow += 10;
+		if (spriteIdTopLeft != 168011) {
+			float xshadow = this->x + Width - 5;
+			float yshadow = this->y + 4;
+			int shadowboxHeightCount = (this->Height / 10) + 1;
+			for (int i = 0; i < shadowboxHeightCount; i++)
+			{
+				s->Get(SHADOWBOX_CONTENT)->Draw(xshadow, yshadow);
+				yshadow += 10;
+			}
 		}
+
 		//Declare reuseable start point
 		float xLocation = x;
 		float yLocation = y;

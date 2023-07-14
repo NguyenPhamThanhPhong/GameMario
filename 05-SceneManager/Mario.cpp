@@ -105,7 +105,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else if (dynamic_cast<CMushroom*>(e->obj)) {
 		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
-		if (mushroom->GetState() == MUSHROOM_STATE_WAKEUP || mushroom->GetState() == MUSHROOM_STATE_MOVE) {
+		if ( mushroom->GetState() == MUSHROOM_STATE_MOVE) {
 			if (level == MARIO_LEVEL_SMALL) {
 				SetLevel(MARIO_LEVEL_BIG);
 			}

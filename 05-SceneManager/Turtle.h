@@ -161,22 +161,8 @@ protected:
 			if (dynamic_cast<CTransparentblock*>(e->obj)) {
 				vx = -vx;
 			}
-			else if (dynamic_cast<CTail*>(e->obj))
-			{
-				CTail* tail = dynamic_cast<CTail*>(e->obj);
-				if (tail->GetState() == TAIL_TRIGGER) {
-					SetState(TURTLE_SLEEP);
-					return;
-				}
-			}
 		}
 		else if (state==TURTLE_FLY) {
-			if (dynamic_cast<CTail*>(e->obj)) {
-				CTail* tail = dynamic_cast<CTail*>(e->obj);
-				if (tail->GetState() == TAIL_TRIGGER) {
-					SetState(TURTLE_LIVE);
-				}
-			}
 		}
 		else {
 			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
@@ -201,23 +187,6 @@ protected:
 				CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 				if (mushroom->GetState() == MUSHROOM_STATE_SLEEP)
 					mushroom->SetState(MUSHROOM_STATE_WAKEUP);
-			}
-			else if (dynamic_cast<CTail*>(e->obj)) {
-				CTail* tail = dynamic_cast<CTail*>(e->obj);
-				if (tail->GetState() == TAIL_TRIGGER) {
-					if (state == TURTLE_SLEEP)
-					{
-						vy = -0.5f;
-						if (e->nx > 0) {
-							vx = 0.02f;
-							bounce_start = GetTickCount64();
-						}
-						else if (e->nx < 0) {
-							vx = -0.02f;
-							bounce_start = GetTickCount64();
-						}
-					}
-				}
 			}
 		}
 
@@ -329,6 +298,28 @@ public:
 			fly_end = GetTickCount64();
 			break;
 		}
+		}
+	}
+
+	void SetBounce(int nx) {
+
+		if (state == TURTLE_SLEEP)
+		{
+			vy = -0.5f;
+			if (nx > 0) {
+				vx = -0.02f;
+				bounce_start = GetTickCount64();
+			}
+			else if (nx < 0) {
+				vx = +0.02f;
+				bounce_start = GetTickCount64();
+			}
+		}
+		else if (state == TURTLE_LIVE) {
+			SetState(TURTLE_SLEEP);
+		}
+		else if (state == TURTLE_FLY) {
+			SetState(TURTLE_LIVE);
 		}
 	}
 };
