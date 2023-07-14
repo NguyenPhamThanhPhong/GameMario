@@ -1,5 +1,5 @@
 [SETTINGS]
-start	4
+start	5
 width	320
 height	240
 
@@ -38,3 +38,4 @@ height	240
 64	textures\goal.png
 65	textures\gameover.png
 66	textures\title.png
+67	textures\MARIO5.png

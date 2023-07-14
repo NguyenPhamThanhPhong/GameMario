@@ -177,10 +177,10 @@ protected:
 		}
 		else
 		{
-			if (state == PLANT_STATE_SLEEP)
-				current_sprite = PLANT_SPRITE_BOTRIGHT;
+			if (y<=TopMost)
+				current_sprite = 300506;
 			else
-				current_sprite = PLANT_SPRITE_BOTLEFT;
+				current_sprite = 300505;
 		}
 
 		CGameObject::Update(dt, coObjects);

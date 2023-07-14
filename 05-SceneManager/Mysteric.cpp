@@ -2,8 +2,8 @@
 #include "Brick.h"
 #include "PlayScene.h"
 
-#define ID_ANI_MYSTERIC_BRICK 100000
-#define ID_ANI_MYSTERIC_BRICK_DIE 100001
+#define ID_ANI_MYSTERIC_BRICK 93
+#define ID_ANI_MYSTERIC_BRICK_DIE 94
 
 #define MYSTERIC_BRICK_HEIGHT 17
 #define MYSTERIC_BRICK_WIDTH 16
@@ -15,8 +15,13 @@ void CMystericBrick::Render()
 	if (state == MYSTERIC_STATE_DIE)
 		renderID = ID_ANI_MYSTERIC_BRICK_DIE;
 	CAnimations* animations = CAnimations::GetInstance();
+
+	if (rewardid == 101) {
+		animations->Get(92)->Render(x, y);
+		return;
+	}
+
 	animations->Get(renderID)->Render(x, y);
-	RenderBoundingBox();
 }
 void CMystericBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 {

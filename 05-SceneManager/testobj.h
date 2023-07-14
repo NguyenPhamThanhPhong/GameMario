@@ -59,7 +59,7 @@ public:
 		int sizeHor = (int)(Width / cellWidth); // numbers of cells horizontally
 		int sizeVer = (int)(Height / cellHeight);// number of cells vertically
 
-		if (spriteIdTopLeft != 168011) {
+		if (spriteIdTopLeft != 168010) {
 			float xshadow = this->x + Width - 5;
 			float yshadow = this->y + 4;
 			int shadowboxHeightCount = (this->Height / 10) + 1;

@@ -12,6 +12,7 @@
 #include "Leaf.h"
 #include "Tail.h"
 #include "Mushroom.h"
+#include "BreakableBrick.h"
 
 #define TURTLE_LIVE		1
 #define TURTLE_SLEEP	2
@@ -87,7 +88,7 @@ protected:
 		else if (state == TURTLE_SLEEP && vx!=0 && (GetTickCount64()-bounce_start > 600)) {
 				vx = 0;
 		}
-		if (xxx >= x + 200 || xxx < x - 200) {
+		if ((xxx >= x + 200 || xxx < x - 200)&&(xxx >= originalx + 200 || xxx < originalx - 200)) {
 			this->x = originalx;
 			this->y = originaly;
 			SetState(Originalstate);
@@ -187,6 +188,14 @@ protected:
 				CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 				if (mushroom->GetState() == MUSHROOM_STATE_SLEEP)
 					mushroom->SetState(MUSHROOM_STATE_WAKEUP);
+			}
+			else if (dynamic_cast<CBreakableBrick*>(e->obj)) {
+				if (state == TURTLE_SPIN_LEFT || state == TURTLE_SPIN_RIGHT) {
+					CBreakableBrick* bbrick = dynamic_cast<CBreakableBrick*>(e->obj);
+					if (bbrick->GetState() == BREAKABLE_BRICK_LIVE) {
+						bbrick->SetState(BREAKABLE_BRICK_DIE);
+					}
+				}
 			}
 		}
 

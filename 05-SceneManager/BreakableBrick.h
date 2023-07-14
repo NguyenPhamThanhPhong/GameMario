@@ -5,8 +5,8 @@
 #include "Animations.h"
 #include "CoinHidden.h"
 
-#define ID_ANI_BREAKABLE_BRICK 100092
-#define ID_ANI_BREAKABLE_BRICK_DIE 100093
+#define ID_ANI_BREAKABLE_BRICK 92
+#define ID_ANI_BREAKABLE_BRICK_DIE 93
 
 #define BREAKABLE_BRICK_LIVE 1
 #define BREAKABLE_BRICK_SLEEP 2
@@ -33,7 +33,6 @@ public:
 		else if (state == BREAKABLE_BRICK_DIE) {
 			animations->Get(ID_ANI_BREAKABLE_BRICK_DIE)->Render(x, y);
 		}
-		RenderBoundingBox();
 	}
 	int IsControlledGroup() { return true; }
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
@@ -58,7 +57,6 @@ public:
 		switch (state) {
 		case BREAKABLE_BRICK_DIE:
 		{
-			blocking_state = false;
 			die_start = GetTickCount64();
 			((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->DeleteCoinHIdden(coinid);
 			this->coinid = -1;
@@ -82,4 +80,5 @@ public:
 		}
 
 	}
+
 };

@@ -14,11 +14,11 @@ void CTail::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 
 	if (x <= xxx - 11) {
 		x = xxx - 10;
-		vx = 0.4f;
+		vx = 0.7f;
 	}
 	else if (x >= xxx + 11) {
 		x = xxx + 10;
-		vx = -0.4f;
+		vx = -0.7f;
 	}
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);

@@ -157,6 +157,7 @@ public:
 		}
 	
 	}
+	void SetCard(int cardid) { this->card = cardid; }
 	 
 	bool GetisCoinDeleted() { return isCoinDeleted; }
 	bool GetGameWasOver() { return this->WasgameOver; }

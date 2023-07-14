@@ -573,6 +573,7 @@ CGame* CGame::GetInstance()
 
 void CGame::SetPlayerlevel(int level) {
 	((CPlayScene*)scenes[1])->SetMarioStateGlobally(level);
+	((CPlayScene*)scenes[5])->SetMarioStateGlobally(level);
 }
 void CGame::SetGameWasOver() {
 	((CPlayScene*)scenes[3])->SetGameWasOver(true);
@@ -589,4 +590,10 @@ void CGame::SetScoreTimeCoinGlobal(int scored, ULONGLONG timed, int coined) {
 	int time = 999 - (int)((GetTickCount64() - timed) / 1000);
 	DebugOut(L" num: %d \n ", time);
 
+}
+void CGame::SetCardGlobal(int cardid) {
+	for (auto it = scenes.begin(); it != scenes.end(); ++it) {
+		CPlayScene* tempscene = (CPlayScene*)(it->second);
+		tempscene->SetCard(cardid);
+	}
 }

@@ -485,7 +485,7 @@ void CPlayScene::Update(DWORD dt)
 	cy -= game->GetBackBufferHeight() / 2;
 
 	if (cx < 0) cx = 0;
-	if (cx > 2700) cx = 2700;
+	if (cx > 2540) cx = 2540;
 
 	if (cy > 228) cy = 225;
 	else if (cy < 10) cy = 0;
@@ -528,16 +528,22 @@ void CPlayScene::Render()
 		Rendernums(3, time, timex, timey);
 		
 
-		float coinx = timex+10;
-		float coiny = timey - 10;
+		float coinx = timex;
+		float coiny = timey - 7;
 		Rendernums(2, coin, coinx, coiny);
+
+
+		if (card <= 3 && card >= 1) {
+			float cardx = timex + 28;
+			float cardy = timey - 4;
+			s->Get(199018 + card)->Draw(cardx, cardy);
+		}
 
 		if (isWin)
 		{
-			s->Get(199012)->Draw(2690,265);
+			s->Get(199012)->Draw(2700,265);
 			if (card <= 3 && card>=1) {
-				s->Get(199018+card)->Draw(2720, 265);
-
+				s->Get(199018+card)->Draw(2763, 275);
 			}
 		}
 
@@ -619,15 +625,16 @@ void CPlayScene::PurgeDeletedObjects()
 }
 
 void CPlayScene::SetGameOver() {
+	player_level = 1;
 	CGame::GetInstance()->InitiateSwitchScene(3, 400, 300,0,0);
 	CGame::GetInstance()->SetGameWasOver();
-	score = 0;
-	coin = 0;
 }
 void CPlayScene::SetGameWin(int received_card) {
 	isWin = true;
 	win_start = GetTickCount64();
+	player_level = 1;
 	card = received_card;
+	CGame::GetInstance()->SetCardGlobal(card);
 	CGame::GetInstance()->SetScoreTimeCoinGlobal(score, 0, coin);
 }
 void CPlayScene::SetScoreTimeCoin(int scored, ULONGLONG game_startz, int coined) {

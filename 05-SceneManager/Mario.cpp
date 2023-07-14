@@ -18,6 +18,7 @@
 #include "BreakableBrick.h"
 #include "Button.h"
 #include "BackgroundAni.h"
+#include "CoinHidden.h"
 
 #include "Collision.h"
 
@@ -34,7 +35,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-
+	//DebugOut(L">>> mario at: (%d,%d) >>> \n",(int)x,(int) y);
 	if (isFlying) {
 		if (GetTickCount64() - resetGravity_start > 300) {
 			vy = 0.1f;
@@ -150,6 +151,14 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		CCard* card = dynamic_cast<CCard*>(e->obj);
 		if (card->GetState() == 1) {
 			card->SetState(2);
+		}
+	}
+	else if (dynamic_cast<CCoinHidden*>(e->obj)) {
+		CCoinHidden* coinhidden = dynamic_cast<CCoinHidden*>(e->obj);
+		if (coinhidden->GetState() == COIN_HIDDEN_LIVE) {
+			coinhidden->SetState(COIN_HIDDEN_DIE);
+			coin++;
+			score += 50;
 		}
 	}
 }
@@ -313,6 +322,11 @@ void CMario::OnCollisionWithTurtle(LPCOLLISIONEVENT e) {
 		}
 	}
 	else if (turtle->GetState() == TURTLE_SPIN_LEFT || turtle->GetState() == TURTLE_SPIN_RIGHT) {
+		if (e->ny < 0) {
+			turtle->SetState(TURTLE_SLEEP);
+			y -= 3;
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
 		DamageMario();
 	}
 	else if (turtle->GetState() == TURTLE_SLEEP) {

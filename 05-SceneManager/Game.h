@@ -125,6 +125,7 @@ public:
 	void SetPlayerlevel(int level);
 	void SetGameWasOver();
 	void SetScoreTimeCoinGlobal(int scored, ULONGLONG timed, int coined);
+	void SetCardGlobal(int cardid);
 	int getPlayerlevel() { return this->current_mario_level; }
 	~CGame();
 };

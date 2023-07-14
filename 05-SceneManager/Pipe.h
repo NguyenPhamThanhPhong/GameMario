@@ -22,7 +22,6 @@ public:
 		s->Get(this->spriteID)->Draw(x, y);
 	}
 	void Update(DWORD dt) {}
-	virtual int IsBlocking() { return 1; }
 	void GetBoundingBox(float& l, float& t, float& r, float& b)
 	{
 		l = x - width / 2;
@@ -30,4 +29,5 @@ public:
 		r = l + width;
 		b = t + height;
 	}
+	int IsBlocking();
 };
