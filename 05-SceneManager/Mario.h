@@ -34,6 +34,8 @@
 #define MARIO_STATE_SIT_RELEASE		601
 
 #define MARIO_STATE_FLY				700
+#define MARIO_STATE_DETELEPORTUP	800
+#define MARIO_STATE_DETELEPORTDOWN	801
 
 
 #pragma region ANIMATION_ID
@@ -251,4 +253,5 @@ public:
 		this->score = scored;
 		this->coin = coined;
 	}
+
 };

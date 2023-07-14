@@ -163,6 +163,7 @@ public:
 	bool GetGameWasOver() { return this->WasgameOver; }
 	bool GetisAniPlaying() { return this->isAniPlaying; }
 	bool GetisWin() { return this->isWin; }
+	int GetMarioLevel() { return this->player_level; }
 	ULONGLONG  Gettime() { return this->game_start; }
 
 	void Clear();

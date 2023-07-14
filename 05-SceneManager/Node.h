@@ -26,10 +26,6 @@ public:
 	float Getx() { return this->x; }
 	float Gety() { return this->y; }
 	void Render() {
-		CSprites* s = CSprites::GetInstance();
-
-		s->Get(20001)->Draw(x, y);
-		RenderBoundingBox();
 	}
 	void GetDirections(bool& left, bool& right, bool& top, bool& bot) {
 		left = this->Left;

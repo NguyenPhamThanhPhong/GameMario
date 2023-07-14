@@ -4,6 +4,7 @@
 
 #include "MarioIcon.h"
 #include "Node.h"
+#include "PlayScene.h"
 
 void CMarioIcon::GetBoundingBox(float& left, float& top, float& right, float& bottom) {
 	float width = 10.0f;
@@ -18,11 +19,16 @@ void CMarioIcon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects) {
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 void CMarioIcon::Render() {
-	CSprites* s = CSprites::GetInstance();
-
-	s->Get(20001)->Draw(x,y);
-	RenderBoundingBox();
-
+	CAnimations* animations = CAnimations::GetInstance();
+	int renderid = 1801;
+	int currentlv = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetMarioLevel();
+	if (currentlv == 2) {
+		renderid = 1802;
+	}
+	else if (currentlv == 3)
+		renderid = 1803;
+	
+	animations->Get(renderid)->Render(x, y);
 }
 void CMarioIcon::OnNoCollision(DWORD dt) {
 	x += vx * dt;

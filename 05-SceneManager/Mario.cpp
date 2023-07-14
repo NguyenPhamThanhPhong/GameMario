@@ -246,16 +246,34 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
+	LPGAME game = CGame::GetInstance();
 	CPortal* p = (CPortal*)e->obj;
 	int startx = -10;
 	int starty = -10;
-	if (p->GetSceneId() == 5) {
-		startx = 2336.0f;
-		starty = 330.0f;
+	if (e->ny < 0) {
+		if (game->IsKeyDown(DIK_DOWN)) {
+			if (p->GetSceneId() == 1) {
+				startx = 150.0f;
+				starty = 10.0f;
+			}
+			ULONGLONG time = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->Gettime();
+			CGame::GetInstance()->SetScoreTimeCoinGlobal(score, time, coin);
+			CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId(), startx, starty, score, coin);
+		}
 	}
-	ULONGLONG time = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->Gettime();
-	CGame::GetInstance()->SetScoreTimeCoinGlobal(score, time, coin);
-	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId(),startx,starty,score,coin);
+	else if (e->ny > 0) {
+		if (game->IsKeyDown(DIK_UP)) {
+			if (p->GetSceneId() == 5) {
+				startx = 2336.0f;
+				starty = 330.0f;
+			}
+			ULONGLONG time = ((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->Gettime();
+			CGame::GetInstance()->SetScoreTimeCoinGlobal(score, time, coin);
+			CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId(), startx, starty, score, coin);
+		}
+	}
+
+
 
 }
 void CMario::OnCOllisionWithMystericBrick(LPCOLLISIONEVENT e)
