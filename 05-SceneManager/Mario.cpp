@@ -122,9 +122,9 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 		if ( mushroom->GetState() == MUSHROOM_STATE_MOVE) {
 			if (level == MARIO_LEVEL_SMALL) {
-				e->obj->Delete();
 				SetLevel(MARIO_LEVEL_BIG);
 			}
+			e->obj->Delete();
 		}
 	}
 	else if (dynamic_cast<CFireball*>(e->obj)) {
@@ -140,21 +140,22 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 			if(level==MARIO_LEVEL_BIG)
 				SetLevel(MARIO_LEVEL_FOX);
 			e->obj->Delete();
-			DebugOut(L">>> leaf die >>> \n");
+			
 		}
 	}
 	else if (dynamic_cast<CFlygoomba*>(e->obj)) {
 		OnCollisionWithFlygoomba(e);
 	}
 	else if (dynamic_cast<CBreakableBrick*>(e->obj)) {
+		CBreakableBrick* bbrick = dynamic_cast<CBreakableBrick*>(e->obj);
 		if (e->ny > 0) {
-			CBreakableBrick* bbrick = dynamic_cast<CBreakableBrick*>(e->obj);
 			if (bbrick->GetState() == BREAKABLE_BRICK_LIVE) {
 				bbrick->SetState(BREAKABLE_BRICK_DIE);
 			}
-			else if (bbrick->GetState() == BREAKABLE_BRICK_SLEEP) {
-				bbrick->Killcoin();
-			}
+		}
+		if (bbrick->GetState() == BREAKABLE_BRICK_SLEEP) {
+			bbrick->Killcoin();
+			bbrick->Delete();
 		}
 	}
 	else if (dynamic_cast<CButton*>(e->obj)) {

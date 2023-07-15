@@ -634,6 +634,7 @@ void CPlayScene::SetGameWin(int received_card) {
 	win_start = GetTickCount64();
 	player_level = 1;
 	card = received_card;
+	player->SetState(MARIO_STATE_WALKING_RIGHT);
 	CGame::GetInstance()->SetCardGlobal(card);
 	CGame::GetInstance()->SetScoreTimeCoinGlobal(score, 0, coin);
 }
