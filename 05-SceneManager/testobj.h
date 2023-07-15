@@ -63,7 +63,7 @@ public:
 			float xshadow = this->x + Width - 5;
 			float yshadow = this->y + 4;
 			int shadowboxHeightCount = (this->Height / 10) + 1;
-			for (int i = 0; i < shadowboxHeightCount; i++)
+			for (int i = 0; i < shadowboxHeightCount-1; i++)
 			{
 				s->Get(SHADOWBOX_CONTENT)->Draw(xshadow, yshadow);
 				yshadow += 10;

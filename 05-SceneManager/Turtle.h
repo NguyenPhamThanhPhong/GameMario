@@ -114,7 +114,7 @@ protected:
 		}
 		else if (Color == TURTLE_GREEN) {
 			if (state == TURTLE_LIVE) {
-				if (vx > 0) {
+				if (vx < 0) {
 					aniId = TURTLE_GREEN_ANI_WALK_LEFT;
 				}
 				else
