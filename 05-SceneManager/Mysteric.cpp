@@ -18,6 +18,8 @@ void CMystericBrick::Render()
 
 	if (rewardid == 101) {
 		animations->Get(92)->Render(x, y);
+		if(state == MYSTERIC_STATE_DIE)
+			animations->Get(renderID)->Render(x, y);
 		return;
 	}
 
